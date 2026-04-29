@@ -18,3 +18,11 @@
 | 22:15 | Session end: 7 writes across 3 files (2026-04-29-phase0-foundation-design.md, CLAUDE.md, ROADMAP.md) | 4 reads | ~10814 tok |
 | 22:25 | Created docs/superpowers/plans/2026-04-29-phase0-foundation.md | — | ~14507 |
 | 22:30 | Brainstorming session complete — Phase 0 design approved, plan written (14 tasks) | spec + plan + CLAUDE.md + ROADMAP.md | ~32k tok |
+| 22:27 | Session end: 8 writes across 4 files (2026-04-29-phase0-foundation-design.md, CLAUDE.md, ROADMAP.md, 2026-04-29-phase0-foundation.md) | 4 reads | ~26399 tok |
+| 22:46 | Edited docs/superpowers/plans/2026-04-29-phase0-foundation.md | 12→7 lines | ~44 |
+| 22:52 | Session end: 9 writes across 4 files (2026-04-29-phase0-foundation-design.md, CLAUDE.md, ROADMAP.md, 2026-04-29-phase0-foundation.md) | 4 reads | ~26446 tok |
+| 23:04 | Created ../../../../home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md | — | ~54 |
+| 23:05 | Created ../../../../home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/user_profile.md | — | ~252 |
+| 23:05 | Created ../../../../home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/project_phase0_design.md | — | ~406 |
+| 22:35 | Session wrap-up: saved user + project memories, fixed intl_utils bug in plan | memory/ + cerebrum.md | ~1k tok |
+| 23:05 | Session end: 12 writes across 7 files (2026-04-29-phase0-foundation-design.md, CLAUDE.md, ROADMAP.md, 2026-04-29-phase0-foundation.md, MEMORY.md) | 4 reads | ~27209 tok |
