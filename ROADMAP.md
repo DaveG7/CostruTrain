@@ -8,19 +8,44 @@
 
 ## Phase 0 — Foundation (Week 1–2)
 **Goal:** Runnable skeleton. Nothing more.
+**Design spec:** `docs/superpowers/specs/2026-04-29-phase0-foundation-design.md`
+**Build order:** Shell → spike → Drift + repository → seed integration
 
-### Deliverables
+### Step 1 — Shell
 - [ ] `flutter create CostruTrain` with folder structure matching CLAUDE.md
-- [ ] Riverpod + Drift + flutter_cache_manager installed and configured
-- [ ] Theme file: dark-first, CrossFit-inspired (dark bg, high-contrast accent)
-- [ ] Bottom navigation: Library | Compose | History | Settings
-- [ ] Bundled `exercises.json` from Body Part Exercise Collection (~1300 entries)
-- [ ] `ExerciseRepository` with `BundledJsonSource` — loads exercises from asset JSON
-- [ ] Exercise list screen: scrollable, shows name + body part (no GIFs yet)
-- [ ] **Milestone:** `flutter run` works on Android emulator, Web, and macOS desktop
+- [ ] Dependencies: `flutter_riverpod`, `riverpod_annotation`, `go_router`, `drift`, `drift_flutter`, `shared_preferences`, `flutter_cache_manager`, `flutter_localizations`, `intl`, `flutter_native_splash`
+- [ ] Theme: dark-first, CrossFit-inspired (dark bg, high-contrast accent) — all colors/sizes via theme tokens
+- [ ] `go_router` with `ShellRoute` — bottom nav: Library | Compose | History | Settings
+- [ ] Four empty placeholder screens (no content yet)
+- [ ] i18n: `l10n.yaml`, `app_en.arb` (nav labels + seed strings), `app_de.arb` (`{"@@locale": "de"}` only)
+- [ ] `BuildContext.l10n` extension in `core/utils/extensions.dart`
+- [ ] `flutter_native_splash` configured and generated
+- [ ] **Checkpoint:** `flutter run` green on Android emulator, Web, macOS desktop
+
+### Step 2 — Seed Spike (standalone, delete after)
+- [ ] `main_seed_spike.dart` at project root: load `exercises.json` → in-memory Drift DB → 100-row chunked inserts → print elapsed per chunk + total
+- [ ] Run on device, record numbers
+- [ ] Adjust `chunkSize` in `SeedService` if needed, then delete spike file
+
+### Step 3 — Drift + ExerciseRepository
+- [ ] `AppDatabase` with `Exercises` table, schema v1 (no FTS yet)
+- [ ] `ExerciseRepository` abstract interface: `getAll()` (Phase 0) + `getById()` — designed for Phase 1 swap to `search()`
+- [ ] `BundledJsonExerciseRepository` implementation
+
+### Step 4 — Seed Flow Integration
+- [ ] `SeedService`: chunked batch insert, `onProgress(done, total)` callback
+- [ ] `SeedNotifier` (`AsyncNotifier<SeedState>`) in `data/seed/` — checks SharedPreferences `seeded` flag, drives seed, sets flag on success
+- [ ] `SeedState`: `done`, `total` (computed), `isDone` getter (`done >= total`)
+- [ ] Branded splash screen: `AsyncLoading` → indeterminate bar; `AsyncData(isDone: false)` → determinate bar; `AsyncData(isDone: true)` → `context.go('/library')` via `ref.listen`; `AsyncError` → retry
+- [ ] GoRouter redirect: `/splash` if not seeded (guard against redirect loops with `return null`)
+- [ ] `SharedPreferences` pre-loaded in `main()`, injected via `ProviderScope` override
+
+### Step 5 — Exercise List
+- [ ] `ExerciseListScreen`: `ListView.builder` — name + bodyPart chip, no GIFs, empty + error states
+- [ ] **Milestone:** `flutter run` works on all targets; ~1300 exercises visible; seed runs once on first launch; subsequent launches go straight to Library
 
 ### No:
-- No player, no composer, no GIFs, no backend, no auth
+- No player, no composer, no GIFs, no search/filter, no backend, no auth
 
 ---
 
