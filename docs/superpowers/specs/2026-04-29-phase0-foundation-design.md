@@ -249,6 +249,7 @@ Navigation fires in `ref.listen`, never inside `build()` — avoids setState-dur
 | `go_router` | Declarative routing |
 | `flutter_localizations` + `intl` | i18n |
 | `flutter_cache_manager` | GIF caching (wired Phase 1, installed Phase 0) |
+| `flutter_native_splash` | Native splash screen on launch |
 
 ---
 

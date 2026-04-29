@@ -1,3 +1,10 @@
+# OpenWolf
+
+@.wolf/OPENWOLF.md
+
+This project uses OpenWolf for context management. Read and follow .wolf/OPENWOLF.md every session. Check .wolf/cerebrum.md before generating code. Check .wolf/anatomy.md before reading files.
+
+
 # CLAUDE.md — CostruTrain: Training Composer App
 
 ## Project Identity
@@ -19,8 +26,12 @@ This is NOT another tracking app. It is a COMPOSER first, player second, tracker
 ## Tech Stack (LOCKED — do not suggest alternatives without strong justification)
 - **Frontend/Mobile/Desktop:** Flutter 3.x (Dart)
 - **State management:** Riverpod (hooks_riverpod + riverpod_annotation)
+- **Routing:** go_router — declarative, ShellRoute for persistent bottom nav
 - **Local DB:** Drift (SQLite ORM for Dart) — workouts, exercises, sessions
+- **Preferences:** shared_preferences — seed completion flag, user settings
 - **Media cache:** flutter_cache_manager — GIFs cached locally per exercise
+- **i18n:** flutter_localizations + intl — from Phase 0, all strings via AppLocalizations
+- **Splash:** flutter_native_splash — native splash on launch
 - **Cloud sync (optional/later):** Supabase (Postgres + Auth + Storage)
 - **Backend API (Phase 2+):** FastAPI (Python 3.12) — exercise DB, user workouts, sharing
 - **Containerization:** Docker Compose, behind Traefik reverse proxy
@@ -115,22 +126,31 @@ States: `Idle → Warmup → ExerciseCountdown(3s) → Working → Resting → C
 ```
 CostruTrain/
 ├── CLAUDE.md                    ← YOU ARE HERE
-├── PROJECT_SPEC.md
 ├── ARCHITECTURE.md
 ├── ROADMAP.md
+├── l10n.yaml                    ← flutter gen-l10n config
 ├── pubspec.yaml
+├── assets/
+│   └── seed/
+│       └── exercises.json       ← Body Part Collection (~1300 exercises)
 ├── lib/
-│   ├── main.dart
-│   ├── app.dart                 ← MaterialApp, routing, theme
+│   ├── main.dart                ← ProviderScope, pre-load SharedPreferences, runApp
+│   ├── app.dart                 ← MaterialApp.router, GoRouter provider, l10n delegates
+│   ├── l10n/
+│   │   ├── app_en.arb           ← template (all strings)
+│   │   └── app_de.arb           ← {"@@locale": "de"} only — missing keys fall back to EN
 │   ├── core/
 │   │   ├── models/              ← Exercise, Workout, WorkoutStep, PlayerState
 │   │   ├── player/              ← State machine (pure Dart, no Flutter)
 │   │   └── utils/
+│   │       └── extensions.dart  ← BuildContext.l10n extension
 │   ├── data/
-│   │   ├── local/               ← Drift DB, DAOs
-│   │   ├── remote/              ← API client (dio), exercise source adapters
-│   │   ├── repositories/        ← ExerciseRepo, WorkoutRepo, SessionRepo
-│   │   └── seed/                ← bundled exercises.json (Body Part Collection)
+│   │   ├── local/               ← Drift AppDatabase, DAOs
+│   │   ├── remote/              ← API client (dio), exercise source adapters (Phase 2+)
+│   │   ├── repositories/        ← ExerciseRepository interface + implementations
+│   │   └── seed/
+│   │       ├── seed_service.dart    ← chunked batch insert, onProgress callback
+│   │       └── seed_notifier.dart   ← AsyncNotifier<SeedState> — app startup concern
 │   ├── features/
 │   │   ├── library/             ← Exercise browser (filterable, searchable)
 │   │   ├── composer/            ← Workout builder (timeline editor)
@@ -138,13 +158,13 @@ CostruTrain/
 │   │   ├── history/             ← Completed sessions log
 │   │   └── settings/            ← Preferences, sync, about
 │   └── shared/
-│       ├── widgets/             ← Reusable components
+│       ├── widgets/             ← Reusable components (ScaffoldWithNav, etc.)
 │       ├── theme/               ← Colors, typography, spacing
-│       └── l10n/                ← Localization (en, de, it start)
+│       └── utils/               ← Shared utilities
 ├── test/
-│   ├── core/                    ← Unit tests for state machine, models
+│   ├── core/                    ← Unit tests for state machine, models, seed
 │   └── features/                ← Widget tests
-├── backend/                     ← FastAPI (Phase 2)
+├── backend/                     ← FastAPI (Phase 2+)
 │   ├── main.py
 │   ├── models/
 │   ├── routers/
@@ -154,6 +174,26 @@ CostruTrain/
     └── traefik/
 ```
 
+## i18n Conventions
+- All UI strings go through `AppLocalizations` from Phase 0 — no hardcoded strings in widgets
+- Access via `context.l10n.someKey` (BuildContext extension in `core/utils/extensions.dart`) — never `AppLocalizations.of(context)!` directly
+- `app_de.arb` contains only `{"@@locale": "de"}` — no empty string values (empty renders blank, not EN fallback)
+- No language switcher UI until Phase 4
+
+## Routing Conventions
+- `GoRouter` instance lives in a Riverpod provider (`goRouterProvider`) — never a global
+- `ShellRoute` wraps all tab routes to keep `ScaffoldWithNav` alive across navigation
+- Redirect guard: return `null` for all non-redirect cases — never `state.matchedLocation` fallthrough
+- Navigation side-effects (e.g., after seed completes) fire in `ref.listen`, never inside `build()`
+
+## Seeding Conventions
+- `SeedNotifier` lives in `data/seed/` — seeding is an **app startup** concern, not a library feature
+- Idempotency uses the SharedPreferences `seeded` flag only — never row count (crash mid-seed leaves rows > 0)
+- Set the `seeded` flag **only after** `db.batch()` completes successfully
+- Chunk inserts: 100 rows/batch, call `onProgress` after each chunk — never one giant batch (no real progress)
+- `SeedState.total` is computed as `(exercises.length / chunkSize).ceil()` — never hardcoded
+- `SeedState.isDone` is a computed getter (`done >= total`) — never a stored field
+
 ## What NOT to do
 - Do NOT use `setState` in complex screens — use Riverpod providers
 - Do NOT put business logic in widgets
@@ -161,6 +201,9 @@ CostruTrain/
 - Do NOT hardcode colors/sizes — always use theme tokens
 - Do NOT make network calls in build methods
 - Do NOT skip error handling on async operations
+- Do NOT use `AppLocalizations.of(context)!` directly — use `context.l10n`
+- Do NOT read SharedPreferences cold inside GoRouter redirect — pre-load in `main()` and inject via `ProviderScope` override
+- Do NOT put seed/startup logic under `features/` — it belongs in `data/seed/`
 
 ## Exercise Data Source
 - **Seed (bundled, Phase 1):** Body Part Exercise Collection JSON (~1300 exercises, gifUrl per entry)
