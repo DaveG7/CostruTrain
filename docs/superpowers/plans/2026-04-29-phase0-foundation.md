@@ -349,11 +349,6 @@ extension BuildContextX on BuildContext {
 - [ ] **Step 4: Generate localizations**
 
 ```bash
-dart run intl_utils:generate
-```
-
-If `intl_utils` is not available, use:
-```bash
 flutter gen-l10n
 ```
 

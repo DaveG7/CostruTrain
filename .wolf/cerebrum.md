@@ -14,6 +14,8 @@
 
 ## Do-Not-Repeat
 
+- [2026-04-29] Do NOT use `dart run intl_utils:generate` — `intl_utils` is not in pubspec.yaml. Always use `flutter gen-l10n` to generate localizations.
+
 - [2026-04-29] Do NOT add empty string values to `app_de.arb`. Use only `{"@@locale": "de"}`. Empty string values render as blank in the UI — missing keys fall back to EN automatically.
 - [2026-04-29] Do NOT use `AppLocalizations.of(context)!` directly in widgets. Always use `context.l10n` via the BuildContext extension in `core/utils/extensions.dart`.
 - [2026-04-29] Do NOT read SharedPreferences cold inside GoRouter redirect — it is synchronous and returns null before the async load completes, causing wrong redirects. Pre-load SharedPreferences before runApp and inject via sharedPrefsProvider override in ProviderScope.
