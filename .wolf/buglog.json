@@ -48,6 +48,86 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-04-29T20:46:56.477Z"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-04-30T08:38:10.211Z",
+      "error_message": "Incorrect value in code",
+      "file": ".worktrees/phase-0/lib/core/utils/extensions.dart",
+      "root_cause": "Had 'package:flutter_gen/gen_l10n/app_localizations.da",
+      "fix": "Changed to 'package:costrutrain/generated/l10n/app_localizati",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "dart"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T08:38:10.211Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-04-30T08:52:19.057Z",
+      "error_message": "Incorrect value in code",
+      "file": ".worktrees/phase-0/lib/data/repositories/bundled_json_exercise_repository.dart",
+      "root_cause": "Had 'package:drift/drift.dart'",
+      "fix": "Changed to 'package:riverpod_annotation/riverpod_annotation.d",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "dart"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T08:52:19.057Z"
+    },
+    {
+      "id": "bug-006",
+      "timestamp": "2026-04-30T08:52:19.856Z",
+      "error_message": "Incorrect value in code",
+      "file": ".worktrees/phase-0/test/data/repositories/bundled_json_exercise_repository_test.dart",
+      "root_cause": "Had 'package:drift/native.dart'",
+      "fix": "Changed to 'package:flutter_test/flutter_test.dart'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "dart"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T08:52:19.856Z"
+    },
+    {
+      "id": "bug-007",
+      "timestamp": "2026-04-30T08:53:18.051Z",
+      "error_message": "Missing import: ...exercise.dart, package:drift/drift.dart",
+      "file": ".worktrees/phase-0/.wolf/cerebrum.md",
+      "root_cause": "Module(s) not imported: ...exercise.dart, package:drift/drift.dart",
+      "fix": "Added import(s) for ...exercise.dart, package:drift/drift.dart",
+      "tags": [
+        "auto-detected",
+        "missing-import",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T08:53:18.051Z"
+    },
+    {
+      "id": "bug-008",
+      "timestamp": "2026-04-30T08:58:35.608Z",
+      "error_message": "Missing await",
+      "file": ".worktrees/phase-0/lib/main.dart",
+      "root_cause": "Async call without await — returned Promise instead of value",
+      "fix": "Added await to async call",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "dart"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T08:58:35.608Z"
     }
   ]
 }

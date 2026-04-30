@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-04-29T20:12:55.805Z",
+      "error_message": "Significant refactor of ",
+      "file": "CLAUDE.md",
+      "root_cause": "11 lines replaced/restructured",
+      "fix": "Rewrote 42→51 lines (11 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-29T20:12:55.805Z"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-04-29T20:13:44.660Z",
+      "error_message": "Significant refactor of ",
+      "file": "ROADMAP.md",
+      "root_cause": "9 lines replaced/restructured",
+      "fix": "Rewrote 15→40 lines (9 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-29T20:13:44.660Z"
+    },
+    {
+      "id": "bug-003",
+      "timestamp": "2026-04-29T20:46:56.477Z",
+      "error_message": "Significant refactor of ",
+      "file": "docs/superpowers/plans/2026-04-29-phase0-foundation.md",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 12→7 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-29T20:46:56.477Z"
+    }
+  ]
+}

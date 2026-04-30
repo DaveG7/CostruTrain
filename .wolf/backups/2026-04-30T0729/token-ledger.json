@@ -1,0 +1,741 @@
+{
+  "version": 1,
+  "created_at": "2026-04-29T19:03:28.554Z",
+  "lifetime": {
+    "total_tokens_estimated": 115563,
+    "total_reads": 42,
+    "total_writes": 38,
+    "total_sessions": 1,
+    "anatomy_hits": 25,
+    "anatomy_misses": 17,
+    "repeated_reads_blocked": 3,
+    "estimated_savings_vs_bare_cli": 11741
+  },
+  "sessions": [
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T19:05:24.581Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 0,
+        "reads_count": 1,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T19:15:50.453Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 1654,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T19:17:55.350Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 1654,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T19:20:22.412Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 1654,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T19:26:26.381Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 1654,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T19:28:15.738Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 1654,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T19:34:31.326Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 1654,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T19:38:03.348Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 1654,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T19:43:48.908Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 1654,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T19:47:57.655Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 1654,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T19:53:40.198Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 1654,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T19:59:56.554Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 1654,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T20:08:12.504Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 2206,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 2521,
+          "action": "create"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 120,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 3860,
+        "output_tokens_estimated": 2641,
+        "reads_count": 3,
+        "writes_count": 2,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T20:15:24.051Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 2206,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 1973,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 2521,
+          "action": "create"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 120,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 40,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 286,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 641,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 575,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 798,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 5833,
+        "output_tokens_estimated": 4981,
+        "reads_count": 4,
+        "writes_count": 7,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T20:27:18.144Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 2247,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 1973,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 2521,
+          "action": "create"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 120,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 40,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 286,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 641,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 575,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 798,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/plans/2026-04-29-phase0-foundation.md",
+          "tokens_estimated": 15544,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 5874,
+        "output_tokens_estimated": 20525,
+        "reads_count": 4,
+        "writes_count": 8,
+        "repeated_reads_blocked": 1,
+        "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T20:52:50.725Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 2247,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 1973,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 2521,
+          "action": "create"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 120,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 40,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 286,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 641,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 575,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 798,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/plans/2026-04-29-phase0-foundation.md",
+          "tokens_estimated": 15544,
+          "action": "create"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/plans/2026-04-29-phase0-foundation.md",
+          "tokens_estimated": 47,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 5874,
+        "output_tokens_estimated": 20572,
+        "reads_count": 4,
+        "writes_count": 9,
+        "repeated_reads_blocked": 1,
+        "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-04-29-2103",
+      "started": "2026-04-29T19:03:38.085Z",
+      "ended": "2026-04-29T21:05:47.250Z",
+      "reads": [
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 1654,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 2247,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 1973,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 2521,
+          "action": "create"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 120,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/specs/2026-04-29-phase0-foundation-design.md",
+          "tokens_estimated": 40,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 286,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 641,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/CLAUDE.md",
+          "tokens_estimated": 575,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/ROADMAP.md",
+          "tokens_estimated": 798,
+          "action": "edit"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/plans/2026-04-29-phase0-foundation.md",
+          "tokens_estimated": 15544,
+          "action": "create"
+        },
+        {
+          "file": "/mnt/d/Coding/CostruTrain/docs/superpowers/plans/2026-04-29-phase0-foundation.md",
+          "tokens_estimated": 47,
+          "action": "edit"
+        },
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/MEMORY.md",
+          "tokens_estimated": 58,
+          "action": "create"
+        },
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/user_profile.md",
+          "tokens_estimated": 270,
+          "action": "create"
+        },
+        {
+          "file": "/home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/project_phase0_design.md",
+          "tokens_estimated": 435,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 5874,
+        "output_tokens_estimated": 21335,
+        "reads_count": 4,
+        "writes_count": 12,
+        "repeated_reads_blocked": 1,
+        "anatomy_lookups": 3
+      }
+    }
+  ],
+  "daemon_usage": [],
+  "waste_flags": [],
+  "optimization_report": {
+    "last_generated": null,
+    "patterns": []
+  }
+}
