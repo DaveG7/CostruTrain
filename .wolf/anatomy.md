@@ -22,7 +22,30 @@
 
 ## lib/
 
-- `main.dart` — Minimal placeholder; real entry point written in Task 7. Passes flutter analyze with 0 issues (~5 tok)
+- `main.dart` — App entry point: pre-loads SharedPreferences, injects via ProviderScope override, runs CostruTrainApp (~25 tok)
+- `app.dart` — CostruTrainApp ConsumerWidget: MaterialApp.router with goRouterProvider, AppTheme.dark, AppLocalizations delegates (~35 tok)
+
+## lib/core/
+
+- `router.dart` — goRouterProvider (Riverpod): GoRouter with /splash guard + ShellRoute wrapping /library, /compose, /history, /settings via ScaffoldWithNav (~60 tok)
+- `router.g.dart` — Generated Riverpod provider code for goRouterProvider — do not edit (~30 tok)
+
+## lib/features/composer/views/
+
+- `composer_screen.dart` — Placeholder ComposerScreen: Center("Composer — coming soon") (~10 tok)
+
+## lib/features/history/views/
+
+- `history_screen.dart` — Placeholder HistoryScreen: Center("History — coming soon") (~10 tok)
+
+## lib/features/settings/views/
+
+- `settings_screen.dart` — Placeholder SettingsScreen: Center("Settings — coming soon") (~10 tok)
+
+## lib/features/library/views/
+
+- `seed_splash_screen.dart` — Placeholder SeedSplashScreen: Scaffold with CircularProgressIndicator; replaced in Task 12 (~10 tok)
+- `exercise_list_screen.dart` — Placeholder ExerciseListScreen: Scaffold with Text("Exercises"); replaced in Task 13 (~10 tok)
 
 ## lib/data/repositories/
 

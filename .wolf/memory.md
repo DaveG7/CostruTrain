@@ -40,3 +40,4 @@
 | 23:05 | Created ../../../../home/dave/.claude/projects/-mnt-d-Coding-CostruTrain/memory/project_phase0_design.md | — | ~406 |
 | 22:35 | Session wrap-up: saved user + project memories, fixed intl_utils bug in plan | memory/ + cerebrum.md | ~1k tok |
 | 23:05 | Session end: 12 writes across 7 files (2026-04-29-phase0-foundation-design.md, CLAUDE.md, ROADMAP.md, 2026-04-29-phase0-foundation.md, MEMORY.md) | 4 reads | ~27209 tok |
+| 11:30 | Task 7: GoRouter shell, 5 placeholder screens, app.dart, main.dart wired; codegen ran; flutter analyze 0 issues; committed feat/phase-0-foundation | lib/core/router.dart, lib/app.dart, lib/main.dart, lib/features/*/views/*.dart | ~3k tok |

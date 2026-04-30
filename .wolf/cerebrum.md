@@ -41,3 +41,5 @@
 - [2026-04-29] **Seed spike:** After shell runs green, do a standalone main.dart spike to measure real insert time on device before wiring seed flow into the app.
 - [2026-04-29] **i18n:** flutter_localizations + intl from Phase 0. l10n.yaml at root. app_en.arb is the template; app_de.arb contains only {"@@locale": "de"}.
 - [2026-04-30] **l10n generated files:** `lib/generated/l10n/` output from `flutter gen-l10n` is committed to the repo (same convention as Drift/Riverpod `.g.dart` files — no gitignore exclusion needed).
+- [2026-04-30] Drift generates the row data class as `Exercise` (singular, no suffix) when the table class is `Exercises`. The plan incorrectly assumed `ExerciseData`. When the domain model is also named `Exercise`, import the model with an alias: `import '...exercise.dart' as model;` and use `model.Exercise` as return types.
+- [2026-04-30] `test/widget_test.dart` from `flutter create` references `MyApp` which does not exist. Delete or replace it when Task 7 writes the real `main.dart` and `CostruTrainApp`.
