@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:costrutrain/data/local/app_database.dart';
 import '../../helpers/test_database.dart';
@@ -14,14 +15,15 @@ void main() {
 
   tearDown(() => db.close());
 
-  Future<void> seedRow(String id, String name, String bodyPart) async {
+  Future<void> seedRow(String id, String name, String bodyPart, {String muscleGroup = 'abs'}) async {
     await db.into(db.exercises).insert(ExercisesCompanion.insert(
       id: id,
       source: 'exercisedb',
       name: name,
       bodyPart: bodyPart,
-      targetPrimary: 'abs',
+      targetPrimary: muscleGroup,
       equipment: 'body weight',
+      muscleGroup: Value(muscleGroup),
     ));
   }
 

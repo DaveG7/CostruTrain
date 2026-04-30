@@ -13,6 +13,7 @@ class Exercises extends Table {
   TextColumn get targetPrimary => text()();
   TextColumn get equipment => text()();
   TextColumn get gifUrl => text().nullable()();
+  TextColumn get muscleGroup => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
