@@ -53,9 +53,18 @@ class SeedSplashScreen extends ConsumerWidget {
                     ],
                   ),
                 AsyncData() => const SizedBox.shrink(),
-                AsyncError() => Column(
+                AsyncError(:final error) => Column(
                     children: [
                       Text(context.l10n.seedError),
+                      const SizedBox(height: 8),
+                      Text(
+                        error.toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(color: Theme.of(context).colorScheme.error),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () => ref.invalidate(seedNotifierProvider),
