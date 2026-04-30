@@ -21,7 +21,14 @@ class Exercises extends Table {
 @DriftDatabase(tables: [Exercises])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
-      : super(executor ?? driftDatabase(name: 'costrutrain'));
+      : super(executor ??
+            driftDatabase(
+              name: 'costrutrain',
+              web: DriftWebOptions(
+                sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+                driftWorker: Uri.parse('drift_worker.js'),
+              ),
+            ));
 
   @override
   int get schemaVersion => 1;
