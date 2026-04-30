@@ -56,3 +56,18 @@ class SeedService {
         gifUrl: Value(e.gifUrl),
       );
 }
+
+// Test helper — overrides run() to use in-memory JSON instead of rootBundle.
+class OverridableSeedService extends SeedService {
+  const OverridableSeedService({required this.json});
+  final String json;
+
+  @override
+  Future<void> run({
+    required AppDatabase db,
+    String? assetPath,
+    int chunkSize = 100,
+    void Function(int done, int total)? onProgress,
+  }) =>
+      runWithJson(db: db, json: json, chunkSize: chunkSize, onProgress: onProgress);
+}
