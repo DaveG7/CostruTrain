@@ -54,6 +54,7 @@ class SeedService {
         targetPrimary: e.targetPrimary,
         equipment: e.equipment,
         gifUrl: Value(e.gifUrl),
+        muscleGroup: Value(e.muscleGroup),
       );
 }
 

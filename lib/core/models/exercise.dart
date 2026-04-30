@@ -7,6 +7,7 @@ class Exercise {
   final String targetPrimary;
   final String equipment;
   final String? gifUrl;
+  final String? muscleGroup;
 
   const Exercise({
     required this.id,
@@ -17,6 +18,7 @@ class Exercise {
     required this.targetPrimary,
     required this.equipment,
     this.gifUrl,
+    this.muscleGroup,
   });
 
   factory Exercise.fromJson(Map<String, dynamic> json) => Exercise(
@@ -26,6 +28,7 @@ class Exercise {
         name: json['name'] as String,
         bodyPart: json['bodyPart'] as String,
         targetPrimary: json['target'] as String,
+        muscleGroup: json['target'] as String?,
         equipment: json['equipment'] as String,
         gifUrl: json['gifUrl'] as String?,
       );

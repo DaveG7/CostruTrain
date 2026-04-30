@@ -53,6 +53,12 @@ class $ExercisesTable extends Exercises
   late final GeneratedColumn<String> gifUrl = GeneratedColumn<String>(
       'gif_url', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _muscleGroupMeta =
+      const VerificationMeta('muscleGroup');
+  @override
+  late final GeneratedColumn<String> muscleGroup = GeneratedColumn<String>(
+      'muscle_group', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -62,7 +68,8 @@ class $ExercisesTable extends Exercises
         bodyPart,
         targetPrimary,
         equipment,
-        gifUrl
+        gifUrl,
+        muscleGroup
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -121,6 +128,12 @@ class $ExercisesTable extends Exercises
       context.handle(_gifUrlMeta,
           gifUrl.isAcceptableOrUnknown(data['gif_url']!, _gifUrlMeta));
     }
+    if (data.containsKey('muscle_group')) {
+      context.handle(
+          _muscleGroupMeta,
+          muscleGroup.isAcceptableOrUnknown(
+              data['muscle_group']!, _muscleGroupMeta));
+    }
     return context;
   }
 
@@ -146,6 +159,8 @@ class $ExercisesTable extends Exercises
           .read(DriftSqlType.string, data['${effectivePrefix}equipment'])!,
       gifUrl: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}gif_url']),
+      muscleGroup: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}muscle_group']),
     );
   }
 
@@ -164,6 +179,7 @@ class Exercise extends DataClass implements Insertable<Exercise> {
   final String targetPrimary;
   final String equipment;
   final String? gifUrl;
+  final String? muscleGroup;
   const Exercise(
       {required this.id,
       this.externalId,
@@ -172,7 +188,8 @@ class Exercise extends DataClass implements Insertable<Exercise> {
       required this.bodyPart,
       required this.targetPrimary,
       required this.equipment,
-      this.gifUrl});
+      this.gifUrl,
+      this.muscleGroup});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -187,6 +204,9 @@ class Exercise extends DataClass implements Insertable<Exercise> {
     map['equipment'] = Variable<String>(equipment);
     if (!nullToAbsent || gifUrl != null) {
       map['gif_url'] = Variable<String>(gifUrl);
+    }
+    if (!nullToAbsent || muscleGroup != null) {
+      map['muscle_group'] = Variable<String>(muscleGroup);
     }
     return map;
   }
@@ -204,6 +224,9 @@ class Exercise extends DataClass implements Insertable<Exercise> {
       equipment: Value(equipment),
       gifUrl:
           gifUrl == null && nullToAbsent ? const Value.absent() : Value(gifUrl),
+      muscleGroup: muscleGroup == null && nullToAbsent
+          ? const Value.absent()
+          : Value(muscleGroup),
     );
   }
 
@@ -219,6 +242,7 @@ class Exercise extends DataClass implements Insertable<Exercise> {
       targetPrimary: serializer.fromJson<String>(json['targetPrimary']),
       equipment: serializer.fromJson<String>(json['equipment']),
       gifUrl: serializer.fromJson<String?>(json['gifUrl']),
+      muscleGroup: serializer.fromJson<String?>(json['muscleGroup']),
     );
   }
   @override
@@ -233,6 +257,7 @@ class Exercise extends DataClass implements Insertable<Exercise> {
       'targetPrimary': serializer.toJson<String>(targetPrimary),
       'equipment': serializer.toJson<String>(equipment),
       'gifUrl': serializer.toJson<String?>(gifUrl),
+      'muscleGroup': serializer.toJson<String?>(muscleGroup),
     };
   }
 
@@ -244,7 +269,8 @@ class Exercise extends DataClass implements Insertable<Exercise> {
           String? bodyPart,
           String? targetPrimary,
           String? equipment,
-          Value<String?> gifUrl = const Value.absent()}) =>
+          Value<String?> gifUrl = const Value.absent(),
+          Value<String?> muscleGroup = const Value.absent()}) =>
       Exercise(
         id: id ?? this.id,
         externalId: externalId.present ? externalId.value : this.externalId,
@@ -254,6 +280,7 @@ class Exercise extends DataClass implements Insertable<Exercise> {
         targetPrimary: targetPrimary ?? this.targetPrimary,
         equipment: equipment ?? this.equipment,
         gifUrl: gifUrl.present ? gifUrl.value : this.gifUrl,
+        muscleGroup: muscleGroup.present ? muscleGroup.value : this.muscleGroup,
       );
   Exercise copyWithCompanion(ExercisesCompanion data) {
     return Exercise(
@@ -268,6 +295,8 @@ class Exercise extends DataClass implements Insertable<Exercise> {
           : this.targetPrimary,
       equipment: data.equipment.present ? data.equipment.value : this.equipment,
       gifUrl: data.gifUrl.present ? data.gifUrl.value : this.gifUrl,
+      muscleGroup:
+          data.muscleGroup.present ? data.muscleGroup.value : this.muscleGroup,
     );
   }
 
@@ -281,14 +310,15 @@ class Exercise extends DataClass implements Insertable<Exercise> {
           ..write('bodyPart: $bodyPart, ')
           ..write('targetPrimary: $targetPrimary, ')
           ..write('equipment: $equipment, ')
-          ..write('gifUrl: $gifUrl')
+          ..write('gifUrl: $gifUrl, ')
+          ..write('muscleGroup: $muscleGroup')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
-      id, externalId, source, name, bodyPart, targetPrimary, equipment, gifUrl);
+  int get hashCode => Object.hash(id, externalId, source, name, bodyPart,
+      targetPrimary, equipment, gifUrl, muscleGroup);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -300,7 +330,8 @@ class Exercise extends DataClass implements Insertable<Exercise> {
           other.bodyPart == this.bodyPart &&
           other.targetPrimary == this.targetPrimary &&
           other.equipment == this.equipment &&
-          other.gifUrl == this.gifUrl);
+          other.gifUrl == this.gifUrl &&
+          other.muscleGroup == this.muscleGroup);
 }
 
 class ExercisesCompanion extends UpdateCompanion<Exercise> {
@@ -312,6 +343,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
   final Value<String> targetPrimary;
   final Value<String> equipment;
   final Value<String?> gifUrl;
+  final Value<String?> muscleGroup;
   final Value<int> rowid;
   const ExercisesCompanion({
     this.id = const Value.absent(),
@@ -322,6 +354,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
     this.targetPrimary = const Value.absent(),
     this.equipment = const Value.absent(),
     this.gifUrl = const Value.absent(),
+    this.muscleGroup = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ExercisesCompanion.insert({
@@ -333,6 +366,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
     required String targetPrimary,
     required String equipment,
     this.gifUrl = const Value.absent(),
+    this.muscleGroup = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         source = Value(source),
@@ -349,6 +383,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
     Expression<String>? targetPrimary,
     Expression<String>? equipment,
     Expression<String>? gifUrl,
+    Expression<String>? muscleGroup,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -360,6 +395,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
       if (targetPrimary != null) 'target_primary': targetPrimary,
       if (equipment != null) 'equipment': equipment,
       if (gifUrl != null) 'gif_url': gifUrl,
+      if (muscleGroup != null) 'muscle_group': muscleGroup,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -373,6 +409,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
       Value<String>? targetPrimary,
       Value<String>? equipment,
       Value<String?>? gifUrl,
+      Value<String?>? muscleGroup,
       Value<int>? rowid}) {
     return ExercisesCompanion(
       id: id ?? this.id,
@@ -383,6 +420,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
       targetPrimary: targetPrimary ?? this.targetPrimary,
       equipment: equipment ?? this.equipment,
       gifUrl: gifUrl ?? this.gifUrl,
+      muscleGroup: muscleGroup ?? this.muscleGroup,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -414,6 +452,9 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
     if (gifUrl.present) {
       map['gif_url'] = Variable<String>(gifUrl.value);
     }
+    if (muscleGroup.present) {
+      map['muscle_group'] = Variable<String>(muscleGroup.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -431,6 +472,7 @@ class ExercisesCompanion extends UpdateCompanion<Exercise> {
           ..write('targetPrimary: $targetPrimary, ')
           ..write('equipment: $equipment, ')
           ..write('gifUrl: $gifUrl, ')
+          ..write('muscleGroup: $muscleGroup, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -457,6 +499,7 @@ typedef $$ExercisesTableCreateCompanionBuilder = ExercisesCompanion Function({
   required String targetPrimary,
   required String equipment,
   Value<String?> gifUrl,
+  Value<String?> muscleGroup,
   Value<int> rowid,
 });
 typedef $$ExercisesTableUpdateCompanionBuilder = ExercisesCompanion Function({
@@ -468,6 +511,7 @@ typedef $$ExercisesTableUpdateCompanionBuilder = ExercisesCompanion Function({
   Value<String> targetPrimary,
   Value<String> equipment,
   Value<String?> gifUrl,
+  Value<String?> muscleGroup,
   Value<int> rowid,
 });
 
@@ -503,6 +547,9 @@ class $$ExercisesTableFilterComposer
 
   ColumnFilters<String> get gifUrl => $composableBuilder(
       column: $table.gifUrl, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get muscleGroup => $composableBuilder(
+      column: $table.muscleGroup, builder: (column) => ColumnFilters(column));
 }
 
 class $$ExercisesTableOrderingComposer
@@ -538,6 +585,9 @@ class $$ExercisesTableOrderingComposer
 
   ColumnOrderings<String> get gifUrl => $composableBuilder(
       column: $table.gifUrl, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get muscleGroup => $composableBuilder(
+      column: $table.muscleGroup, builder: (column) => ColumnOrderings(column));
 }
 
 class $$ExercisesTableAnnotationComposer
@@ -572,6 +622,9 @@ class $$ExercisesTableAnnotationComposer
 
   GeneratedColumn<String> get gifUrl =>
       $composableBuilder(column: $table.gifUrl, builder: (column) => column);
+
+  GeneratedColumn<String> get muscleGroup => $composableBuilder(
+      column: $table.muscleGroup, builder: (column) => column);
 }
 
 class $$ExercisesTableTableManager extends RootTableManager<
@@ -605,6 +658,7 @@ class $$ExercisesTableTableManager extends RootTableManager<
             Value<String> targetPrimary = const Value.absent(),
             Value<String> equipment = const Value.absent(),
             Value<String?> gifUrl = const Value.absent(),
+            Value<String?> muscleGroup = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               ExercisesCompanion(
@@ -616,6 +670,7 @@ class $$ExercisesTableTableManager extends RootTableManager<
             targetPrimary: targetPrimary,
             equipment: equipment,
             gifUrl: gifUrl,
+            muscleGroup: muscleGroup,
             rowid: rowid,
           ),
           createCompanionCallback: ({
@@ -627,6 +682,7 @@ class $$ExercisesTableTableManager extends RootTableManager<
             required String targetPrimary,
             required String equipment,
             Value<String?> gifUrl = const Value.absent(),
+            Value<String?> muscleGroup = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               ExercisesCompanion.insert(
@@ -638,6 +694,7 @@ class $$ExercisesTableTableManager extends RootTableManager<
             targetPrimary: targetPrimary,
             equipment: equipment,
             gifUrl: gifUrl,
+            muscleGroup: muscleGroup,
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0
