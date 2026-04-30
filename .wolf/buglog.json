@@ -233,5 +233,17 @@
       "occurrences": 1,
       "last_seen": "2026-04-30T11:30:00.000Z"
     }
+  ,{
+      "id": "bug-014",
+      "timestamp": "2026-04-30T12:00:00.000Z",
+      "error_message": "Method not found: 'Value'. — test/data/repositories/bundled_json_exercise_repository_test.dart:25:20",
+      "file": "test/data/repositories/bundled_json_exercise_repository_test.dart",
+      "root_cause": "Task 2 added Value(muscleGroup) to the seedRow helper but the test file had no import for package:drift/drift.dart. Unlike lib files that use part-of to inherit the import, test files need their own explicit import.",
+      "fix": "Added `import 'package:drift/drift.dart' show Value;` to the test file.",
+      "tags": ["missing-import", "drift", "test", "Value"],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T12:00:00.000Z"
+    }
   ]
 }

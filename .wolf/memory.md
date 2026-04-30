@@ -3,10 +3,14 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+| 12:00 | Task 2: add muscleGroup to Exercise model, Drift table, SeedService, test helper | lib/core/models/exercise.dart, lib/data/local/app_database.dart, lib/data/seed/seed_service.dart, test/data/repositories/bundled_json_exercise_repository_test.dart | 17/17 tests green, flutter analyze clean | ~500 |
+
 ## Session: 2026-04-30
 
 | Time | Action | File(s) | Outcome | ~Tokens |
 |------|--------|---------|---------|--------|
+| 21:40 | Task 3: schema v2 — FTS5 virtual table + AFTER INSERT trigger + MigrationStrategy | lib/data/local/app_database.dart, test/data/local/app_database_migration_test.dart | 19/19 tests green, flutter analyze clean, committed | ~800 |
+| 21:50 | Task 4: add search() to ExerciseRepository interface; implement with FTS5 JOIN + filter-only paths; 7 new tests | lib/data/repositories/exercise_repository.dart, lib/data/repositories/bundled_json_exercise_repository.dart, test/data/repositories/bundled_json_exercise_repository_search_test.dart | 26/26 tests green, flutter analyze clean, committed | ~800 |
 | 09:00 | Task 1 — flutter create + scaffold | pubspec.yaml, l10n.yaml, analysis_options.yaml, assets/seed/exercises.json, pubspec.lock | committed feat/phase-0-foundation | ~2800 |
 | 09:05 | intl version fix: ^0.19.0→^0.20.0 (pinned by flutter_localizations 0.20.2) | pubspec.yaml | resolved | ~200 |
 | 09:06 | custom_lint version fix: ^0.6.4→^0.7.6 (conflict with riverpod_lint analyzer) | pubspec.yaml | resolved, 118 deps installed | ~200 |

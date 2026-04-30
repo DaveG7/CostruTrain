@@ -49,13 +49,13 @@
 
 ## lib/data/repositories/
 
-- `exercise_repository.dart` — Abstract interface ExerciseRepository with getAll() and getById(). getAll() is Phase 0 only; Phase 1 replaces with search(). (~15 tok)
-- `bundled_json_exercise_repository.dart` — BundledJsonExerciseRepository implements ExerciseRepository. Reads from Drift AppDatabase. Includes exerciseRepository Riverpod provider (keepAlive, returns interface type). Uses `as model` alias to resolve Exercise name conflict with Drift generated class. (~60 tok)
+- `exercise_repository.dart` — Abstract interface ExerciseRepository with getAll(), getById(), and search({query, bodyPart, equipment, muscleGroup}). getAll() is Phase 0 only — removed in Task 11. (~20 tok)
+- `bundled_json_exercise_repository.dart` — BundledJsonExerciseRepository implements ExerciseRepository. search() routes to _searchWithFts (FTS5 JOIN + optional filters) or _filterOnly (Drift DSL, ORDER BY name). Includes exerciseRepository Riverpod provider (keepAlive). Uses `as model` alias. (~130 tok)
 - `bundled_json_exercise_repository.g.dart` — Generated Riverpod provider code for exerciseRepositoryProvider — do not edit (~50 tok)
 
 ## lib/data/local/
 
-- `app_database.dart` — Drift AppDatabase with Exercises table (id, externalId, source, name, bodyPart, targetPrimary, equipment, gifUrl). Includes AppDatabase.forTesting() constructor and keepAlive appDatabaseProvider (~70 tok)
+- `app_database.dart` — Drift AppDatabase schema v2. Exercises table (9 cols). MigrationStrategy: onCreate creates exercises_fts FTS5 virtual table + AFTER INSERT trigger; onUpgrade(from<2) adds muscleGroup, bulk-populates FTS. appDatabaseProvider (keepAlive). (~110 tok)
 - `app_database.g.dart` — Generated Drift code: _$AppDatabase mixin, ExercisesTable, Exercise (row data class — NOT ExerciseData), ExercisesCompanion — do not edit (~1500 tok)
 - `shared_prefs_provider.dart` — keepAlive sharedPrefsProvider that throws UnimplementedError — must be overridden in main.dart via ProviderScope (~30 tok)
 - `shared_prefs_provider.g.dart` — Generated Riverpod provider code for sharedPrefsProvider — do not edit (~60 tok)
@@ -83,9 +83,14 @@
 - `app_localizations_en.dart` — Generated English strings class (~30 tok)
 - `app_localizations_de.dart` — Generated German strings class (~30 tok)
 
+## test/data/local/
+
+- `app_database_migration_test.dart` — 2 unit tests: exercises_fts AFTER INSERT trigger populates FTS index, muscle_group column readable/writable. Uses NativeDatabase.memory(), imports Value from drift. (~60 tok)
+
 ## test/data/repositories/
 
 - `bundled_json_exercise_repository_test.dart` — 4 unit tests for BundledJsonExerciseRepository: getAll (2 rows), getAll (empty), getById (found), getById (null) (~60 tok)
+- `bundled_json_exercise_repository_search_test.dart` — 7 unit tests for search(): empty returns all ordered by name, FTS query match, FTS no match, bodyPart filter, muscleGroup filter, query+bodyPart AND logic, filter no match. Uses OverridableSeedService with 4-row _seedJson. (~80 tok)
 
 ## assets/seed/
 

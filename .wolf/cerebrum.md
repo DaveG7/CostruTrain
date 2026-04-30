@@ -14,6 +14,8 @@
 - **intl version:** flutter_localizations SDK package pins intl to 0.20.2 in Flutter 3.41.x. Always use `intl: ^0.20.0` not `^0.19.0` in pubspec.yaml.
 - **custom_lint version:** `custom_lint ^0.6.4` conflicts with `riverpod_lint ^2.3.13` due to incompatible analyzer/rxdart versions. Use `custom_lint: ^0.7.6` or higher.
 - **flutter pub get with l10n:** When `generate: true` is set in pubspec and l10n.yaml exists, pub get attempts to run gen-l10n. It will error if lib/l10n/app_en.arb does not exist — this is expected until ARB files are created in Task 2.
+- **FTS5 bound-variable MATCH:** `WHERE exercises_fts MATCH ?` with `Variable.withString(query)` works correctly in Drift's `customSelect`. The `(col = ? OR ? IS NULL)` pattern for optional filters also works — bind NULL via `const Variable<String>(null)` (NOT `Variable<String?>(null)` — the non-nullable form compiles fine with null value).
+- **search() routing:** When no query, use Drift type-safe DSL (_filterOnly with Expression<bool> composition); when query present, use customSelect with FTS5 JOIN. This avoids string concatenation for the common filter-only path.
 
 ## Do-Not-Repeat
 
@@ -33,6 +35,7 @@
 - [2026-04-30] `custom_lint: ^0.6.4` conflicts with `riverpod_lint: ^2.3.13` — use `^0.7.6` or higher.
 - [2026-04-30] Drift generates a data class named `Exercise` (not `ExerciseData`) from an `Exercises` table. This conflicts with `lib/core/models/exercise.dart:Exercise`. Fix: import the model with alias (`import '...exercise.dart' as model;`) and use `model.Exercise` for return types. Unqualified `Exercise` in the same file then refers to the Drift data class. The test file imports only `app_database.dart` (not the model), so no conflict there.
 - [2026-04-30] `import 'package:drift/drift.dart'` is NOT needed in BundledJsonExerciseRepository if no Drift-specific DSL (Companion, Drift queries) is used directly — Drift query API is inherited through the AppDatabase import via `app_database.dart`.
+- [2026-04-30] Test files that use `Value(...)` from Drift need `import 'package:drift/drift.dart' show Value;` explicitly — unlike lib files that use `part of`, test files don't inherit the import from app_database.dart.
 
 ## Decision Log
 
