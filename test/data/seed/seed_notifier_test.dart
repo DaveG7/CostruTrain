@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:costrutrain/data/local/app_database.dart';
+import '../../helpers/test_database.dart';
 import 'package:costrutrain/data/local/shared_prefs_provider.dart';
 import 'package:costrutrain/data/seed/seed_notifier.dart';
 import 'package:costrutrain/data/seed/seed_service.dart';
@@ -31,7 +32,7 @@ void main() {
   late AppDatabase db;
 
   setUp(() {
-    db = AppDatabase.forTesting();
+    db = createTestDatabase();
     SharedPreferences.setMockInitialValues({});
   });
 
