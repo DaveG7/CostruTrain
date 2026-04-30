@@ -3,6 +3,19 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+## Session: 2026-04-30
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 09:00 | Task 1 — flutter create + scaffold | pubspec.yaml, l10n.yaml, analysis_options.yaml, assets/seed/exercises.json, pubspec.lock | committed feat/phase-0-foundation | ~2800 |
+| 09:05 | intl version fix: ^0.19.0→^0.20.0 (pinned by flutter_localizations 0.20.2) | pubspec.yaml | resolved | ~200 |
+| 09:06 | custom_lint version fix: ^0.6.4→^0.7.6 (conflict with riverpod_lint analyzer) | pubspec.yaml | resolved, 118 deps installed | ~200 |
+| 09:10 | Fix 1: replaced generated main.dart with minimal placeholder (dot-shorthand errors) | lib/main.dart | flutter analyze: 0 issues | ~150 |
+| 09:10 | Fix 2: cerebrum.md — moved Do-Not-Repeat (additional) entries into main section; added l10n Decision Log entry | .wolf/cerebrum.md | updated | ~100 |
+| 09:15 | Task 3 — i18n infrastructure: fixed import path (custom output-dir), removed unnecessary non-null assertion | lib/core/utils/extensions.dart, lib/l10n/*, lib/generated/l10n/* | committed, flutter analyze clean | ~600 |
+| 10:40 | Task 4 — Theme + ScaffoldWithNav: app_theme.dart (dark theme tokens), scaffold_with_nav.dart (bottom nav routing) | lib/shared/theme/app_theme.dart, lib/shared/widgets/scaffold_with_nav.dart | flutter analyze: 0 issues, committed | ~500 |
+| 10:48 | Task 5 — Drift AppDatabase schema v1 + SharedPreferences provider; build_runner generated .g.dart files; flutter analyze: 0 issues | lib/data/local/app_database.dart, app_database.g.dart, shared_prefs_provider.dart, shared_prefs_provider.g.dart | committed | ~800 |
+
 ## Session: 2026-04-29 21:03
 
 | Time | Action | File(s) | Outcome | ~Tokens |
