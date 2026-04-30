@@ -31,6 +31,8 @@
 - [2026-04-29] SeedState.isDone must be a computed getter (done >= total), not a stored field — avoids done/total/isDone getting out of sync.
 - [2026-04-30] `intl: ^0.19.0` fails resolution with Flutter 3.41.x — use `^0.20.0` or higher. Flutter 3.41 pins intl to 0.20.2 internally.
 - [2026-04-30] `custom_lint: ^0.6.4` conflicts with `riverpod_lint: ^2.3.13` — use `^0.7.6` or higher.
+- [2026-04-30] Drift generates a data class named `Exercise` (not `ExerciseData`) from an `Exercises` table. This conflicts with `lib/core/models/exercise.dart:Exercise`. Fix: import the model with alias (`import '...exercise.dart' as model;`) and use `model.Exercise` for return types. Unqualified `Exercise` in the same file then refers to the Drift data class. The test file imports only `app_database.dart` (not the model), so no conflict there.
+- [2026-04-30] `import 'package:drift/drift.dart'` is NOT needed in BundledJsonExerciseRepository if no Drift-specific DSL (Companion, Drift queries) is used directly — Drift query API is inherited through the AppDatabase import via `app_database.dart`.
 
 ## Decision Log
 

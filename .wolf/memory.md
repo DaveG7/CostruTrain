@@ -15,6 +15,7 @@
 | 09:15 | Task 3 — i18n infrastructure: fixed import path (custom output-dir), removed unnecessary non-null assertion | lib/core/utils/extensions.dart, lib/l10n/*, lib/generated/l10n/* | committed, flutter analyze clean | ~600 |
 | 10:40 | Task 4 — Theme + ScaffoldWithNav: app_theme.dart (dark theme tokens), scaffold_with_nav.dart (bottom nav routing) | lib/shared/theme/app_theme.dart, lib/shared/widgets/scaffold_with_nav.dart | flutter analyze: 0 issues, committed | ~500 |
 | 10:48 | Task 5 — Drift AppDatabase schema v1 + SharedPreferences provider; build_runner generated .g.dart files; flutter analyze: 0 issues | lib/data/local/app_database.dart, app_database.g.dart, shared_prefs_provider.dart, shared_prefs_provider.g.dart | committed | ~800 |
+| 11:10 | Task 6 — ExerciseRepository TDD: interface + BundledJsonExerciseRepository; fixed Drift Exercise vs model Exercise name conflict using model alias; 4/4 tests pass; analyze clean | lib/data/repositories/exercise_repository.dart, bundled_json_exercise_repository.dart, bundled_json_exercise_repository.g.dart, test/data/repositories/bundled_json_exercise_repository_test.dart | committed | ~900 |
 
 ## Session: 2026-04-29 21:03
 
