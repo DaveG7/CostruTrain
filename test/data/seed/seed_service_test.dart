@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:costrutrain/data/local/app_database.dart';
+import '../../helpers/test_database.dart';
 import 'package:costrutrain/data/seed/seed_service.dart';
 
 Map<String, dynamic> _fakeExercise(String id) => {
@@ -17,7 +18,7 @@ void main() {
   late SeedService service;
 
   setUp(() {
-    db = AppDatabase.forTesting();
+    db = createTestDatabase();
     service = const SeedService();
   });
 

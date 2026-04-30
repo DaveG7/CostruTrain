@@ -1,5 +1,4 @@
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -23,8 +22,6 @@ class Exercises extends Table {
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
       : super(executor ?? driftDatabase(name: 'costrutrain'));
-
-  AppDatabase.forTesting() : super(NativeDatabase.memory());
 
   @override
   int get schemaVersion => 1;

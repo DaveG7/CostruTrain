@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:costrutrain/data/local/app_database.dart';
+import '../../helpers/test_database.dart';
 import 'package:costrutrain/data/repositories/bundled_json_exercise_repository.dart';
 
 void main() {
@@ -7,7 +8,7 @@ void main() {
   late BundledJsonExerciseRepository repo;
 
   setUp(() {
-    db = AppDatabase.forTesting();
+    db = createTestDatabase();
     repo = BundledJsonExerciseRepository(db);
   });
 
