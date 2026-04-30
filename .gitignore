@@ -16,3 +16,6 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+custom_lint.log
+devtools_options.yaml
+*.log
