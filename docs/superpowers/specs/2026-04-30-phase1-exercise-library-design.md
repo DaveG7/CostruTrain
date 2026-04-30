@@ -47,12 +47,17 @@
 
 ### Schema Migration v1 → v2
 
-`AppDatabase.schemaVersion` bumps to `2`. Migration adds two SQLite-native objects via `customStatement` (Drift does not model FTS5 tables as typed tables):
+`AppDatabase.schemaVersion` bumps to `2`. Migration adds a new column, two SQLite-native objects via `customStatement` (Drift does not model FTS5 tables as typed tables), and bulk-populates FTS for existing rows:
 
 ```sql
+-- New column for muscle group filtering
+ALTER TABLE exercises ADD COLUMN muscle_group TEXT;
+
+-- FTS5 virtual table — indexes exercise names
 CREATE VIRTUAL TABLE IF NOT EXISTS exercises_fts
   USING fts5(name, exercise_id UNINDEXED);
 
+-- Trigger: auto-populate FTS on every INSERT into exercises
 CREATE TRIGGER IF NOT EXISTS exercises_ai
   AFTER INSERT ON exercises BEGIN
     INSERT INTO exercises_fts(name, exercise_id)
@@ -60,7 +65,7 @@ CREATE TRIGGER IF NOT EXISTS exercises_ai
   END;
 ```
 
-- `onUpgrade(from: 1, to: 2)` runs both statements, then immediately bulk-populates FTS from existing exercises:
+- `onUpgrade(from: 1, to: 2)` runs all statements, then immediately bulk-populates FTS from existing exercises:
   ```sql
   INSERT INTO exercises_fts(name, exercise_id) SELECT name, id FROM exercises;
   ```
@@ -86,8 +91,8 @@ abstract class ExerciseRepository {
 ```
 
 `BundledJsonExerciseRepository` implementation:
-- When `query` is non-null and non-empty: JOIN `exercises_fts MATCH ?` with `exercises` table, apply filter `WHERE` clauses, order by FTS `rank`.
-- When `query` is null/empty: plain `SELECT` with `WHERE` filters, order by `name`.
+- When `query` is non-null and non-empty: JOIN `exercises_fts MATCH ?` with `exercises` table, apply filter `WHERE` clauses on `body_part`, `equipment`, `muscle_group`, order by FTS `rank`.
+- When `query` is null/empty: plain `SELECT` with `WHERE` filters on same columns, order by `name`.
 - Uses `db.customSelect()` with typed mapping for the FTS JOIN path.
 - Returns `List<model.Exercise>` (domain model, not Drift row class — `as model` alias preserved).
 
@@ -117,7 +122,18 @@ class LibraryFilterState {
 
 Methods: `setQuery(String)`, `setBodyPart(BodyPart?)`, `setEquipment(Equipment?)`, `setMuscleGroup(MuscleGroup?)`, `clearAll()`.
 
-No debounce here — notifier is pure state.
+`setQuery()` owns the debounce via a `Timer?` field — cancels the previous timer on each call, fires after 300ms to update `state.query`. All other setters update state immediately (chip taps don't need debounce).
+
+```dart
+Timer? _debounce;
+
+void setQuery(String value) {
+  _debounce?.cancel();
+  _debounce = Timer(const Duration(milliseconds: 300), () {
+    state = state.copyWith(query: value);
+  });
+}
+```
 
 ### `exerciseSearchResultsProvider`
 
@@ -126,7 +142,6 @@ No debounce here — notifier is pure state.
 ```dart
 final exerciseSearchResultsProvider = FutureProvider.autoDispose((ref) async {
   final filter = ref.watch(libraryFilterProvider);
-  await Future.delayed(const Duration(milliseconds: 300)); // debounce
   return ref.watch(exerciseRepositoryProvider).search(
     query: filter.query.isEmpty ? null : filter.query,
     bodyPart: filter.bodyPart,
@@ -136,7 +151,7 @@ final exerciseSearchResultsProvider = FutureProvider.autoDispose((ref) async {
 });
 ```
 
-The 300ms `Future.delayed` acts as a debounce — if the filter state changes again within 300ms, the previous future is discarded by `autoDispose` rebuild.
+No `Future.delayed` in the provider — debounce is entirely in `setQuery()`. The provider rebuilds only when `state.query` actually changes (after the timer fires), not on every keystroke.
 
 ---
 
@@ -157,6 +172,7 @@ All shared widgets in `lib/shared/widgets/`. Screen-specific widgets in `lib/fea
 - Styled `TextField`, Lucide `search` prefix icon
 - Lucide `x` suffix icon (visible when non-empty), clears query on tap
 - Takes `onChanged: ValueChanged<String>` callback — the screen wires it to `libraryFilterProvider.notifier.setQuery()`
+- Takes optional `TextEditingController? controller` — `ExerciseListScreen` passes its own controller so it can call `controller.clear()` when `clearAll()` is triggered (programmatic field reset without rebuilding the widget)
 - Shared widget stays provider-agnostic
 
 ### `CTFilterChip` — `lib/shared/widgets/filter_chip.dart`
@@ -203,20 +219,23 @@ Layout (top to bottom):
 
 ## Navigation
 
-New route added inside the existing `ShellRoute` in `lib/core/router.dart`:
+`/library/:exerciseId` is placed **outside** the `ShellRoute` — the detail screen is a full-screen push context with no bottom nav. The nav bar reappears on back.
 
 ```dart
+// Outside ShellRoute — no bottom nav on detail
 GoRoute(
   path: '/library/:exerciseId',
   builder: (context, state) => ExerciseDetailScreen(
     exerciseId: state.pathParameters['exerciseId']!,
   ),
 ),
+// ShellRoute wraps /library, /compose, /history, /settings (unchanged)
+ShellRoute(...),
 ```
 
-- Inside `ShellRoute` → bottom nav remains visible on detail screen
-- `context.push()` from card (not `go`) → back button works correctly
-- No new redirect guards needed
+- `context.push('/library/$id')` from the card — back button returns to library with nav restored
+- No redirect guards needed on this route
+- Rationale: bottom nav on a detail screen is visual noise and breaks the browse → inspect mental model
 
 ---
 
