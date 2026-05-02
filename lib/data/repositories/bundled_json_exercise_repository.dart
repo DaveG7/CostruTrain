@@ -13,12 +13,6 @@ class BundledJsonExerciseRepository implements ExerciseRepository {
   final AppDatabase _db;
 
   @override
-  Future<List<model.Exercise>> getAll() async {
-    final rows = await _db.select(_db.exercises).get();
-    return rows.map(_fromData).toList();
-  }
-
-  @override
   Future<model.Exercise?> getById(String id) async {
     final row = await (_db.select(_db.exercises)
           ..where((t) => t.id.equals(id)))

@@ -1,8 +1,9 @@
 import 'package:drift/drift.dart' show Value;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:costrutrain/data/local/app_database.dart';
-import '../../helpers/test_database.dart';
 import 'package:costrutrain/data/repositories/bundled_json_exercise_repository.dart';
+
+import '../../helpers/test_database.dart';
 
 void main() {
   late AppDatabase db;
@@ -27,16 +28,16 @@ void main() {
     ));
   }
 
-  test('getAll returns all rows', () async {
+  test('search() returns all rows when called with no params', () async {
     await seedRow('exercisedb_1', 'Push-up', 'chest');
     await seedRow('exercisedb_2', 'Squat', 'upper legs');
-    final all = await repo.getAll();
+    final all = await repo.search();
     expect(all.length, 2);
     expect(all.map((e) => e.name), containsAll(['Push-up', 'Squat']));
   });
 
-  test('getAll returns empty list when no rows', () async {
-    final all = await repo.getAll();
+  test('search() returns empty list when no rows', () async {
+    final all = await repo.search();
     expect(all, isEmpty);
   });
 
