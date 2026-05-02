@@ -31,4 +31,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exercisesEmpty => 'No exercises found.';
+
+  @override
+  String get searchExercises => 'Search exercises…';
+
+  @override
+  String get noExercisesFound => 'No exercises found';
+
+  @override
+  String get clearFilters => 'Clear filters';
+
+  @override
+  String get filterExercises => 'Filter exercises';
 }

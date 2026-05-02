@@ -145,6 +145,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No exercises found.'**
   String get exercisesEmpty;
+
+  /// Placeholder text in the exercise search bar
+  ///
+  /// In en, this message translates to:
+  /// **'Search exercises…'**
+  String get searchExercises;
+
+  /// Empty state when search/filter returns nothing
+  ///
+  /// In en, this message translates to:
+  /// **'No exercises found'**
+  String get noExercisesFound;
+
+  /// Button to reset all active filters
+  ///
+  /// In en, this message translates to:
+  /// **'Clear filters'**
+  String get clearFilters;
+
+  /// Tooltip for the filter FAB
+  ///
+  /// In en, this message translates to:
+  /// **'Filter exercises'**
+  String get filterExercises;
 }
 
 class _AppLocalizationsDelegate

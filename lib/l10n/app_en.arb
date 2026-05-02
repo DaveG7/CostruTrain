@@ -15,5 +15,13 @@
   "seedRetry": "Retry",
   "@seedRetry": {"description": "Retry button label after seed failure"},
   "exercisesEmpty": "No exercises found.",
-  "@exercisesEmpty": {"description": "Empty state label on exercise list screen"}
+  "@exercisesEmpty": {"description": "Empty state label on exercise list screen"},
+  "searchExercises": "Search exercises…",
+  "@searchExercises": {"description": "Placeholder text in the exercise search bar"},
+  "noExercisesFound": "No exercises found",
+  "@noExercisesFound": {"description": "Empty state when search/filter returns nothing"},
+  "clearFilters": "Clear filters",
+  "@clearFilters": {"description": "Button to reset all active filters"},
+  "filterExercises": "Filter exercises",
+  "@filterExercises": {"description": "Tooltip for the filter FAB"}
 }
