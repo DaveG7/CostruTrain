@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../data/local/shared_prefs_provider.dart';
 import '../features/composer/views/composer_screen.dart';
 import '../features/history/views/history_screen.dart';
+import '../features/library/views/exercise_detail_screen.dart';
 import '../features/library/views/exercise_list_screen.dart';
 import '../features/library/views/seed_splash_screen.dart';
 import '../features/settings/views/settings_screen.dart';
@@ -25,6 +26,13 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/splash',
         builder: (context, state) => const SeedSplashScreen(),
+      ),
+      // Detail route is OUTSIDE ShellRoute — full-screen push, no bottom nav.
+      GoRoute(
+        path: '/library/:exerciseId',
+        builder: (context, state) => ExerciseDetailScreen(
+          exerciseId: state.pathParameters['exerciseId']!,
+        ),
       ),
       ShellRoute(
         builder: (context, state, child) => ScaffoldWithNav(child: child),

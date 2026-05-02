@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import 'ct_colors.dart';
 
 class AppTheme {
-  static const Color _bg = Color(0xFF0F0F0F);
-  static const Color _surface = Color(0xFF1A1A1A);
-  static const Color _accent = Color(0xFFE8FF00); // CrossFit yellow-green
-
   static ThemeData get dark => ThemeData(
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: _bg,
-        colorScheme: const ColorScheme.dark(
-          primary: _accent,
-          secondary: _accent,
-          surface: _surface,
+        scaffoldBackgroundColor: CTColors.dark.bg,
+        colorScheme: ColorScheme.dark(
+          primary: CTColors.dark.accent,
+          secondary: CTColors.dark.accent,
+          surface: CTColors.dark.surface,
         ),
-        navigationBarTheme: const NavigationBarThemeData(
-          backgroundColor: _surface,
-          indicatorColor: Color(0x33E8FF00),
-          labelTextStyle: WidgetStatePropertyAll(
+        textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
+        extensions: const [CTColors.dark],
+        navigationBarTheme: NavigationBarThemeData(
+          backgroundColor: CTColors.dark.surface,
+          indicatorColor: CTColors.dark.accent.withValues(alpha: 0.2),
+          labelTextStyle: const WidgetStatePropertyAll(
             TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
           ),
         ),
         chipTheme: ChipThemeData(
-          backgroundColor: _surface,
+          backgroundColor: CTColors.dark.surface,
           labelStyle: const TextStyle(fontSize: 12),
-          side: BorderSide(color: _accent.withValues(alpha: 0.4)),
+          side: BorderSide(color: CTColors.dark.accent.withValues(alpha: 0.4)),
         ),
         useMaterial3: true,
       );
