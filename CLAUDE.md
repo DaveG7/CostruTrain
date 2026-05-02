@@ -4,6 +4,11 @@
 
 This project uses OpenWolf for context management. Read and follow .wolf/OPENWOLF.md every session. Check .wolf/cerebrum.md before generating code. Check .wolf/anatomy.md before reading files.
 
+## Compact Policy
+After completing a discrete task (all tests green, task verified):
+1. Output a summary line: `✅ TASK N COMPLETE`
+2. Immediately run /compact
+3. Only then await the next task
 
 # CLAUDE.md — CostruTrain: Training Composer App
 
