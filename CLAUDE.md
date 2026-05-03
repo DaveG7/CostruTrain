@@ -139,6 +139,8 @@ CostruTrain/
 ├── CLAUDE.md                    ← YOU ARE HERE
 ├── ARCHITECTURE.md
 ├── ROADMAP.md
+├── DESIGN_BRIEF.md              ← Visual language, color tokens, typography
+├── design_handoff_v0.4/         ← Screen mockups (JSX) — source of truth for UI layout
 ├── l10n.yaml                    ← flutter gen-l10n config
 ├── pubspec.yaml
 ├── assets/
@@ -205,6 +207,15 @@ CostruTrain/
 - `SeedState.total` is computed as `(exercises.length / chunkSize).ceil()` — never hardcoded
 - `SeedState.isDone` is a computed getter (`done >= total`) — never a stored field
 
+## Design Contract (MANDATORY)
+Before implementing ANY screen, widget, or visual component:
+1. Read `DESIGN_BRIEF.md` — color tokens, typography, mood (once per session, not per widget)
+2. List `design_handoff_v0.4/` — check if a mockup exists for this screen
+3. If mockup exists → read it first, implement it faithfully, do not invent layout
+4. If no mockup exists → flag it before proceeding, do not invent layout without confirmation
+5. Color tokens in `DESIGN_BRIEF.md` override any defaults — never hardcode hex values
+6. Dark theme is the primary theme — build dark-first, light theme is Phase 4+
+
 ## What NOT to do
 - Do NOT use `setState` in complex screens — use Riverpod providers
 - Do NOT put business logic in widgets
@@ -215,6 +226,7 @@ CostruTrain/
 - Do NOT use `AppLocalizations.of(context)!` directly — use `context.l10n`
 - Do NOT read SharedPreferences cold inside GoRouter redirect — pre-load in `main()` and inject via `ProviderScope` override
 - Do NOT put seed/startup logic under `features/` — it belongs in `data/seed/`
+- Do NOT implement any screen without first checking `design_handoff_v0.4/` for an existing mockup
 
 ## Exercise Data Source
 - **Seed (bundled, Phase 1):** Body Part Exercise Collection JSON (~1300 exercises, gifUrl per entry)
