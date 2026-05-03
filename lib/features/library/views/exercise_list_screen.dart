@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../../core/models/exercise.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../shared/widgets/ct_exercise_card.dart';
 import '../../../shared/widgets/ct_filter_chip.dart';
@@ -12,7 +13,17 @@ import '../providers/library_filter_notifier.dart';
 import '../widgets/filter_sheet.dart';
 
 class ExerciseListScreen extends ConsumerStatefulWidget {
-  const ExerciseListScreen({super.key});
+  const ExerciseListScreen({
+    super.key,
+    this.onSelected,
+    this.embedded = false,
+  });
+
+  /// Non-null = picker mode. Called when user taps an exercise.
+  final void Function(Exercise exercise)? onSelected;
+
+  /// true = suppresses Scaffold/AppBar, uses NeverScrollableScrollPhysics for outer scroll.
+  final bool embedded;
 
   @override
   ConsumerState<ExerciseListScreen> createState() => _ExerciseListScreenState();
@@ -48,81 +59,94 @@ class _ExerciseListScreenState extends ConsumerState<ExerciseListScreen> {
       if (filter.muscleGroup != null) (label: filter.muscleGroup!, clear: () => notifier.setMuscleGroup(null)),
     ];
 
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-              child: CTSearchBar(
-                controller: _searchController,
-                hint: context.l10n.searchExercises,
-                onChanged: notifier.setQuery,
+    final content = SafeArea(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+            child: CTSearchBar(
+              controller: _searchController,
+              hint: context.l10n.searchExercises,
+              onChanged: notifier.setQuery,
+            ),
+          ),
+          if (activeFilters.isNotEmpty)
+            SizedBox(
+              height: 36,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: activeFilters.length,
+                separatorBuilder: (_, __) => const SizedBox(width: 6),
+                itemBuilder: (_, i) {
+                  final f = activeFilters[i];
+                  return CTFilterChip(
+                    label: f.label,
+                    selected: true,
+                    onSelected: (_) => f.clear(),
+                  );
+                },
               ),
             ),
-            if (activeFilters.isNotEmpty)
-              SizedBox(
-                height: 36,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: activeFilters.length,
-                  separatorBuilder: (_, __) => const SizedBox(width: 6),
-                  itemBuilder: (_, i) {
-                    final f = activeFilters[i];
-                    return CTFilterChip(
-                      label: f.label,
-                      selected: true,
-                      onSelected: (_) => f.clear(),
-                    );
-                  },
+          Expanded(
+            child: asyncExercises.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (e, _) => Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Error: $e'),
+                    const SizedBox(height: 8),
+                    FilledButton(
+                      onPressed: () => ref.invalidate(exerciseSearchResultsProvider),
+                      child: const Text('Retry'),
+                    ),
+                  ],
                 ),
               ),
-            Expanded(
-              child: asyncExercises.when(
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (e, _) => Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Error: $e'),
-                      const SizedBox(height: 8),
-                      FilledButton(
-                        onPressed: () => ref.invalidate(exerciseSearchResultsProvider),
-                        child: const Text('Retry'),
+              data: (exercises) => exercises.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(context.l10n.noExercisesFound),
+                          const SizedBox(height: 8),
+                          TextButton(
+                            onPressed: () {
+                              notifier.clearAll();
+                              _searchController.clear();
+                            },
+                            child: Text(context.l10n.clearFilters),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                data: (exercises) => exercises.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(context.l10n.noExercisesFound),
-                            const SizedBox(height: 8),
-                            TextButton(
-                              onPressed: () {
-                                notifier.clearAll();
-                                _searchController.clear();
-                              },
-                              child: Text(context.l10n.clearFilters),
-                            ),
-                          ],
-                        ),
-                      )
-                    : ListView.builder(
-                        itemCount: exercises.length,
-                        itemBuilder: (_, i) => CTExerciseCard(
-                          exercise: exercises[i],
-                          onTap: () => context.push('/library/${exercises[i].id}'),
-                        ),
+                    )
+                  : ListView.builder(
+                      physics: widget.embedded
+                          ? const NeverScrollableScrollPhysics()
+                          : null,
+                      itemCount: exercises.length,
+                      itemBuilder: (_, i) => CTExerciseCard(
+                        exercise: exercises[i],
+                        onTap: () {
+                          if (widget.onSelected != null) {
+                            widget.onSelected!(exercises[i]);
+                          } else {
+                            context.push('/library/${exercises[i].id}');
+                          }
+                        },
                       ),
-              ),
+                    ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
+    );
+
+    if (widget.embedded) return content;
+
+    return Scaffold(
+      body: content,
       floatingActionButton: FloatingActionButton(
         onPressed: _openFilterSheet,
         tooltip: context.l10n.filterExercises,
