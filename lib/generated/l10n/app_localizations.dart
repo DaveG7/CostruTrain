@@ -169,6 +169,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Filter exercises'**
   String get filterExercises;
+
+  /// No description provided for @myWorkouts.
+  ///
+  /// In en, this message translates to:
+  /// **'My Workouts'**
+  String get myWorkouts;
+
+  /// No description provided for @newWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'New Workout'**
+  String get newWorkout;
+
+  /// No description provided for @noWorkoutsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No workouts yet'**
+  String get noWorkoutsYet;
+
+  /// No description provided for @noWorkoutsYetHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap + to build your first workout'**
+  String get noWorkoutsYetHint;
+
+  /// No description provided for @workoutDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} deleted'**
+  String workoutDeleted(String name);
+
+  /// No description provided for @workoutDuplicated.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (copy) saved'**
+  String workoutDuplicated(String name);
+
+  /// No description provided for @undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// No description provided for @duplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate'**
+  String get duplicate;
+
+  /// No description provided for @steps.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} steps'**
+  String steps(int count);
+
+  /// No description provided for @composerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New Workout'**
+  String get composerTitle;
+
+  /// No description provided for @saveWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get saveWorkout;
+
+  /// No description provided for @discardChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard changes?'**
+  String get discardChanges;
+
+  /// No description provided for @discardChangesMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You have unsaved changes. Discard them?'**
+  String get discardChangesMessage;
+
+  /// No description provided for @discard.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get discard;
+
+  /// No description provided for @addStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Add step'**
+  String get addStep;
+
+  /// No description provided for @addExercise.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise'**
+  String get addExercise;
+
+  /// No description provided for @addRest.
+  ///
+  /// In en, this message translates to:
+  /// **'Rest'**
+  String get addRest;
+
+  /// No description provided for @addCircuit.
+  ///
+  /// In en, this message translates to:
+  /// **'Circuit'**
+  String get addCircuit;
+
+  /// No description provided for @addCountdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Countdown'**
+  String get addCountdown;
+
+  /// No description provided for @wrapInCircuit.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrap {count} in Circuit'**
+  String wrapInCircuit(int count);
+
+  /// No description provided for @circuitRounds.
+  ///
+  /// In en, this message translates to:
+  /// **'Rounds'**
+  String get circuitRounds;
+
+  /// No description provided for @selectContiguousSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'Select contiguous steps only'**
+  String get selectContiguousSteps;
+
+  /// No description provided for @stepModReps.
+  ///
+  /// In en, this message translates to:
+  /// **'Reps'**
+  String get stepModReps;
+
+  /// No description provided for @stepModeTimed.
+  ///
+  /// In en, this message translates to:
+  /// **'Timed'**
+  String get stepModeTimed;
+
+  /// No description provided for @stepModeAmrap.
+  ///
+  /// In en, this message translates to:
+  /// **'AMRAP'**
+  String get stepModeAmrap;
+
+  /// No description provided for @sets.
+  ///
+  /// In en, this message translates to:
+  /// **'Sets'**
+  String get sets;
+
+  /// No description provided for @reps.
+  ///
+  /// In en, this message translates to:
+  /// **'Reps'**
+  String get reps;
+
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
+  /// No description provided for @rest.
+  ///
+  /// In en, this message translates to:
+  /// **'Rest'**
+  String get rest;
+
+  /// No description provided for @tempo.
+  ///
+  /// In en, this message translates to:
+  /// **'Tempo'**
+  String get tempo;
+
+  /// No description provided for @tempoEccentric.
+  ///
+  /// In en, this message translates to:
+  /// **'Eccentric'**
+  String get tempoEccentric;
+
+  /// No description provided for @tempoPause.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get tempoPause;
+
+  /// No description provided for @tempoConcentric.
+  ///
+  /// In en, this message translates to:
+  /// **'Concentric'**
+  String get tempoConcentric;
+
+  /// No description provided for @saveStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get saveStep;
+
+  /// No description provided for @playComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming in Phase 3'**
+  String get playComingSoon;
+
+  /// No description provided for @workoutNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout name'**
+  String get workoutNameHint;
+
+  /// No description provided for @addTag.
+  ///
+  /// In en, this message translates to:
+  /// **'+ tag'**
+  String get addTag;
 }
 
 class _AppLocalizationsDelegate
