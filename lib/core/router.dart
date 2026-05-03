@@ -7,6 +7,7 @@ import '../features/history/views/history_screen.dart';
 import '../features/library/views/exercise_detail_screen.dart';
 import '../features/library/views/exercise_list_screen.dart';
 import '../features/library/views/seed_splash_screen.dart';
+import '../features/my_workouts/views/my_workouts_screen.dart';
 import '../features/settings/views/settings_screen.dart';
 import '../shared/widgets/scaffold_with_nav.dart';
 
@@ -27,11 +28,21 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/splash',
         builder: (context, state) => const SeedSplashScreen(),
       ),
-      // Detail route is OUTSIDE ShellRoute — full-screen push, no bottom nav.
+      // Detail routes — OUTSIDE ShellRoute (full-screen push, no bottom nav).
       GoRoute(
         path: '/library/:exerciseId',
         builder: (context, state) => ExerciseDetailScreen(
           exerciseId: state.pathParameters['exerciseId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/compose/new',
+        builder: (context, state) => const ComposerScreen(),
+      ),
+      GoRoute(
+        path: '/compose/:workoutId',
+        builder: (context, state) => ComposerScreen(
+          workoutId: state.pathParameters['workoutId'],
         ),
       ),
       ShellRoute(
@@ -43,7 +54,7 @@ GoRouter goRouter(GoRouterRef ref) {
           ),
           GoRoute(
             path: '/compose',
-            builder: (context, state) => const ComposerScreen(),
+            builder: (context, state) => const MyWorkoutsScreen(),
           ),
           GoRoute(
             path: '/history',
