@@ -19,3 +19,10 @@ Thumbs.db
 custom_lint.log
 devtools_options.yaml
 *.log
+
+# OpenWolf ephemeral session files
+.wolf/token-ledger.json
+.wolf/hooks/_session.json
+.wolf/cron-state.json
+.wolf/designqc-report.json
+.wolf/suggestions.json
