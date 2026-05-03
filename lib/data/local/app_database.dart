@@ -14,12 +14,63 @@ class Exercises extends Table {
   TextColumn get equipment => text()();
   TextColumn get gifUrl => text().nullable()();
   TextColumn get muscleGroup => text().nullable()();
+  // Forward-compat columns (seeds populated in Phase 4)
+  IntColumn get defaultSets => integer().nullable()();
+  IntColumn get defaultReps => integer().nullable()();
+  IntColumn get defaultRestSeconds => integer().nullable()();
+  TextColumn get defaultType => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [Exercises])
+@DataClassName('WorkoutRow')
+class Workouts extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get description => text().nullable()();
+  TextColumn get tags => text().withDefault(const Constant('[]'))();
+  IntColumn get globalRestS => integer().nullable()();
+  IntColumn get warmupSeconds => integer().nullable()();
+  IntColumn get cooldownS => integer().nullable()();
+  IntColumn get createdAt => integer()();
+  IntColumn get updatedAt => integer()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DataClassName('WorkoutStepRow')
+class WorkoutSteps extends Table {
+  TextColumn get id => text()();
+  TextColumn get workoutId =>
+      text().references(Workouts, #id, onDelete: KeyAction.cascade)();
+  IntColumn get orderIndex => integer()();
+  TextColumn get type => text()(); // 'exercise'|'rest'|'circuit'|'countdown'
+
+  // ExerciseStep fields
+  TextColumn get exerciseId => text().nullable()(); // FK to exercises.id (TEXT)
+  TextColumn get stepMode => text().nullable()();   // 'reps'|'timed'|'amrap'
+  IntColumn get sets => integer().nullable()();
+  IntColumn get reps => integer().nullable()();
+  IntColumn get workSeconds => integer().nullable()();
+  IntColumn get restSeconds => integer().nullable()();
+  TextColumn get tempo => text().nullable()();
+  BoolColumn get isConfigured =>
+      boolean().withDefault(const Constant(false))();
+
+  // CircuitBlock fields
+  IntColumn get circuitRounds => integer().nullable()();
+
+  // Nesting — self-reference tracked as TEXT nullable (no Drift .references() for self)
+  TextColumn get parentStepId => text().nullable()();
+  IntColumn get nestingDepth => integer().withDefault(const Constant(0))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DriftDatabase(tables: [Exercises, Workouts, WorkoutSteps])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
       : super(executor ??
@@ -32,7 +83,7 @@ class AppDatabase extends _$AppDatabase {
             ));
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -46,9 +97,16 @@ class AppDatabase extends _$AppDatabase {
             await customStatement(
                 'UPDATE exercises SET muscle_group = target_primary');
             await _createFts();
-            // Bulk-populate FTS for existing rows (trigger only fires on future INSERTs).
             await customStatement(
                 'INSERT INTO exercises_fts(name, exercise_id) SELECT name, id FROM exercises');
+          }
+          if (from < 3) {
+            await m.addColumn(exercises, exercises.defaultSets);
+            await m.addColumn(exercises, exercises.defaultReps);
+            await m.addColumn(exercises, exercises.defaultRestSeconds);
+            await m.addColumn(exercises, exercises.defaultType);
+            await m.createTable(workouts);
+            await m.createTable(workoutSteps);
           }
         },
       );
