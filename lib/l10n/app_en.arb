@@ -64,5 +64,38 @@
   "saveStep": "Save",
   "playComingSoon": "Coming in Phase 3",
   "workoutNameHint": "Workout name",
-  "addTag": "+ tag"
+  "addTag": "+ tag",
+  "playerPhaseCountdown": "GET READY",
+  "playerPhaseWork": "WORK",
+  "playerPhaseRest": "REST",
+  "playerPhaseDone": "DONE",
+  "playerRound": "ROUND {current} / {total}",
+  "@playerRound": {
+    "placeholders": {
+      "current": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "playerComplete": "WORKOUT COMPLETE",
+  "playerNextUp": "NEXT UP",
+  "playerPause": "PAUSE",
+  "playerResume": "RESUME",
+  "playerSaveSession": "SAVE SESSION",
+  "playerTimerRemaining": "REMAINING",
+  "playerTimerElapsed": "ELAPSED",
+  "historyEmpty": "No sessions yet.\nStart a workout to see your history.",
+  "historyGroupThisWeek": "THIS WEEK",
+  "historyGroupLastWeek": "LAST WEEK",
+  "sessionCompleted": "COMPLETED",
+  "sessionAbandoned": "ABANDONED",
+  "sessionSteps": "{count} steps",
+  "@sessionSteps": {
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "sessionDetailTitle": "Session",
+  "sessionDetailDuration": "Duration",
+  "sessionDetailStarted": "Started",
+  "sessionDetailSteps": "Steps",
+  "settingsTitle": "Settings",
+  "settingsAudioCues": "Audio cues during workout"
 }

@@ -162,4 +162,81 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addTag => '+ tag';
+
+  @override
+  String get playerPhaseCountdown => 'GET READY';
+
+  @override
+  String get playerPhaseWork => 'WORK';
+
+  @override
+  String get playerPhaseRest => 'REST';
+
+  @override
+  String get playerPhaseDone => 'DONE';
+
+  @override
+  String playerRound(int current, int total) {
+    return 'ROUND $current / $total';
+  }
+
+  @override
+  String get playerComplete => 'WORKOUT COMPLETE';
+
+  @override
+  String get playerNextUp => 'NEXT UP';
+
+  @override
+  String get playerPause => 'PAUSE';
+
+  @override
+  String get playerResume => 'RESUME';
+
+  @override
+  String get playerSaveSession => 'SAVE SESSION';
+
+  @override
+  String get playerTimerRemaining => 'REMAINING';
+
+  @override
+  String get playerTimerElapsed => 'ELAPSED';
+
+  @override
+  String get historyEmpty =>
+      'No sessions yet.\nStart a workout to see your history.';
+
+  @override
+  String get historyGroupThisWeek => 'THIS WEEK';
+
+  @override
+  String get historyGroupLastWeek => 'LAST WEEK';
+
+  @override
+  String get sessionCompleted => 'COMPLETED';
+
+  @override
+  String get sessionAbandoned => 'ABANDONED';
+
+  @override
+  String sessionSteps(int count) {
+    return '$count steps';
+  }
+
+  @override
+  String get sessionDetailTitle => 'Session';
+
+  @override
+  String get sessionDetailDuration => 'Duration';
+
+  @override
+  String get sessionDetailStarted => 'Started';
+
+  @override
+  String get sessionDetailSteps => 'Steps';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsAudioCues => 'Audio cues during workout';
 }

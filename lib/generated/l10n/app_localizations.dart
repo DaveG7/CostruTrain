@@ -391,6 +391,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'+ tag'**
   String get addTag;
+
+  /// No description provided for @playerPhaseCountdown.
+  ///
+  /// In en, this message translates to:
+  /// **'GET READY'**
+  String get playerPhaseCountdown;
+
+  /// No description provided for @playerPhaseWork.
+  ///
+  /// In en, this message translates to:
+  /// **'WORK'**
+  String get playerPhaseWork;
+
+  /// No description provided for @playerPhaseRest.
+  ///
+  /// In en, this message translates to:
+  /// **'REST'**
+  String get playerPhaseRest;
+
+  /// No description provided for @playerPhaseDone.
+  ///
+  /// In en, this message translates to:
+  /// **'DONE'**
+  String get playerPhaseDone;
+
+  /// No description provided for @playerRound.
+  ///
+  /// In en, this message translates to:
+  /// **'ROUND {current} / {total}'**
+  String playerRound(int current, int total);
+
+  /// No description provided for @playerComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'WORKOUT COMPLETE'**
+  String get playerComplete;
+
+  /// No description provided for @playerNextUp.
+  ///
+  /// In en, this message translates to:
+  /// **'NEXT UP'**
+  String get playerNextUp;
+
+  /// No description provided for @playerPause.
+  ///
+  /// In en, this message translates to:
+  /// **'PAUSE'**
+  String get playerPause;
+
+  /// No description provided for @playerResume.
+  ///
+  /// In en, this message translates to:
+  /// **'RESUME'**
+  String get playerResume;
+
+  /// No description provided for @playerSaveSession.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE SESSION'**
+  String get playerSaveSession;
+
+  /// No description provided for @playerTimerRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'REMAINING'**
+  String get playerTimerRemaining;
+
+  /// No description provided for @playerTimerElapsed.
+  ///
+  /// In en, this message translates to:
+  /// **'ELAPSED'**
+  String get playerTimerElapsed;
+
+  /// No description provided for @historyEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No sessions yet.\nStart a workout to see your history.'**
+  String get historyEmpty;
+
+  /// No description provided for @historyGroupThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'THIS WEEK'**
+  String get historyGroupThisWeek;
+
+  /// No description provided for @historyGroupLastWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'LAST WEEK'**
+  String get historyGroupLastWeek;
+
+  /// No description provided for @sessionCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'COMPLETED'**
+  String get sessionCompleted;
+
+  /// No description provided for @sessionAbandoned.
+  ///
+  /// In en, this message translates to:
+  /// **'ABANDONED'**
+  String get sessionAbandoned;
+
+  /// No description provided for @sessionSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} steps'**
+  String sessionSteps(int count);
+
+  /// No description provided for @sessionDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Session'**
+  String get sessionDetailTitle;
+
+  /// No description provided for @sessionDetailDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get sessionDetailDuration;
+
+  /// No description provided for @sessionDetailStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Started'**
+  String get sessionDetailStarted;
+
+  /// No description provided for @sessionDetailSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'Steps'**
+  String get sessionDetailSteps;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsAudioCues.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio cues during workout'**
+  String get settingsAudioCues;
 }
 
 class _AppLocalizationsDelegate

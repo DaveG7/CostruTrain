@@ -25,6 +25,9 @@ dependencies:
   shimmer: ^3.0.0
   google_fonts: ^6.2.1
   uuid: ^4.4.0
+  audioplayers: ^6.0.0
+  wakelock_plus: ^1.2.0
+  logger: ^2.4.0
 
 dev_dependencies:
   flutter_test:
@@ -41,3 +44,4 @@ flutter:
   generate: true
   assets:
     - assets/seed/exercises.json
+    - assets/audio/
