@@ -70,7 +70,23 @@ class WorkoutSteps extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [Exercises, Workouts, WorkoutSteps])
+@DataClassName('SessionRow')
+class Sessions extends Table {
+  TextColumn get id => text()();
+  TextColumn get workoutId => text().nullable()(); // soft FK to workouts.id
+  TextColumn get workoutNameSnapshot => text()();
+  IntColumn get startedAt => integer()(); // Unix ms
+  IntColumn get completedAt => integer().nullable()(); // null = abandoned
+  IntColumn get totalSeconds => integer()();
+  IntColumn get stepCount => integer()();
+  BoolColumn get wasCompleted =>
+      boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DriftDatabase(tables: [Exercises, Workouts, WorkoutSteps, Sessions])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
       : super(executor ??
@@ -83,7 +99,7 @@ class AppDatabase extends _$AppDatabase {
             ));
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -107,6 +123,9 @@ class AppDatabase extends _$AppDatabase {
             await m.addColumn(exercises, exercises.defaultType);
             await m.createTable(workouts);
             await m.createTable(workoutSteps);
+          }
+          if (from < 4) {
+            await m.createTable(sessions);
           }
         },
       );

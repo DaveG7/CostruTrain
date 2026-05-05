@@ -80,4 +80,18 @@ void main() {
     await db.customStatement('UPDATE exercises SET default_sets = 3 WHERE id = ?', ['x']);
     await db.close();
   });
+
+  test('v4 migration creates sessions table', () async {
+    final db = AppDatabase(NativeDatabase.memory());
+    await db.customStatement(
+      'INSERT INTO sessions(id, workout_name_snapshot, started_at, total_seconds, step_count, was_completed) '
+      'VALUES (?, ?, ?, ?, ?, ?)',
+      ['s1', 'Test Workout', 1000000, 300, 5, 0],
+    );
+    final rows = await db.customSelect('SELECT * FROM sessions').get();
+    expect(rows.length, 1);
+    expect(rows.first.read<String>('workout_name_snapshot'), 'Test Workout');
+    expect(rows.first.read<int>('was_completed'), 0);
+    await db.close();
+  });
 }
