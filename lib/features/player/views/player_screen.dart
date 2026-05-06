@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,6 +6,7 @@ import '../../../core/models/step_mode.dart';
 import '../../../core/models/workout_step.dart';
 import '../../../core/player/player_phase.dart';
 import '../../../core/player/player_state.dart';
+import '../../../core/utils/extensions.dart';
 import '../../../data/repositories/drift_workout_repository.dart';
 import '../providers/player_notifier.dart';
 import '../widgets/countdown_ring.dart';
@@ -24,7 +24,6 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final workout =
           await ref.read(workoutRepositoryProvider).getById(widget.workoutId);
@@ -35,12 +34,6 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
       }
       ref.read(playerNotifierProvider.notifier).start(workout);
     });
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    super.dispose();
   }
 
   @override
@@ -76,13 +69,20 @@ class _TopBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(playerNotifierProvider.notifier);
-    final roundLabel = _roundLabel(state);
+    final roundLabel = _roundLabel(context, state);
+    final (phaseLabel, phaseColor) = switch (state.phase) {
+      PlayerPhase.countdown => (context.l10n.playerPhaseCountdown, const Color(0xFF4CAF50)),
+      PlayerPhase.working   => (context.l10n.playerPhaseWork,      const Color(0xFFE84040)),
+      PlayerPhase.resting   => (context.l10n.playerPhaseRest,      const Color(0xFFF5A623)),
+      PlayerPhase.complete  => (context.l10n.playerPhaseDone,      const Color(0xFF4CAF50)),
+      _                     => ('',                                 const Color(0xFF555555)),
+    };
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _PhaseBadge(phase: state.phase),
+          _PhaseBadge(label: phaseLabel, color: phaseColor),
           if (roundLabel != null)
             Text(
               roundLabel,
@@ -95,8 +95,8 @@ class _TopBar extends ConsumerWidget {
             ),
           GestureDetector(
             onTap: () {
-              notifier.quit();
               context.pop();
+              notifier.quit();
             },
             child: Container(
               width: 28,
@@ -119,26 +119,23 @@ class _TopBar extends ConsumerWidget {
     );
   }
 
-  String? _roundLabel(PlayerState state) {
+  String? _roundLabel(BuildContext context, PlayerState state) {
     final flat = state.sequence.isEmpty ? null : state.current;
     if (flat == null || flat.circuitTotalRounds == null) return null;
-    return 'ROUND ${flat.circuitRound} / ${flat.circuitTotalRounds}';
+    return context.l10n.playerRound(
+      flat.circuitRound ?? 0,
+      flat.circuitTotalRounds!,
+    );
   }
 }
 
 class _PhaseBadge extends StatelessWidget {
-  const _PhaseBadge({required this.phase});
-  final PlayerPhase phase;
+  const _PhaseBadge({required this.label, required this.color});
+  final String label;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    final (label, color) = switch (phase) {
-      PlayerPhase.countdown => ('GET READY', const Color(0xFF4CAF50)),
-      PlayerPhase.working   => ('WORK',      const Color(0xFFE84040)),
-      PlayerPhase.resting   => ('REST',      const Color(0xFFF5A623)),
-      PlayerPhase.complete  => ('DONE',      const Color(0xFF4CAF50)),
-      _                     => ('',          const Color(0xFF555555)),
-    };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
@@ -230,7 +227,9 @@ class _ActiveView extends ConsumerWidget {
                   const SizedBox(width: 10),
                   Expanded(
                     child: _PillBtn(
-                      label: isPaused ? '▶  RESUME' : '❚❚  PAUSE',
+                      label: isPaused
+                          ? '▶  ${context.l10n.playerResume}'
+                          : '❚❚  ${context.l10n.playerPause}',
                       color: const Color(0xFFE84040),
                       onTap: isPaused ? notifier.resume : notifier.pause,
                     ),
@@ -257,11 +256,7 @@ class _ActiveView extends ConsumerWidget {
 
   String _detailLine(PlayerState state) {
     if (state.sequence.isEmpty) return '';
-    final flat = state.current;
-    if (flat.circuitRound != null) {
-      return 'Round ${flat.circuitRound} / ${flat.circuitTotalRounds}';
-    }
-    final step = flat.step;
+    final step = state.current.step;
     if (step is ExerciseStep) {
       return switch (step.mode) {
         StepMode.reps  => '${step.reps ?? '?'} reps',
@@ -292,9 +287,9 @@ class _FinishedView extends ConsumerWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
-          'WORKOUT COMPLETE',
-          style: TextStyle(
+        Text(
+          context.l10n.playerComplete,
+          style: const TextStyle(
             fontFamily: 'RobotoMono',
             fontSize: 11,
             color: Color(0xFF4CAF50),
@@ -310,7 +305,7 @@ class _FinishedView extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: _PillBtn(
-            label: '✓  SAVE SESSION',
+            label: '✓  ${context.l10n.playerSaveSession}',
             color: const Color(0xFF4CAF50),
             onTap: () => context.go('/compose'),
           ),
