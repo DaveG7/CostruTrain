@@ -23,7 +23,7 @@ class SessionDetailScreen extends ConsumerWidget {
         error: (e, _) => Center(child: Text(e.toString())),
         data: (session) {
           if (session == null) {
-            return const Center(child: Text('Session not found'));
+            return Center(child: Text(context.l10n.sessionNotFound));
           }
           return _DetailBody(session: session);
         },

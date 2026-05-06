@@ -96,6 +96,7 @@
   "sessionDetailDuration": "Duration",
   "sessionDetailStarted": "Started",
   "sessionDetailSteps": "Steps",
+  "sessionNotFound": "Session not found",
   "settingsTitle": "Settings",
   "settingsAudioCues": "Audio cues during workout"
 }

@@ -235,6 +235,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get sessionDetailSteps => 'Steps';
 
   @override
+  String get sessionNotFound => 'Session not found';
+
+  @override
   String get settingsTitle => 'Settings';
 
   @override

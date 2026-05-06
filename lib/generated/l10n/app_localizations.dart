@@ -524,6 +524,12 @@ abstract class AppLocalizations {
   /// **'Steps'**
   String get sessionDetailSteps;
 
+  /// No description provided for @sessionNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Session not found'**
+  String get sessionNotFound;
+
   /// No description provided for @settingsTitle.
   ///
   /// In en, this message translates to:
