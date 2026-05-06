@@ -46,10 +46,10 @@ List<SessionGroup> groupSessions(List<Session> sessions, DateTime now) {
 
   final result = <SessionGroup>[];
   if (thisWeek.isNotEmpty) {
-    result.add(SessionGroup(label: 'THIS WEEK', sessions: thisWeek));
+    result.add(SessionGroup(label: 'THIS_WEEK', sessions: thisWeek));
   }
   if (lastWeek.isNotEmpty) {
-    result.add(SessionGroup(label: 'LAST WEEK', sessions: lastWeek));
+    result.add(SessionGroup(label: 'LAST_WEEK', sessions: lastWeek));
   }
   for (final entry in olderGroups.entries) {
     result.add(SessionGroup(label: entry.key, sessions: entry.value));

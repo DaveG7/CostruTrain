@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../core/models/session.dart';
 import '../../../core/utils/extensions.dart';
+import '../../../shared/theme/ct_colors.dart';
 
 class SessionCard extends StatelessWidget {
   const SessionCard({super.key, required this.session});
@@ -20,13 +21,18 @@ class SessionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    final ct = Theme.of(context).extension<CTColors>();
+    final muted = Theme.of(context).colorScheme.onSurfaceVariant;
+    return InkWell(
       onTap: () => context.push('/history/${session.id}'),
+      borderRadius: BorderRadius.circular(8),
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: const Color(0xFF1A1A1A),
-          border: Border.all(color: const Color(0xFF2E2E2E)),
+          color: ct?.surface ?? Theme.of(context).colorScheme.surface,
+          border: Border.all(
+            color: Theme.of(context).colorScheme.outlineVariant,
+          ),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
@@ -49,13 +55,12 @@ class SessionCard extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               _fmtDate(session.startedAt),
-              style: const TextStyle(fontSize: 12, color: Color(0xFF9E9E9E)),
+              style: TextStyle(fontSize: 12, color: muted),
             ),
             const SizedBox(height: 8),
             Row(
               children: [
-                const Icon(Icons.timer_outlined,
-                    size: 14, color: Color(0xFF9E9E9E)),
+                Icon(Icons.timer_outlined, size: 14, color: muted),
                 const SizedBox(width: 4),
                 Text(
                   _fmtDuration(session.totalSeconds),
@@ -66,12 +71,11 @@ class SessionCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 14),
-                const Icon(Icons.format_list_numbered,
-                    size: 14, color: Color(0xFF9E9E9E)),
+                Icon(Icons.format_list_numbered, size: 14, color: muted),
                 const SizedBox(width: 4),
                 Text(
                   context.l10n.sessionSteps(session.stepCount),
-                  style: const TextStyle(fontSize: 12, color: Color(0xFF9E9E9E)),
+                  style: TextStyle(fontSize: 12, color: muted),
                 ),
               ],
             ),
@@ -88,8 +92,10 @@ class _StatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color =
-        completed ? const Color(0xFF4CAF50) : const Color(0xFF9E9E9E);
+    final ct = Theme.of(context).extension<CTColors>();
+    final color = completed
+        ? (ct?.green ?? const Color(0xFF4CAF50))
+        : Theme.of(context).colorScheme.onSurfaceVariant;
     final label = completed
         ? context.l10n.sessionCompleted
         : context.l10n.sessionAbandoned;

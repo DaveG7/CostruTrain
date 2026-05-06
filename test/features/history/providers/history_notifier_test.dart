@@ -30,7 +30,7 @@ void main() {
     final sessions = [_s('s1', thisMonday.add(const Duration(hours: 10)))];
     final groups = groupSessions(sessions, now);
     expect(groups.length, 1);
-    expect(groups[0].label, 'THIS WEEK');
+    expect(groups[0].label, 'THIS_WEEK');
     expect(groups[0].sessions.length, 1);
   });
 
@@ -38,7 +38,7 @@ void main() {
     final sessions = [_s('s1', lastMonday.add(const Duration(hours: 9)))];
     final groups = groupSessions(sessions, now);
     expect(groups.length, 1);
-    expect(groups[0].label, 'LAST WEEK');
+    expect(groups[0].label, 'LAST_WEEK');
   });
 
   test('session older → month label group', () {
@@ -56,8 +56,8 @@ void main() {
     ];
     final groups = groupSessions(sessions, now);
     expect(groups.length, 3);
-    expect(groups[0].label, 'THIS WEEK');
-    expect(groups[1].label, 'LAST WEEK');
+    expect(groups[0].label, 'THIS_WEEK');
+    expect(groups[1].label, 'LAST_WEEK');
     expect(groups[2].label, 'MAR 2026');
   });
 
@@ -65,6 +65,6 @@ void main() {
     final sunday = DateTime(2026, 5, 10); // Sunday of this week
     final sessions = [_s('s1', sunday)];
     final groups = groupSessions(sessions, now);
-    expect(groups[0].label, 'THIS WEEK');
+    expect(groups[0].label, 'THIS_WEEK');
   });
 }

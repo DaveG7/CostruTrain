@@ -5,6 +5,14 @@ import '../../../core/utils/extensions.dart';
 import '../providers/history_notifier.dart';
 import '../widgets/session_card.dart';
 
+String _localizeGroupLabel(BuildContext context, String label) {
+  return switch (label) {
+    'THIS_WEEK' => context.l10n.historyGroupThisWeek,
+    'LAST_WEEK' => context.l10n.historyGroupLastWeek,
+    _ => label,
+  };
+}
+
 class HistoryScreen extends ConsumerWidget {
   const HistoryScreen({super.key});
 
@@ -22,7 +30,9 @@ class HistoryScreen extends ConsumerWidget {
               child: Text(
                 context.l10n.historyEmpty,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Color(0xFF9E9E9E)),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
             );
           }
@@ -36,11 +46,11 @@ class HistoryScreen extends ConsumerWidget {
                   return Padding(
                     padding: const EdgeInsets.only(top: 12, bottom: 8),
                     child: Text(
-                      group.label,
-                      style: const TextStyle(
+                      _localizeGroupLabel(context, group.label),
+                      style: TextStyle(
                         fontFamily: 'RobotoMono',
                         fontSize: 10,
-                        color: Color(0xFF9E9E9E),
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                         letterSpacing: 1.6,
                       ),
                     ),
