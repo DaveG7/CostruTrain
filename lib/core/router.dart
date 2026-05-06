@@ -4,10 +4,12 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../data/local/shared_prefs_provider.dart';
 import '../features/composer/views/composer_screen.dart';
 import '../features/history/views/history_screen.dart';
+import '../features/history/views/session_detail_screen.dart';
 import '../features/library/views/exercise_detail_screen.dart';
 import '../features/library/views/exercise_list_screen.dart';
 import '../features/library/views/seed_splash_screen.dart';
 import '../features/my_workouts/views/my_workouts_screen.dart';
+import '../features/player/views/player_screen.dart';
 import '../features/settings/views/settings_screen.dart';
 import '../shared/widgets/scaffold_with_nav.dart';
 
@@ -43,6 +45,18 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/compose/:workoutId',
         builder: (context, state) => ComposerScreen(
           workoutId: state.pathParameters['workoutId'],
+        ),
+      ),
+      GoRoute(
+        path: '/play/:workoutId',
+        builder: (context, state) => PlayerScreen(
+          workoutId: state.pathParameters['workoutId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/history/:sessionId',
+        builder: (context, state) => SessionDetailScreen(
+          sessionId: state.pathParameters['sessionId']!,
         ),
       ),
       ShellRoute(
