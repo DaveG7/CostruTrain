@@ -29,7 +29,7 @@ RestStep _restStep({int duration = 60}) =>
 Workout _workout(List<WorkoutStep> steps) => Workout(
       id: 'w1',
       name: 'Test',
-      tags: [],
+      tags: const [],
       steps: steps,
       createdAt: DateTime(2026),
       updatedAt: DateTime(2026),
