@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../core/models/workout.dart';
@@ -45,16 +46,11 @@ class WorkoutCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Tooltip(
-                  message: 'Coming in Phase 3',
-                  child: IconButton(
-                    icon: Icon(LucideIcons.play,
-                        color: Theme.of(context).disabledColor,
-                        size: 18),
-                    onPressed: null,
-                    constraints: const BoxConstraints(),
-                    padding: EdgeInsets.zero,
-                  ),
+                IconButton(
+                  icon: const Icon(LucideIcons.play, size: 18),
+                  onPressed: () => context.push('/play/${workout.id}'),
+                  constraints: const BoxConstraints(),
+                  padding: EdgeInsets.zero,
                 ),
               ],
             ),

@@ -374,12 +374,6 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get saveStep;
 
-  /// No description provided for @playComingSoon.
-  ///
-  /// In en, this message translates to:
-  /// **'Coming in Phase 3'**
-  String get playComingSoon;
-
   /// No description provided for @workoutNameHint.
   ///
   /// In en, this message translates to:

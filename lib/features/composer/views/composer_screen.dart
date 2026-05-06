@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../core/models/workout.dart';
@@ -228,11 +229,19 @@ class _ComposerScreenState extends ConsumerState<ComposerScreen> {
                   style: const TextStyle(color: Color(0xFFE8FF00)),
                 ),
               )
-            else
+            else ...[
+              IconButton(
+                icon: const Icon(Icons.play_arrow),
+                onPressed: widget.workoutId != null
+                    ? () => context.push('/play/${widget.workoutId}')
+                    : null,
+                tooltip: null,
+              ),
               TextButton(
                 onPressed: composerState.isDirty ? _save : null,
                 child: Text(context.l10n.saveWorkout),
               ),
+            ],
           ],
         ),
         body: isWide

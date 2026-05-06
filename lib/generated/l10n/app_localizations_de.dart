@@ -155,9 +155,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get saveStep => 'Save';
 
   @override
-  String get playComingSoon => 'Coming in Phase 3';
-
-  @override
   String get workoutNameHint => 'Workout name';
 
   @override
