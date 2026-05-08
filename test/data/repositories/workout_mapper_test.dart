@@ -117,5 +117,43 @@ void main() {
         throwsA(isA<StateError>()),
       );
     });
+
+    test('fromRows maps isTemplate and templateId', () {
+      const row = WorkoutRow(
+        id: 'w1',
+        name: 'Fran',
+        description: null,
+        tags: '[]',
+        globalRestS: null,
+        warmupSeconds: null,
+        cooldownS: null,
+        createdAt: 0,
+        updatedAt: 0,
+        isTemplate: true,
+        templateId: 'fran',
+      );
+      final workout = WorkoutMapper.fromRows(workout: row, stepRows: const []);
+      expect(workout.isTemplate, isTrue);
+      expect(workout.templateId, 'fran');
+    });
+
+    test('fromRows defaults isTemplate to false when not set', () {
+      const row = WorkoutRow(
+        id: 'w1',
+        name: 'My WOD',
+        description: null,
+        tags: '[]',
+        globalRestS: null,
+        warmupSeconds: null,
+        cooldownS: null,
+        createdAt: 0,
+        updatedAt: 0,
+        isTemplate: false,
+        templateId: null,
+      );
+      final workout = WorkoutMapper.fromRows(workout: row, stepRows: const []);
+      expect(workout.isTemplate, isFalse);
+      expect(workout.templateId, isNull);
+    });
   });
 }

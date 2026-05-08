@@ -50,6 +50,8 @@ class WorkoutMapper {
       steps: topLevel.map((r) => _mapStep(r, byParent)).toList(),
       createdAt: DateTime.fromMillisecondsSinceEpoch(workout.createdAt),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(workout.updatedAt),
+      isTemplate: workout.isTemplate,
+      templateId: workout.templateId,
     );
   }
 
