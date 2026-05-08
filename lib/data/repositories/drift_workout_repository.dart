@@ -40,6 +40,14 @@ class DriftWorkoutRepository implements WorkoutRepository {
   @override
   Future<Workout> save(Workout workout) async {
     final now = DateTime.now().millisecondsSinceEpoch;
+
+    // Template detach: if this workout was a template and already exists,
+    // the user has edited it — detach from template catalog.
+    final isTemplate = workout.isTemplate &&
+            (await getById(workout.id)) == null
+        ? true
+        : false;
+
     await _db.transaction(() async {
       await _db.into(_db.workouts).insertOnConflictUpdate(WorkoutsCompanion(
             id: Value(workout.id),
@@ -49,6 +57,8 @@ class DriftWorkoutRepository implements WorkoutRepository {
             globalRestS: Value(workout.globalRestSeconds),
             warmupSeconds: Value(workout.warmupSeconds),
             cooldownS: Value(workout.cooldownSeconds),
+            isTemplate: Value(isTemplate),
+            templateId: Value(workout.templateId),
             createdAt: Value(workout.createdAt.millisecondsSinceEpoch),
             updatedAt: Value(now),
           ));

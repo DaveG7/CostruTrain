@@ -80,4 +80,55 @@ void main() {
   test('getById returns null for unknown id', () async {
     expect(await repo.getById('nope'), isNull);
   });
+
+  test('save() detaches template when edited (sets isTemplate to false)', () async {
+    final db = AppDatabase(NativeDatabase.memory());
+    final repo = DriftWorkoutRepository(db);
+    final now = DateTime.now();
+
+    // Insert as a template
+    final template = Workout(
+      id: 'w-tmpl',
+      name: 'Fran',
+      tags: const [],
+      steps: const [],
+      isTemplate: true,
+      templateId: 'fran',
+      createdAt: now,
+      updatedAt: now,
+    );
+    await repo.save(template);
+
+    // Simulate user editing — still has isTemplate:true but already exists in DB
+    final edited = template.copyWith(name: 'My Fran');
+    await repo.save(edited);
+
+    final result = await repo.getById('w-tmpl');
+    expect(result!.isTemplate, isFalse);   // detached
+    expect(result.templateId, 'fran');     // preserved
+    expect(result.name, 'My Fran');
+    await db.close();
+  });
+
+  test('save() preserves isTemplate:true on first insert', () async {
+    final db = AppDatabase(NativeDatabase.memory());
+    final repo = DriftWorkoutRepository(db);
+    final now = DateTime.now();
+
+    final template = Workout(
+      id: 'w-tmpl2',
+      name: 'Tabata',
+      tags: const [],
+      steps: const [],
+      isTemplate: true,
+      templateId: 'tabata',
+      createdAt: now,
+      updatedAt: now,
+    );
+    await repo.save(template);
+
+    final result = await repo.getById('w-tmpl2');
+    expect(result!.isTemplate, isTrue);
+    await db.close();
+  });
 }
