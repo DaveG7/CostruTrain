@@ -5,6 +5,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../core/utils/extensions.dart';
 import '../../../data/services/workout_service.dart';
+import '../../../shared/widgets/empty_state.dart';
 import '../providers/my_workouts_notifier.dart';
 import '../widgets/workout_card.dart';
 
@@ -20,17 +21,11 @@ class MyWorkoutsScreen extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Error: $e')),
         data: (workouts) => workouts.isEmpty
-            ? Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(context.l10n.noWorkoutsYet,
-                        style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 8),
-                    Text(context.l10n.noWorkoutsYetHint,
-                        style: Theme.of(context).textTheme.bodySmall),
-                  ],
-                ),
+            ? EmptyState(
+                icon: Icons.fitness_center,
+                message: context.l10n.emptyWorkouts,
+                ctaLabel: context.l10n.emptyWorkoutsCta,
+                onCta: () => context.push('/compose/new'),
               )
             : ListView.separated(
                 padding: const EdgeInsets.all(16),

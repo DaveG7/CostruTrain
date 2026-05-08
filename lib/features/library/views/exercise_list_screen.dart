@@ -8,6 +8,7 @@ import '../../../core/utils/extensions.dart';
 import '../../../shared/widgets/ct_exercise_card.dart';
 import '../../../shared/widgets/ct_filter_chip.dart';
 import '../../../shared/widgets/ct_search_bar.dart';
+import '../../../shared/widgets/empty_state.dart';
 import '../providers/exercise_search_results_provider.dart';
 import '../providers/library_filter_notifier.dart';
 import '../widgets/filter_sheet.dart';
@@ -105,21 +106,14 @@ class _ExerciseListScreenState extends ConsumerState<ExerciseListScreen> {
                 ),
               ),
               data: (exercises) => exercises.isEmpty
-                  ? Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(context.l10n.noExercisesFound),
-                          const SizedBox(height: 8),
-                          TextButton(
-                            onPressed: () {
-                              notifier.clearAll();
-                              _searchController.clear();
-                            },
-                            child: Text(context.l10n.clearFilters),
-                          ),
-                        ],
-                      ),
+                  ? EmptyState(
+                      icon: Icons.search_off,
+                      message: context.l10n.noExercisesFound,
+                      ctaLabel: context.l10n.emptySearchResultsCta,
+                      onCta: () {
+                        notifier.clearAll();
+                        _searchController.clear();
+                      },
                     )
                   : ListView.builder(
                       physics: widget.embedded

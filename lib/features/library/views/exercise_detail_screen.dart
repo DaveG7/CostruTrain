@@ -50,12 +50,12 @@ class ExerciseDetailScreen extends ConsumerWidget {
                           fit: BoxFit.cover,
                           placeholder: (_, __) =>
                               const CTGifPlaceholder(height: 300),
-                          errorWidget: (_, __, ___) => Container(
-                            color: ct.elevated,
+                          errorWidget: (context, url, error) => Container(
+                            color: Theme.of(context).extension<CTColors>()?.surface,
                             child: const Icon(
-                              LucideIcons.dumbbell,
-                              size: 64,
-                              color: Colors.white24,
+                              Icons.fitness_center,
+                              color: Colors.grey,
+                              size: 48,
                             ),
                           ),
                         )

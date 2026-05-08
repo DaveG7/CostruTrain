@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/utils/extensions.dart';
+import '../../../shared/widgets/empty_state.dart';
 import '../providers/history_notifier.dart';
 import '../widgets/session_card.dart';
 
@@ -26,14 +28,11 @@ class HistoryScreen extends ConsumerWidget {
         error: (e, _) => Center(child: Text(e.toString())),
         data: (groups) {
           if (groups.isEmpty) {
-            return Center(
-              child: Text(
-                context.l10n.historyEmpty,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              ),
+            return EmptyState(
+              icon: Icons.history,
+              message: context.l10n.emptySessions,
+              ctaLabel: context.l10n.emptySessionsCta,
+              onCta: () => context.go('/compose'),
             );
           }
           return ListView.builder(
