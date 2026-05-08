@@ -15,6 +15,8 @@ class Workout {
   final List<WorkoutStep> steps;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final bool isTemplate;
+  final String? templateId;
 
   const Workout({
     required this.id,
@@ -27,6 +29,8 @@ class Workout {
     required this.steps,
     required this.createdAt,
     required this.updatedAt,
+    this.isTemplate = false,
+    this.templateId,
   });
 
   Workout copyWith({
@@ -38,20 +42,28 @@ class Workout {
     Object? cooldownSeconds = _kKeep,
     List<WorkoutStep>? steps,
     DateTime? updatedAt,
+    bool? isTemplate,
+    Object? templateId = _kKeep,
   }) =>
       Workout(
         id: id,
         name: name ?? this.name,
-        description: identical(description, _kKeep) ? this.description : description as String?,
+        description:
+            identical(description, _kKeep) ? this.description : description as String?,
         tags: tags ?? this.tags,
         globalRestSeconds: identical(globalRestSeconds, _kKeep)
             ? this.globalRestSeconds
             : globalRestSeconds as int?,
-        warmupSeconds: identical(warmupSeconds, _kKeep) ? this.warmupSeconds : warmupSeconds as int?,
-        cooldownSeconds:
-            identical(cooldownSeconds, _kKeep) ? this.cooldownSeconds : cooldownSeconds as int?,
+        warmupSeconds:
+            identical(warmupSeconds, _kKeep) ? this.warmupSeconds : warmupSeconds as int?,
+        cooldownSeconds: identical(cooldownSeconds, _kKeep)
+            ? this.cooldownSeconds
+            : cooldownSeconds as int?,
         steps: steps ?? this.steps,
         createdAt: createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
+        isTemplate: isTemplate ?? this.isTemplate,
+        templateId:
+            identical(templateId, _kKeep) ? this.templateId : templateId as String?,
       );
 }

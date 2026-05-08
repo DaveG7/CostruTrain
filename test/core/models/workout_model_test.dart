@@ -50,4 +50,51 @@ void main() {
       expect(circuit.steps.first, isA<ExerciseStep>());
     });
   });
+
+  group('Workout.isTemplate and templateId', () {
+    test('isTemplate defaults to false', () {
+      final w = Workout(
+        id: 'w1',
+        name: 'Test',
+        tags: const [],
+        steps: const [],
+        createdAt: DateTime(2026),
+        updatedAt: DateTime(2026),
+      );
+      expect(w.isTemplate, isFalse);
+      expect(w.templateId, isNull);
+    });
+
+    test('copyWith preserves isTemplate when not specified', () {
+      final w = Workout(
+        id: 'w1',
+        name: 'Test',
+        tags: const [],
+        steps: const [],
+        isTemplate: true,
+        templateId: 'fran',
+        createdAt: DateTime(2026),
+        updatedAt: DateTime(2026),
+      );
+      final copy = w.copyWith(name: 'Updated');
+      expect(copy.isTemplate, isTrue);
+      expect(copy.templateId, 'fran');
+    });
+
+    test('copyWith can override isTemplate', () {
+      final w = Workout(
+        id: 'w1',
+        name: 'Test',
+        tags: const [],
+        steps: const [],
+        isTemplate: true,
+        templateId: 'fran',
+        createdAt: DateTime(2026),
+        updatedAt: DateTime(2026),
+      );
+      final copy = w.copyWith(isTemplate: false);
+      expect(copy.isTemplate, isFalse);
+      expect(copy.templateId, 'fran'); // templateId preserved
+    });
+  });
 }
