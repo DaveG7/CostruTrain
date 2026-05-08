@@ -535,6 +535,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Audio cues during workout'**
   String get settingsAudioCues;
+
+  /// Settings toggle label for haptic feedback
+  ///
+  /// In en, this message translates to:
+  /// **'Haptic feedback'**
+  String get settingsHaptics;
+
+  /// Settings slider label for default rest time
+  ///
+  /// In en, this message translates to:
+  /// **'Default rest time'**
+  String get settingsDefaultRestTime;
+
+  /// Live label on the default rest time slider
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds}s'**
+  String settingsDefaultRestTimeValue(int seconds);
+
+  /// Settings tile to export the SQLite database file
+  ///
+  /// In en, this message translates to:
+  /// **'Export app data'**
+  String get settingsExportData;
+
+  /// SnackBar shown after successful DB export
+  ///
+  /// In en, this message translates to:
+  /// **'Database exported.'**
+  String get settingsExportSuccess;
+
+  /// Onboarding screen 1 headline
+  ///
+  /// In en, this message translates to:
+  /// **'Build your training.'**
+  String get onboardingHeadline1;
+
+  /// Onboarding screen 1 body text
+  ///
+  /// In en, this message translates to:
+  /// **'No account needed. No cloud. Your data stays on your device.'**
+  String get onboardingBody1;
+
+  /// Onboarding screen 1 CTA
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// Onboarding screen 2 headline
+  ///
+  /// In en, this message translates to:
+  /// **'Start with a template or build from scratch.'**
+  String get onboardingHeadline2;
+
+  /// Onboarding screen 2 — start with blank composer
+  ///
+  /// In en, this message translates to:
+  /// **'Start empty'**
+  String get onboardingStartEmpty;
+
+  /// Empty state headline on My Workouts screen
+  ///
+  /// In en, this message translates to:
+  /// **'No workouts yet.'**
+  String get emptyWorkouts;
+
+  /// CTA button on My Workouts empty state
+  ///
+  /// In en, this message translates to:
+  /// **'Create your first workout'**
+  String get emptyWorkoutsCta;
+
+  /// Empty state headline on History screen
+  ///
+  /// In en, this message translates to:
+  /// **'No sessions yet.'**
+  String get emptySessions;
+
+  /// CTA button on History empty state
+  ///
+  /// In en, this message translates to:
+  /// **'Start a workout'**
+  String get emptySessionsCta;
+
+  /// CTA button on Library no-results empty state
+  ///
+  /// In en, this message translates to:
+  /// **'Clear filters'**
+  String get emptySearchResultsCta;
+
+  /// DB error screen headline
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong loading your data.'**
+  String get errorDbHeadline;
+
+  /// ExpansionTile label hiding the nuclear option
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get errorDbAdvanced;
+
+  /// Nuclear option button inside Advanced tile
+  ///
+  /// In en, this message translates to:
+  /// **'Reset app data'**
+  String get errorDbReset;
+
+  /// Confirmation dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Reset app data?'**
+  String get errorDbResetTitle;
+
+  /// Confirmation dialog body
+  ///
+  /// In en, this message translates to:
+  /// **'This will delete all your workouts and session history. This cannot be undone.'**
+  String get errorDbResetBody;
+
+  /// Destructive confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'Reset everything'**
+  String get errorDbResetConfirm;
+
+  /// Cancel button in reset dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get errorDbResetCancel;
+
+  /// Chip shown on WorkoutCard for seeded template workouts
+  ///
+  /// In en, this message translates to:
+  /// **'Template'**
+  String get templateChipLabel;
 }
 
 class _AppLocalizationsDelegate

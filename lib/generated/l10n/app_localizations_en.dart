@@ -239,4 +239,78 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsAudioCues => 'Audio cues during workout';
+
+  @override
+  String get settingsHaptics => 'Haptic feedback';
+
+  @override
+  String get settingsDefaultRestTime => 'Default rest time';
+
+  @override
+  String settingsDefaultRestTimeValue(int seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String get settingsExportData => 'Export app data';
+
+  @override
+  String get settingsExportSuccess => 'Database exported.';
+
+  @override
+  String get onboardingHeadline1 => 'Build your training.';
+
+  @override
+  String get onboardingBody1 =>
+      'No account needed. No cloud. Your data stays on your device.';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingHeadline2 =>
+      'Start with a template or build from scratch.';
+
+  @override
+  String get onboardingStartEmpty => 'Start empty';
+
+  @override
+  String get emptyWorkouts => 'No workouts yet.';
+
+  @override
+  String get emptyWorkoutsCta => 'Create your first workout';
+
+  @override
+  String get emptySessions => 'No sessions yet.';
+
+  @override
+  String get emptySessionsCta => 'Start a workout';
+
+  @override
+  String get emptySearchResultsCta => 'Clear filters';
+
+  @override
+  String get errorDbHeadline => 'Something went wrong loading your data.';
+
+  @override
+  String get errorDbAdvanced => 'Advanced';
+
+  @override
+  String get errorDbReset => 'Reset app data';
+
+  @override
+  String get errorDbResetTitle => 'Reset app data?';
+
+  @override
+  String get errorDbResetBody =>
+      'This will delete all your workouts and session history. This cannot be undone.';
+
+  @override
+  String get errorDbResetConfirm => 'Reset everything';
+
+  @override
+  String get errorDbResetCancel => 'Cancel';
+
+  @override
+  String get templateChipLabel => 'Template';
 }
