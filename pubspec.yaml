@@ -44,4 +44,5 @@ flutter:
   generate: true
   assets:
     - assets/seed/exercises.json
+    - assets/seed/templates.json
     - assets/audio/

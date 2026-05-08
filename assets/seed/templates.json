@@ -1,0 +1,103 @@
+[
+  {
+    "id": "template_tabata",
+    "templateId": "tabata",
+    "name": "Tabata Timer",
+    "description": "8 rounds of 20s work / 10s rest. Fill in your exercise in the Composer.",
+    "tags": ["tabata", "timing"],
+    "globalRestSeconds": null,
+    "steps": [
+      {"type": "countdown", "id": "tt_01", "orderIndex": 0, "durationSeconds": 20},
+      {"type": "rest",      "id": "tt_02", "orderIndex": 1, "durationSeconds": 10},
+      {"type": "countdown", "id": "tt_03", "orderIndex": 2, "durationSeconds": 20},
+      {"type": "rest",      "id": "tt_04", "orderIndex": 3, "durationSeconds": 10},
+      {"type": "countdown", "id": "tt_05", "orderIndex": 4, "durationSeconds": 20},
+      {"type": "rest",      "id": "tt_06", "orderIndex": 5, "durationSeconds": 10},
+      {"type": "countdown", "id": "tt_07", "orderIndex": 6, "durationSeconds": 20},
+      {"type": "rest",      "id": "tt_08", "orderIndex": 7, "durationSeconds": 10},
+      {"type": "countdown", "id": "tt_09", "orderIndex": 8, "durationSeconds": 20},
+      {"type": "rest",      "id": "tt_10", "orderIndex": 9, "durationSeconds": 10},
+      {"type": "countdown", "id": "tt_11", "orderIndex": 10, "durationSeconds": 20},
+      {"type": "rest",      "id": "tt_12", "orderIndex": 11, "durationSeconds": 10},
+      {"type": "countdown", "id": "tt_13", "orderIndex": 12, "durationSeconds": 20},
+      {"type": "rest",      "id": "tt_14", "orderIndex": 13, "durationSeconds": 10},
+      {"type": "countdown", "id": "tt_15", "orderIndex": 14, "durationSeconds": 20},
+      {"type": "rest",      "id": "tt_16", "orderIndex": 15, "durationSeconds": 10}
+    ]
+  },
+  {
+    "id": "template_fran",
+    "templateId": "fran",
+    "name": "Fran",
+    "description": "21-15-9 Thrusters and Pull-ups for time. A CrossFit benchmark.",
+    "tags": ["benchmark", "for time"],
+    "globalRestSeconds": null,
+    "steps": [
+      {"type": "exercise", "id": "tf_01", "orderIndex": 0,
+       "exerciseId": "f7Y9eDZ", "mode": "reps", "reps": 21, "restSeconds": 0},
+      {"type": "exercise", "id": "tf_02", "orderIndex": 1,
+       "exerciseId": "lBDjFxJ", "mode": "reps", "reps": 21, "restSeconds": 0},
+      {"type": "exercise", "id": "tf_03", "orderIndex": 2,
+       "exerciseId": "f7Y9eDZ", "mode": "reps", "reps": 15, "restSeconds": 0},
+      {"type": "exercise", "id": "tf_04", "orderIndex": 3,
+       "exerciseId": "lBDjFxJ", "mode": "reps", "reps": 15, "restSeconds": 0},
+      {"type": "exercise", "id": "tf_05", "orderIndex": 4,
+       "exerciseId": "f7Y9eDZ", "mode": "reps", "reps": 9, "restSeconds": 0},
+      {"type": "exercise", "id": "tf_06", "orderIndex": 5,
+       "exerciseId": "lBDjFxJ", "mode": "reps", "reps": 9, "restSeconds": 0}
+    ]
+  },
+  {
+    "id": "template_cindy",
+    "templateId": "cindy",
+    "name": "Cindy",
+    "description": "20min AMRAP: 5 pull-ups, 10 push-ups, 15 squats. Start the timer and go.",
+    "tags": ["amrap", "benchmark", "body weight"],
+    "globalRestSeconds": null,
+    "steps": [
+      {"type": "countdown", "id": "tc_01", "orderIndex": 0, "durationSeconds": 1200},
+      {"type": "exercise", "id": "tc_02", "orderIndex": 1,
+       "exerciseId": "lBDjFxJ", "mode": "reps", "reps": 5, "restSeconds": 0},
+      {"type": "exercise", "id": "tc_03", "orderIndex": 2,
+       "exerciseId": "I4hDWkc", "mode": "reps", "reps": 10, "restSeconds": 0},
+      {"type": "exercise", "id": "tc_04", "orderIndex": 3,
+       "exerciseId": "5BZHW9s", "mode": "reps", "reps": 15, "restSeconds": 0}
+    ]
+  },
+  {
+    "id": "template_emom10",
+    "templateId": "emom_10",
+    "name": "EMOM 10",
+    "description": "Every minute on the minute for 10 rounds. Add your exercise in the Composer.",
+    "tags": ["emom", "timing"],
+    "globalRestSeconds": null,
+    "steps": [
+      {"type": "countdown", "id": "te_01", "orderIndex": 0, "durationSeconds": 60},
+      {"type": "countdown", "id": "te_02", "orderIndex": 1, "durationSeconds": 60},
+      {"type": "countdown", "id": "te_03", "orderIndex": 2, "durationSeconds": 60},
+      {"type": "countdown", "id": "te_04", "orderIndex": 3, "durationSeconds": 60},
+      {"type": "countdown", "id": "te_05", "orderIndex": 4, "durationSeconds": 60},
+      {"type": "countdown", "id": "te_06", "orderIndex": 5, "durationSeconds": 60},
+      {"type": "countdown", "id": "te_07", "orderIndex": 6, "durationSeconds": 60},
+      {"type": "countdown", "id": "te_08", "orderIndex": 7, "durationSeconds": 60},
+      {"type": "countdown", "id": "te_09", "orderIndex": 8, "durationSeconds": 60},
+      {"type": "countdown", "id": "te_10", "orderIndex": 9, "durationSeconds": 60}
+    ]
+  },
+  {
+    "id": "template_5x5",
+    "templateId": "5x5",
+    "name": "5×5 Strength",
+    "description": "5 sets of 5 reps with 3-minute rest. Classic strength protocol.",
+    "tags": ["strength", "barbell"],
+    "globalRestSeconds": null,
+    "steps": [
+      {"type": "circuit", "id": "t5_01", "orderIndex": 0, "rounds": 5,
+       "children": [
+         {"type": "exercise", "id": "t5_01a", "orderIndex": 0,
+          "exerciseId": "ila4NZS", "mode": "reps", "reps": 5, "restSeconds": 180}
+       ]
+      }
+    ]
+  }
+]
