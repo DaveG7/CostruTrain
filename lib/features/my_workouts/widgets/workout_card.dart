@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../core/models/workout.dart';
+import '../../../core/utils/extensions.dart';
 import '../../../shared/theme/ct_colors.dart';
 
 class WorkoutCard extends StatelessWidget {
@@ -82,6 +83,18 @@ class WorkoutCard extends StatelessWidget {
                           visualDensity: VisualDensity.compact,
                         ))
                     .toList(),
+              ),
+            ],
+            if (workout.isTemplate) ...[
+              const SizedBox(height: 8),
+              Chip(
+                label: Text(
+                  context.l10n.templateChipLabel,
+                  style: const TextStyle(fontSize: 11),
+                ),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
+                visualDensity: VisualDensity.compact,
               ),
             ],
           ],

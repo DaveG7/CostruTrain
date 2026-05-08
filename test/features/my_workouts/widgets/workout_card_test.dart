@@ -1,8 +1,19 @@
 import 'package:costrutrain/core/models/workout.dart';
 import 'package:costrutrain/features/my_workouts/widgets/workout_card.dart';
+import 'package:costrutrain/generated/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+
+Workout _baseWorkout = Workout(
+  id: 'w1',
+  name: 'Fran',
+  tags: const ['Classic'],
+  steps: const [],
+  createdAt: DateTime(2026),
+  updatedAt: DateTime(2026),
+);
 
 Workout _w({String name = 'Fran', List<String> tags = const ['Classic']}) =>
     Workout(
@@ -23,7 +34,15 @@ Widget _wrap(Widget child) {
       ),
     ],
   );
-  return MaterialApp.router(routerConfig: router);
+  return MaterialApp.router(
+    routerConfig: router,
+    localizationsDelegates: const [
+      AppLocalizations.delegate,
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+    ],
+    supportedLocales: AppLocalizations.supportedLocales,
+  );
 }
 
 void main() {
@@ -54,5 +73,24 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byType(WorkoutCard));
     expect(tapped, isTrue);
+  });
+
+  testWidgets('shows Template chip when workout.isTemplate is true', (tester) async {
+    final template = _baseWorkout.copyWith(isTemplate: true);
+    await tester.pumpWidget(_wrap(WorkoutCard(
+      workout: template,
+      onTap: () {},
+    )));
+    await tester.pumpAndSettle();
+    expect(find.text('Template'), findsOneWidget);
+  });
+
+  testWidgets('no Template chip for regular workout', (tester) async {
+    await tester.pumpWidget(_wrap(WorkoutCard(
+      workout: _baseWorkout,
+      onTap: () {},
+    )));
+    await tester.pumpAndSettle();
+    expect(find.text('Template'), findsNothing);
   });
 }
