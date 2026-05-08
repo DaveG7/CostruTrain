@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../core/utils/extensions.dart';
 import '../providers/settings_notifier.dart';
@@ -42,9 +45,31 @@ class SettingsScreen extends ConsumerWidget {
               onChanged: (v) => notifier.setDefaultRestTime(v.round()),
             ),
           ),
-          // Export DB tile added in Task 15 after share_plus is integrated.
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.upload_file),
+            title: Text(context.l10n.settingsExportData),
+            onTap: () => _exportDb(context),
+          ),
         ],
       ),
     );
+  }
+}
+
+Future<void> _exportDb(BuildContext context) async {
+  try {
+    final docsDir = await getApplicationDocumentsDirectory();
+    final dbPath = p.join(docsDir.path, 'costrutrain.db');
+    await SharePlus.instance.share(
+      ShareParams(files: [XFile(dbPath)]),
+    );
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.settingsExportSuccess)),
+      );
+    }
+  } catch (_) {
+    // Share sheet dismissed or error — no action needed.
   }
 }
