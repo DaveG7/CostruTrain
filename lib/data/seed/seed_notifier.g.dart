@@ -22,7 +22,7 @@ final seedServiceProvider = Provider<SeedService>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef SeedServiceRef = ProviderRef<SeedService>;
-String _$seedNotifierHash() => r'e70a4e71e0df4f2790ce338e56c3444b24f7866a';
+String _$seedNotifierHash() => r'38353f5aa0e25886e9d97e5fcc343be184d7b20e';
 
 /// See also [SeedNotifier].
 @ProviderFor(SeedNotifier)
