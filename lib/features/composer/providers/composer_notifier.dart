@@ -7,6 +7,7 @@ import '../../../core/models/step_mode.dart';
 import '../../../core/models/workout.dart';
 import '../../../core/models/workout_step.dart';
 import '../../../data/repositories/drift_workout_repository.dart';
+import '../../settings/providers/settings_notifier.dart';
 
 part 'composer_notifier.g.dart';
 
@@ -58,10 +59,12 @@ class ComposerNotifier extends _$ComposerNotifier {
   }
 
   void addRestStep() {
+    final defaultRest = state.draft.globalRestSeconds ??
+        ref.read(settingsNotifierProvider).defaultRestTime;
     final step = RestStep(
       id: const Uuid().v4(),
       orderIndex: state.draft.steps.length,
-      durationSeconds: state.draft.globalRestSeconds ?? 60,
+      durationSeconds: defaultRest,
     );
     _patch(state.draft.copyWith(steps: [...state.draft.steps, step]));
   }

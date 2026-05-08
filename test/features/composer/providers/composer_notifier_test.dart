@@ -5,6 +5,7 @@ import 'package:costrutrain/core/models/workout_step.dart';
 import 'package:costrutrain/data/repositories/drift_workout_repository.dart';
 import 'package:costrutrain/data/repositories/workout_repository.dart';
 import 'package:costrutrain/features/composer/providers/composer_notifier.dart';
+import 'package:costrutrain/features/settings/providers/settings_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -28,6 +29,16 @@ class _FakeRepo implements WorkoutRepository {
   Future<void> delete(String id) async => store.remove(id);
 }
 
+// Fake SettingsNotifier for tests
+class _FakeSettingsNotifier extends SettingsNotifier {
+  @override
+  SettingsState build() => const SettingsState(
+        audioCuesEnabled: true,
+        hapticsEnabled: true,
+        defaultRestTime: 60,
+      );
+}
+
 Exercise _exercise({String id = 'ex1', String bodyPart = 'back'}) => Exercise(
       id: id,
       source: 'exercisedb',
@@ -38,7 +49,12 @@ Exercise _exercise({String id = 'ex1', String bodyPart = 'back'}) => Exercise(
     );
 
 ProviderContainer _container(_FakeRepo repo) => ProviderContainer(
-      overrides: [workoutRepositoryProvider.overrideWithValue(repo)],
+      overrides: [
+        workoutRepositoryProvider.overrideWithValue(repo),
+        settingsNotifierProvider.overrideWith(
+          () => _FakeSettingsNotifier(),
+        ),
+      ],
     );
 
 void main() {
