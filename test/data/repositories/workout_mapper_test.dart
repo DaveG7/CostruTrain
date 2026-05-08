@@ -13,6 +13,8 @@ WorkoutRow _workout({String tags = '[]'}) => WorkoutRow(
       cooldownS: null,
       createdAt: 1000,
       updatedAt: 1000,
+      templateId: null,
+      isTemplate: false,
     );
 
 WorkoutStepRow _exerciseRow({

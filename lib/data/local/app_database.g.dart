@@ -722,6 +722,22 @@ class $WorkoutsTable extends Workouts
   late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
       'updated_at', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _templateIdMeta =
+      const VerificationMeta('templateId');
+  @override
+  late final GeneratedColumn<String> templateId = GeneratedColumn<String>(
+      'template_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _isTemplateMeta =
+      const VerificationMeta('isTemplate');
+  @override
+  late final GeneratedColumn<bool> isTemplate = GeneratedColumn<bool>(
+      'is_template', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_template" IN (0, 1))'),
+      defaultValue: const Constant(false));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -732,7 +748,9 @@ class $WorkoutsTable extends Workouts
         warmupSeconds,
         cooldownS,
         createdAt,
-        updatedAt
+        updatedAt,
+        templateId,
+        isTemplate
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -793,6 +811,18 @@ class $WorkoutsTable extends Workouts
     } else if (isInserting) {
       context.missing(_updatedAtMeta);
     }
+    if (data.containsKey('template_id')) {
+      context.handle(
+          _templateIdMeta,
+          templateId.isAcceptableOrUnknown(
+              data['template_id']!, _templateIdMeta));
+    }
+    if (data.containsKey('is_template')) {
+      context.handle(
+          _isTemplateMeta,
+          isTemplate.isAcceptableOrUnknown(
+              data['is_template']!, _isTemplateMeta));
+    }
     return context;
   }
 
@@ -820,6 +850,10 @@ class $WorkoutsTable extends Workouts
           .read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
       updatedAt: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}updated_at'])!,
+      templateId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}template_id']),
+      isTemplate: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_template'])!,
     );
   }
 
@@ -839,6 +873,8 @@ class WorkoutRow extends DataClass implements Insertable<WorkoutRow> {
   final int? cooldownS;
   final int createdAt;
   final int updatedAt;
+  final String? templateId;
+  final bool isTemplate;
   const WorkoutRow(
       {required this.id,
       required this.name,
@@ -848,7 +884,9 @@ class WorkoutRow extends DataClass implements Insertable<WorkoutRow> {
       this.warmupSeconds,
       this.cooldownS,
       required this.createdAt,
-      required this.updatedAt});
+      required this.updatedAt,
+      this.templateId,
+      required this.isTemplate});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -869,6 +907,10 @@ class WorkoutRow extends DataClass implements Insertable<WorkoutRow> {
     }
     map['created_at'] = Variable<int>(createdAt);
     map['updated_at'] = Variable<int>(updatedAt);
+    if (!nullToAbsent || templateId != null) {
+      map['template_id'] = Variable<String>(templateId);
+    }
+    map['is_template'] = Variable<bool>(isTemplate);
     return map;
   }
 
@@ -891,6 +933,10 @@ class WorkoutRow extends DataClass implements Insertable<WorkoutRow> {
           : Value(cooldownS),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
+      templateId: templateId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(templateId),
+      isTemplate: Value(isTemplate),
     );
   }
 
@@ -907,6 +953,8 @@ class WorkoutRow extends DataClass implements Insertable<WorkoutRow> {
       cooldownS: serializer.fromJson<int?>(json['cooldownS']),
       createdAt: serializer.fromJson<int>(json['createdAt']),
       updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      templateId: serializer.fromJson<String?>(json['templateId']),
+      isTemplate: serializer.fromJson<bool>(json['isTemplate']),
     );
   }
   @override
@@ -922,6 +970,8 @@ class WorkoutRow extends DataClass implements Insertable<WorkoutRow> {
       'cooldownS': serializer.toJson<int?>(cooldownS),
       'createdAt': serializer.toJson<int>(createdAt),
       'updatedAt': serializer.toJson<int>(updatedAt),
+      'templateId': serializer.toJson<String?>(templateId),
+      'isTemplate': serializer.toJson<bool>(isTemplate),
     };
   }
 
@@ -934,7 +984,9 @@ class WorkoutRow extends DataClass implements Insertable<WorkoutRow> {
           Value<int?> warmupSeconds = const Value.absent(),
           Value<int?> cooldownS = const Value.absent(),
           int? createdAt,
-          int? updatedAt}) =>
+          int? updatedAt,
+          Value<String?> templateId = const Value.absent(),
+          bool? isTemplate}) =>
       WorkoutRow(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -946,6 +998,8 @@ class WorkoutRow extends DataClass implements Insertable<WorkoutRow> {
         cooldownS: cooldownS.present ? cooldownS.value : this.cooldownS,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
+        templateId: templateId.present ? templateId.value : this.templateId,
+        isTemplate: isTemplate ?? this.isTemplate,
       );
   WorkoutRow copyWithCompanion(WorkoutsCompanion data) {
     return WorkoutRow(
@@ -962,6 +1016,10 @@ class WorkoutRow extends DataClass implements Insertable<WorkoutRow> {
       cooldownS: data.cooldownS.present ? data.cooldownS.value : this.cooldownS,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      templateId:
+          data.templateId.present ? data.templateId.value : this.templateId,
+      isTemplate:
+          data.isTemplate.present ? data.isTemplate.value : this.isTemplate,
     );
   }
 
@@ -976,14 +1034,16 @@ class WorkoutRow extends DataClass implements Insertable<WorkoutRow> {
           ..write('warmupSeconds: $warmupSeconds, ')
           ..write('cooldownS: $cooldownS, ')
           ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('templateId: $templateId, ')
+          ..write('isTemplate: $isTemplate')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(id, name, description, tags, globalRestS,
-      warmupSeconds, cooldownS, createdAt, updatedAt);
+      warmupSeconds, cooldownS, createdAt, updatedAt, templateId, isTemplate);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -996,7 +1056,9 @@ class WorkoutRow extends DataClass implements Insertable<WorkoutRow> {
           other.warmupSeconds == this.warmupSeconds &&
           other.cooldownS == this.cooldownS &&
           other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt);
+          other.updatedAt == this.updatedAt &&
+          other.templateId == this.templateId &&
+          other.isTemplate == this.isTemplate);
 }
 
 class WorkoutsCompanion extends UpdateCompanion<WorkoutRow> {
@@ -1009,6 +1071,8 @@ class WorkoutsCompanion extends UpdateCompanion<WorkoutRow> {
   final Value<int?> cooldownS;
   final Value<int> createdAt;
   final Value<int> updatedAt;
+  final Value<String?> templateId;
+  final Value<bool> isTemplate;
   final Value<int> rowid;
   const WorkoutsCompanion({
     this.id = const Value.absent(),
@@ -1020,6 +1084,8 @@ class WorkoutsCompanion extends UpdateCompanion<WorkoutRow> {
     this.cooldownS = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.templateId = const Value.absent(),
+    this.isTemplate = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   WorkoutsCompanion.insert({
@@ -1032,6 +1098,8 @@ class WorkoutsCompanion extends UpdateCompanion<WorkoutRow> {
     this.cooldownS = const Value.absent(),
     required int createdAt,
     required int updatedAt,
+    this.templateId = const Value.absent(),
+    this.isTemplate = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         name = Value(name),
@@ -1047,6 +1115,8 @@ class WorkoutsCompanion extends UpdateCompanion<WorkoutRow> {
     Expression<int>? cooldownS,
     Expression<int>? createdAt,
     Expression<int>? updatedAt,
+    Expression<String>? templateId,
+    Expression<bool>? isTemplate,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1059,6 +1129,8 @@ class WorkoutsCompanion extends UpdateCompanion<WorkoutRow> {
       if (cooldownS != null) 'cooldown_s': cooldownS,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
+      if (templateId != null) 'template_id': templateId,
+      if (isTemplate != null) 'is_template': isTemplate,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1073,6 +1145,8 @@ class WorkoutsCompanion extends UpdateCompanion<WorkoutRow> {
       Value<int?>? cooldownS,
       Value<int>? createdAt,
       Value<int>? updatedAt,
+      Value<String?>? templateId,
+      Value<bool>? isTemplate,
       Value<int>? rowid}) {
     return WorkoutsCompanion(
       id: id ?? this.id,
@@ -1084,6 +1158,8 @@ class WorkoutsCompanion extends UpdateCompanion<WorkoutRow> {
       cooldownS: cooldownS ?? this.cooldownS,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      templateId: templateId ?? this.templateId,
+      isTemplate: isTemplate ?? this.isTemplate,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1118,6 +1194,12 @@ class WorkoutsCompanion extends UpdateCompanion<WorkoutRow> {
     if (updatedAt.present) {
       map['updated_at'] = Variable<int>(updatedAt.value);
     }
+    if (templateId.present) {
+      map['template_id'] = Variable<String>(templateId.value);
+    }
+    if (isTemplate.present) {
+      map['is_template'] = Variable<bool>(isTemplate.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1136,6 +1218,8 @@ class WorkoutsCompanion extends UpdateCompanion<WorkoutRow> {
           ..write('cooldownS: $cooldownS, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('templateId: $templateId, ')
+          ..write('isTemplate: $isTemplate, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -2660,6 +2744,8 @@ typedef $$WorkoutsTableCreateCompanionBuilder = WorkoutsCompanion Function({
   Value<int?> cooldownS,
   required int createdAt,
   required int updatedAt,
+  Value<String?> templateId,
+  Value<bool> isTemplate,
   Value<int> rowid,
 });
 typedef $$WorkoutsTableUpdateCompanionBuilder = WorkoutsCompanion Function({
@@ -2672,6 +2758,8 @@ typedef $$WorkoutsTableUpdateCompanionBuilder = WorkoutsCompanion Function({
   Value<int?> cooldownS,
   Value<int> createdAt,
   Value<int> updatedAt,
+  Value<String?> templateId,
+  Value<bool> isTemplate,
   Value<int> rowid,
 });
 
@@ -2731,6 +2819,12 @@ class $$WorkoutsTableFilterComposer
   ColumnFilters<int> get updatedAt => $composableBuilder(
       column: $table.updatedAt, builder: (column) => ColumnFilters(column));
 
+  ColumnFilters<String> get templateId => $composableBuilder(
+      column: $table.templateId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isTemplate => $composableBuilder(
+      column: $table.isTemplate, builder: (column) => ColumnFilters(column));
+
   Expression<bool> workoutStepsRefs(
       Expression<bool> Function($$WorkoutStepsTableFilterComposer f) f) {
     final $$WorkoutStepsTableFilterComposer composer = $composerBuilder(
@@ -2789,6 +2883,12 @@ class $$WorkoutsTableOrderingComposer
 
   ColumnOrderings<int> get updatedAt => $composableBuilder(
       column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get templateId => $composableBuilder(
+      column: $table.templateId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isTemplate => $composableBuilder(
+      column: $table.isTemplate, builder: (column) => ColumnOrderings(column));
 }
 
 class $$WorkoutsTableAnnotationComposer
@@ -2826,6 +2926,12 @@ class $$WorkoutsTableAnnotationComposer
 
   GeneratedColumn<int> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get templateId => $composableBuilder(
+      column: $table.templateId, builder: (column) => column);
+
+  GeneratedColumn<bool> get isTemplate => $composableBuilder(
+      column: $table.isTemplate, builder: (column) => column);
 
   Expression<T> workoutStepsRefs<T extends Object>(
       Expression<T> Function($$WorkoutStepsTableAnnotationComposer a) f) {
@@ -2881,6 +2987,8 @@ class $$WorkoutsTableTableManager extends RootTableManager<
             Value<int?> cooldownS = const Value.absent(),
             Value<int> createdAt = const Value.absent(),
             Value<int> updatedAt = const Value.absent(),
+            Value<String?> templateId = const Value.absent(),
+            Value<bool> isTemplate = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               WorkoutsCompanion(
@@ -2893,6 +3001,8 @@ class $$WorkoutsTableTableManager extends RootTableManager<
             cooldownS: cooldownS,
             createdAt: createdAt,
             updatedAt: updatedAt,
+            templateId: templateId,
+            isTemplate: isTemplate,
             rowid: rowid,
           ),
           createCompanionCallback: ({
@@ -2905,6 +3015,8 @@ class $$WorkoutsTableTableManager extends RootTableManager<
             Value<int?> cooldownS = const Value.absent(),
             required int createdAt,
             required int updatedAt,
+            Value<String?> templateId = const Value.absent(),
+            Value<bool> isTemplate = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               WorkoutsCompanion.insert(
@@ -2917,6 +3029,8 @@ class $$WorkoutsTableTableManager extends RootTableManager<
             cooldownS: cooldownS,
             createdAt: createdAt,
             updatedAt: updatedAt,
+            templateId: templateId,
+            isTemplate: isTemplate,
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0

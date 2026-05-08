@@ -35,6 +35,8 @@ class Workouts extends Table {
   IntColumn get cooldownS => integer().nullable()();
   IntColumn get createdAt => integer()();
   IntColumn get updatedAt => integer()();
+  TextColumn get templateId => text().nullable()();
+  BoolColumn get isTemplate => boolean().withDefault(const Constant(false))();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -99,7 +101,7 @@ class AppDatabase extends _$AppDatabase {
             ));
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -126,6 +128,10 @@ class AppDatabase extends _$AppDatabase {
           }
           if (from < 4) {
             await m.createTable(sessions);
+          }
+          if (from < 5) {
+            await m.addColumn(workouts, workouts.templateId);
+            await m.addColumn(workouts, workouts.isTemplate);
           }
         },
       );

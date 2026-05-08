@@ -2,6 +2,7 @@ import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:costrutrain/data/local/app_database.dart';
+import 'package:uuid/uuid.dart';
 
 void main() {
   late AppDatabase db;
@@ -92,6 +93,26 @@ void main() {
     expect(rows.length, 1);
     expect(rows.first.read<String>('workout_name_snapshot'), 'Test Workout');
     expect(rows.first.read<int>('was_completed'), 0);
+    await db.close();
+  });
+
+  test('v4 to v5: workouts table gains template_id and is_template columns', () async {
+    final db = AppDatabase(
+      NativeDatabase.memory(logStatements: false),
+    );
+    final workoutId = const Uuid().v4();
+    await db.into(db.workouts).insert(WorkoutsCompanion(
+      id: Value(workoutId),
+      name: const Value('Test'),
+      tags: const Value('[]'),
+      createdAt: Value(DateTime.now().millisecondsSinceEpoch),
+      updatedAt: Value(DateTime.now().millisecondsSinceEpoch),
+    ));
+    final row = await (db.select(db.workouts)
+          ..where((t) => t.id.equals(workoutId)))
+        .getSingle();
+    expect(row.isTemplate, isFalse);
+    expect(row.templateId, isNull);
     await db.close();
   });
 }
