@@ -9,6 +9,7 @@ import '../features/library/views/exercise_detail_screen.dart';
 import '../features/library/views/exercise_list_screen.dart';
 import '../features/library/views/seed_splash_screen.dart';
 import '../features/my_workouts/views/my_workouts_screen.dart';
+import '../features/onboarding/views/onboarding_screen.dart';
 import '../features/player/views/player_screen.dart';
 import '../features/settings/views/settings_screen.dart';
 import '../shared/widgets/scaffold_with_nav.dart';
@@ -22,13 +23,22 @@ GoRouter goRouter(GoRouterRef ref) {
     initialLocation: '/library',
     redirect: (context, state) {
       final seeded = prefs.getBool('seeded') ?? false;
+      final onboardingDone = prefs.getBool('onboarding_done') ?? false;
+
       if (!seeded && state.matchedLocation != '/splash') return '/splash';
+      if (seeded && !onboardingDone && state.matchedLocation != '/onboarding') {
+        return '/onboarding';
+      }
       return null;
     },
     routes: [
       GoRoute(
         path: '/splash',
         builder: (context, state) => const SeedSplashScreen(),
+      ),
+      GoRoute(
+        path: '/onboarding',
+        builder: (context, state) => const OnboardingScreen(),
       ),
       // Detail routes — OUTSIDE ShellRoute (full-screen push, no bottom nav).
       GoRoute(
