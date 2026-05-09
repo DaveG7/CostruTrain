@@ -41,6 +41,7 @@ dev_dependencies:
   riverpod_generator: ^2.4.3
   riverpod_lint: ^2.3.13
   custom_lint: ^0.7.6
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
@@ -49,3 +50,4 @@ flutter:
     - assets/seed/exercises.json
     - assets/seed/templates.json
     - assets/audio/
+    - assets/icon/
