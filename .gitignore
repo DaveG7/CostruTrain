@@ -20,9 +20,11 @@ custom_lint.log
 devtools_options.yaml
 *.log
 
-# OpenWolf ephemeral session files
-.wolf/token-ledger.json
-.wolf/hooks/_session.json
-.wolf/cron-state.json
-.wolf/designqc-report.json
-.wolf/suggestions.json
+# OpenWolf — private AI session tooling
+.wolf/
+
+# Claude Code — local tooling config
+.claude/
+
+# Internal planning docs
+docs/superpowers/
