@@ -4,18 +4,6 @@
 
 This project uses OpenWolf for context management. Read and follow .wolf/OPENWOLF.md every session. Check .wolf/cerebrum.md before generating code. Check .wolf/anatomy.md before reading files.
 
-## Token Discipline
-- Session-init reads (anatomy.md, cerebrum.md) are exempt
-- Never re-read *project source files* in full mid-session
-- For partial updates: use offset/limit or targeted line reads
-- Re-read full source only if architecture context is genuinely lost
-
-## Compact Policy
-After completing a discrete task (all tests green, task verified):
-1. Output a summary line: `✅ TASK N COMPLETE`
-2. Immediately run /compact
-3. Only then await the next task
-
 # CLAUDE.md — CostruTrain: Training Composer App
 
 ## Project Identity
@@ -247,3 +235,4 @@ Before implementing ANY screen, widget, or visual component:
 - Commit messages: `feat:`, `fix:`, `refactor:`, `test:`, `docs:` prefixes
 - When uncertain about a model change, ASK before implementing — model changes cascade
 - Check `ROADMAP.md` before starting any task to confirm phase alignment
+- Mark the current phase complete in `ROADMAP.md` before the final commit of any phase
