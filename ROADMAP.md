@@ -104,19 +104,19 @@
 
 ---
 
-## Phase 4 — Polish & Public Alpha (Week 11–13)
+## Phase 4a — Polish & Public Alpha ✅ COMPLETE (2026-05-09)
 **Goal:** Good enough to share with strangers.
 
 ### Deliverables
-- [ ] Onboarding flow: 3 screens (what it is, create first workout, privacy statement)
-- [ ] Settings screen: default rest time, audio on/off, haptics on/off, theme toggle
-- [ ] Workout templates: 5–10 pre-built workouts bundled (Tabata 8-round, 21-15-9, EMOM 10min, etc.)
-- [ ] App icon + splash screen (designed, not placeholder)
-- [ ] Proper responsive layout: phone / tablet / desktop breakpoints
-- [ ] Localization scaffolding: English complete, German skeleton
-- [ ] Error handling: empty states, failed GIF loads, corrupted DB recovery
-- [ ] GitHub repo goes public: README, screenshots, Docker run instructions
-- [ ] GitHub Actions: `flutter test` + `flutter analyze` on every PR
+- [x] Onboarding flow: 2-screen non-skippable intro with template picker
+- [x] Settings screen: default rest time slider, audio on/off, haptics on/off, export DB
+- [x] Workout templates: 5 bundled WODs (Fran, Cindy, Tabata, EMOM 10, 5×5 Strength)
+- [x] App icon: flutter_launcher_icons setup + placeholder icon (▶ on #0F0F0F)
+- [x] Error handling: empty states across all screens, GIF error fallback, DB error screen with nuclear option
+- [x] README: public alpha write-up, build-from-source instructions
+- [ ] Proper responsive layout: phone / tablet / desktop breakpoints (Phase 4b+)
+- [ ] Localization scaffolding: English complete, German skeleton (Phase 4b+)
+- [ ] GitHub Actions: `flutter test` + `flutter analyze` on every PR (Phase 4b+)
 - [ ] **Milestone:** Post on r/selfhosted and r/homegym. Get 10 real users.
 
 ---
