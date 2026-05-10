@@ -1,0 +1,7 @@
+# CostruTrain Android signing configuration
+# Copy this file to android/key.properties and fill in your values
+# NEVER commit android/key.properties to git
+storePassword=YOUR_KEYSTORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=costrutrain
+storeFile=/absolute/path/to/costrutrain-release.jks

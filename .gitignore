@@ -28,3 +28,8 @@ devtools_options.yaml
 
 # Internal planning docs
 docs/superpowers/
+
+# Android signing — NEVER commit these
+android/key.properties
+*.jks
+*.keystore
