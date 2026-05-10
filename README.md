@@ -2,6 +2,8 @@
 
 > Build your training. Own your data.
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-blue?logo=github)](https://daveg7.github.io/CostruTrain/)
+
 A privacy-first, open-source workout composer and player for people who actually program their own training — CrossFit, strength, HIIT, home gym.
 
 ---
