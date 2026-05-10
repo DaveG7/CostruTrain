@@ -1,0 +1,15 @@
+lib/
+test/
+android/
+ios/
+macos/
+windows/
+linux/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
+*.md
+.wolf/
+.claude/
+docs/
