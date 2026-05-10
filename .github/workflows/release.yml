@@ -23,9 +23,8 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build web
-        run: flutter build web --release --web-renderer canvaskit --base-href /CostruTrain/
-
+      # Phase 4b TODO: inject keystore credentials from GitHub Secrets for production signing.
+      # Current behaviour: falls back to debug signing (acceptable for sideload/testing APKs).
       - name: Build APK (split per ABI)
         run: flutter build apk --release --split-per-abi
 
