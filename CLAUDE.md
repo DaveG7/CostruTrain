@@ -236,3 +236,31 @@ Before implementing ANY screen, widget, or visual component:
 - When uncertain about a model change, ASK before implementing — model changes cascade
 - Check `ROADMAP.md` before starting any task to confirm phase alignment
 - Mark the current phase complete in `ROADMAP.md` before the final commit of any phase
+
+## Versioning
+
+**Convention:** `MAJOR.MINOR.PATCH[-channel.N]+BUILD`
+
+| Component | Rule | Example |
+|-----------|------|---------|
+| `MAJOR` | Breaking DB migration or full redesign | `2.0.0` |
+| `MINOR` | New visible feature/screen/flow | `1.1.0` |
+| `PATCH` | Bug fix, polish, copy change | `1.1.1` |
+| `-channel.N` | Pre-release stage (omit for production) | `-beta.1`, `-rc.1` |
+| `+BUILD` | Monotonically increasing, never reset | `+42` |
+
+**Channel stages:**
+```
+1.1.0-alpha.1+42   → internal / dev only
+1.1.0-beta.1+43   → Firebase App Distribution / sideload APK
+1.1.0-rc.1+44     → final QA
+1.1.0+45          → production (Play Store, GitHub Release, GitHub Pages)
+```
+
+**Git tag convention:**
+```bash
+git tag v1.1.0 -m "CostruTrain 1.1.0 — <one-liner changelog>"
+git push origin --tags
+```
+
+**Build number strategy:** Sequential, tied to `GITHUB_RUN_NUMBER` in CI. Never reset. Never timestamp-based.

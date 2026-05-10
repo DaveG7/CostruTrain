@@ -2,6 +2,8 @@
 
 > Build your training. Own your data.
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-blue?logo=github)](https://daveg7.github.io/CostruTrain/)
+
 A privacy-first, open-source workout composer and player for people who actually program their own training — CrossFit, strength, HIIT, home gym.
 
 ---
@@ -57,3 +59,24 @@ Requires Flutter 3.x. Tested on Android, Web, and macOS.
 ## Contributing
 
 PRs welcome. Please open an issue first for large changes to discuss the approach.
+
+---
+
+## Docker (local hosting)
+
+Run the app locally without installing Flutter:
+
+```bash
+# Build Flutter web + run in nginx container
+./docker/build_and_run.sh
+```
+
+Or manually:
+
+```bash
+flutter build web --release --base-href /
+docker build -t costrutrain:local .
+docker run --rm -p 8080:80 costrutrain:local
+```
+
+Open [http://localhost:8080](http://localhost:8080)
