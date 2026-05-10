@@ -74,7 +74,7 @@ Run the app locally without installing Flutter:
 Or manually:
 
 ```bash
-flutter build web --release --web-renderer canvaskit --base-href /
+flutter build web --release --base-href /
 docker build -t costrutrain:local .
 docker run --rm -p 8080:80 costrutrain:local
 ```
