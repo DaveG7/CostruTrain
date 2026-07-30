@@ -7,6 +7,7 @@ import '../../../core/models/workout.dart';
 import '../../../core/models/workout_step.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../data/repositories/drift_workout_repository.dart';
+import '../../../data/repositories/exercise_lookup_provider.dart';
 import '../../../features/library/views/exercise_list_screen.dart';
 import '../../../features/my_workouts/providers/my_workouts_notifier.dart';
 import '../providers/composer_notifier.dart';
@@ -181,6 +182,13 @@ class _ComposerScreenState extends ConsumerState<ComposerScreen> {
     });
   }
 
+  void _cancelCircuitSelect() {
+    setState(() {
+      _isCircuitSelectMode = false;
+      _circuitSelectedIndices.clear();
+    });
+  }
+
   Future<void> _save() async {
     await ref.read(composerNotifierProvider.notifier).save();
     ref.read(myWorkoutsNotifierProvider.notifier).refresh();
@@ -192,15 +200,34 @@ class _ComposerScreenState extends ConsumerState<ComposerScreen> {
     return '';
   }
 
+  Set<String> _collectExerciseIds(List<WorkoutStep> steps) {
+    final ids = <String>{};
+    for (final step in steps) {
+      switch (step) {
+        case ExerciseStep s:
+          ids.add(s.exerciseId);
+        case CircuitBlock b:
+          for (final child in b.steps) {
+            ids.add(child.exerciseId);
+          }
+        case RestStep _:
+        case CountdownStep _:
+          break;
+      }
+    }
+    return ids;
+  }
+
   @override
   Widget build(BuildContext context) {
     final composerState = ref.watch(composerNotifierProvider);
     final draft = composerState.draft;
     final isWide = MediaQuery.of(context).size.width >= 900;
 
-    // Exercise name cache — Phase 2.5 will wire exerciseNamesProvider.
-    // For now, display exerciseId as fallback.
-    const exerciseNames = <String, String>{};
+    final exerciseNames = <String, String>{
+      for (final id in _collectExerciseIds(draft.steps))
+        id: ref.watch(exerciseByIdProvider(id)).valueOrNull?.name ?? id,
+    };
 
     return PopScope(
       canPop: false,
@@ -219,17 +246,25 @@ class _ComposerScreenState extends ConsumerState<ComposerScreen> {
             ),
           ),
           actions: [
-            if (_isCircuitSelectMode)
+            if (_isCircuitSelectMode) ...[
+              TextButton(
+                onPressed: _cancelCircuitSelect,
+                child: Text(context.l10n.cancelCircuitSelect),
+              ),
               TextButton(
                 onPressed: _circuitSelectedIndices.length >= 2
                     ? _confirmWrapInCircuit
                     : null,
                 child: Text(
                   context.l10n.wrapInCircuit(_circuitSelectedIndices.length),
-                  style: const TextStyle(color: Color(0xFFE8FF00)),
+                  style: TextStyle(
+                    color: _circuitSelectedIndices.length >= 2
+                        ? const Color(0xFFE8FF00)
+                        : Theme.of(context).disabledColor,
+                  ),
                 ),
-              )
-            else ...[
+              ),
+            ] else ...[
               IconButton(
                 icon: const Icon(Icons.play_arrow),
                 onPressed: widget.workoutId != null
