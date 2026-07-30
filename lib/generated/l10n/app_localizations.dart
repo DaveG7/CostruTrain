@@ -290,6 +290,12 @@ abstract class AppLocalizations {
   /// **'Wrap {count} in Circuit'**
   String wrapInCircuit(int count);
 
+  /// No description provided for @cancelCircuitSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancelCircuitSelect;
+
   /// No description provided for @circuitRounds.
   ///
   /// In en, this message translates to:
@@ -457,6 +463,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'ELAPSED'**
   String get playerTimerElapsed;
+
+  /// No description provided for @playerGetReadyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Ready'**
+  String get playerGetReadyLabel;
+
+  /// No description provided for @playerRestLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Rest'**
+  String get playerRestLabel;
+
+  /// No description provided for @playerCountdownLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Countdown'**
+  String get playerCountdownLabel;
 
   /// No description provided for @historyEmpty.
   ///

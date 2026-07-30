@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../core/models/exercise.dart';
 import '../theme/ct_colors.dart';
 import 'ct_filter_chip.dart';
+import 'ct_gif_placeholder.dart';
 
 class CTExerciseCard extends StatelessWidget {
   const CTExerciseCard({
@@ -29,14 +31,29 @@ class CTExerciseCard extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Row(
             children: [
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  color: ct.elevated,
-                  borderRadius: BorderRadius.circular(8),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: SizedBox(
+                  width: 56,
+                  height: 56,
+                  child: exercise.gifUrl != null
+                      ? CachedNetworkImage(
+                          imageUrl: exercise.gifUrl!,
+                          fit: BoxFit.cover,
+                          placeholder: (_, __) =>
+                              const CTGifPlaceholder(width: 56, height: 56),
+                          errorWidget: (context, url, error) => Container(
+                            color: ct.elevated,
+                            child: const Icon(LucideIcons.dumbbell,
+                                color: Colors.white38, size: 24),
+                          ),
+                        )
+                      : Container(
+                          color: ct.elevated,
+                          child: const Icon(LucideIcons.dumbbell,
+                              color: Colors.white38, size: 24),
+                        ),
                 ),
-                child: const Icon(LucideIcons.dumbbell, color: Colors.white38, size: 24),
               ),
               const SizedBox(width: 12),
               Expanded(

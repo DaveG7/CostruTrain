@@ -113,6 +113,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get cancelCircuitSelect => 'Cancel';
+
+  @override
   String get circuitRounds => 'Rounds';
 
   @override
@@ -197,6 +200,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get playerTimerElapsed => 'ELAPSED';
+
+  @override
+  String get playerGetReadyLabel => 'Get Ready';
+
+  @override
+  String get playerRestLabel => 'Rest';
+
+  @override
+  String get playerCountdownLabel => 'Countdown';
 
   @override
   String get historyEmpty =>

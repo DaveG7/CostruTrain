@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-import '../../../core/models/exercise.dart';
-import '../../../data/repositories/bundled_json_exercise_repository.dart';
+import '../../../data/repositories/exercise_lookup_provider.dart';
 import '../../../shared/theme/ct_colors.dart';
 import '../../../shared/widgets/ct_filter_chip.dart';
 import '../../../shared/widgets/ct_gif_placeholder.dart';
@@ -17,7 +16,7 @@ class ExerciseDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncExercise = ref.watch(
-      _exerciseDetailProvider(exerciseId),
+      exerciseByIdProvider(exerciseId),
     );
 
     return Scaffold(
@@ -144,9 +143,3 @@ class _InfoRow extends StatelessWidget {
     );
   }
 }
-
-// Private provider — scoped to this file.
-final _exerciseDetailProvider = FutureProvider.autoDispose
-    .family<Exercise?, String>((ref, id) async {
-  return ref.watch(exerciseRepositoryProvider).getById(id);
-});

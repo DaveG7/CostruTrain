@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +9,7 @@ import '../../../core/player/player_phase.dart';
 import '../../../core/player/player_state.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../data/repositories/drift_workout_repository.dart';
+import '../../../data/repositories/exercise_lookup_provider.dart';
 import '../providers/player_notifier.dart';
 import '../widgets/countdown_ring.dart';
 import '../widgets/next_step_preview.dart';
@@ -176,19 +178,37 @@ class _ActiveView extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 8),
-              Container(
-                width: 220,
-                height: 140,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF242424),
-                  borderRadius: BorderRadius.circular(8),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: SizedBox(
+                  width: 220,
+                  height: 140,
+                  child: switch (_currentGifUrl(ref, state)) {
+                    final url? => CachedNetworkImage(
+                        imageUrl: url,
+                        fit: BoxFit.cover,
+                        placeholder: (_, __) => Container(
+                          color: const Color(0xFF242424),
+                          child: const Icon(Icons.fitness_center,
+                              size: 40, color: Color(0xFF9E9E9E)),
+                        ),
+                        errorWidget: (_, __, ___) => Container(
+                          color: const Color(0xFF242424),
+                          child: const Icon(Icons.fitness_center,
+                              size: 40, color: Color(0xFF9E9E9E)),
+                        ),
+                      ),
+                    _ => Container(
+                        color: const Color(0xFF242424),
+                        child: const Icon(Icons.fitness_center,
+                            size: 40, color: Color(0xFF9E9E9E)),
+                      ),
+                  },
                 ),
-                child: const Icon(Icons.fitness_center,
-                    size: 40, color: Color(0xFF9E9E9E)),
               ),
               const SizedBox(height: 14),
               Text(
-                _exerciseName(state),
+                _exerciseName(context, ref, state),
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
@@ -245,13 +265,30 @@ class _ActiveView extends ConsumerWidget {
     );
   }
 
-  String _exerciseName(PlayerState state) {
+  String _exerciseName(BuildContext context, WidgetRef ref, PlayerState state) {
     if (state.sequence.isEmpty) return '';
+    // The pre-work buffer (PlayerPhase.countdown) always reads "Get Ready",
+    // regardless of what the upcoming step is.
+    if (state.phase == PlayerPhase.countdown) {
+      return context.l10n.playerGetReadyLabel;
+    }
     final step = state.current.step;
-    if (step is ExerciseStep) return step.exerciseId;
-    if (step is RestStep) return 'Rest';
-    if (step is CountdownStep) return 'Get Ready';
+    if (step is ExerciseStep) {
+      final exercise = ref.watch(exerciseByIdProvider(step.exerciseId)).valueOrNull;
+      return exercise?.name ?? step.exerciseId;
+    }
+    if (step is RestStep) return context.l10n.playerRestLabel;
+    if (step is CountdownStep) return context.l10n.playerCountdownLabel;
     return '';
+  }
+
+  String? _currentGifUrl(WidgetRef ref, PlayerState state) {
+    if (state.sequence.isEmpty || state.phase == PlayerPhase.countdown) {
+      return null;
+    }
+    final step = state.current.step;
+    if (step is! ExerciseStep) return null;
+    return ref.watch(exerciseByIdProvider(step.exerciseId)).valueOrNull?.gifUrl;
   }
 
   String _detailLine(PlayerState state) {

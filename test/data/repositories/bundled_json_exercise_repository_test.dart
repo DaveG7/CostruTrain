@@ -52,4 +52,32 @@ void main() {
     final e = await repo.getById('exercisedb_999');
     expect(e, isNull);
   });
+
+  test('getById returns gifUrl when the row has one', () async {
+    await db.into(db.exercises).insert(ExercisesCompanion.insert(
+          id: 'exercisedb_gif1',
+          source: 'exercisedb',
+          name: 'Push-up',
+          bodyPart: 'chest',
+          targetPrimary: 'chest',
+          equipment: 'body weight',
+          gifUrl: const Value('https://static.exercisedb.dev/media/gif1.gif'),
+        ));
+    final e = await repo.getById('exercisedb_gif1');
+    expect(e?.gifUrl, 'https://static.exercisedb.dev/media/gif1.gif');
+  });
+
+  test('search() returns gifUrl when the row has one', () async {
+    await db.into(db.exercises).insert(ExercisesCompanion.insert(
+          id: 'exercisedb_gif2',
+          source: 'exercisedb',
+          name: 'Squat',
+          bodyPart: 'upper legs',
+          targetPrimary: 'upper legs',
+          equipment: 'body weight',
+          gifUrl: const Value('https://static.exercisedb.dev/media/gif2.gif'),
+        ));
+    final all = await repo.search();
+    expect(all.single.gifUrl, 'https://static.exercisedb.dev/media/gif2.gif');
+  });
 }

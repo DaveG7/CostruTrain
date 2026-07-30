@@ -1,24 +1,37 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/player/player_state.dart';
 import '../../../core/models/workout_step.dart';
+import '../../../data/repositories/exercise_lookup_provider.dart';
 
-class NextStepPreview extends StatelessWidget {
+class NextStepPreview extends ConsumerWidget {
   const NextStepPreview({super.key, required this.nextFlat});
 
   final FlatStep nextFlat;
 
-  String _stepName() {
+  String _stepName(WidgetRef ref) {
     final step = nextFlat.step;
-    if (step is ExerciseStep) return step.exerciseId;
+    if (step is ExerciseStep) {
+      final exercise = ref.watch(exerciseByIdProvider(step.exerciseId)).valueOrNull;
+      return exercise?.name ?? step.exerciseId;
+    }
     if (step is RestStep) return 'Rest';
     if (step is CountdownStep) return 'Countdown';
     if (step is CircuitBlock) return 'Circuit';
     return 'Next';
   }
 
+  String? _gifUrl(WidgetRef ref) {
+    final step = nextFlat.step;
+    if (step is! ExerciseStep) return null;
+    return ref.watch(exerciseByIdProvider(step.exerciseId)).valueOrNull?.gifUrl;
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final gifUrl = _gifUrl(ref);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
@@ -28,15 +41,32 @@ class NextStepPreview extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
-              color: const Color(0xFF242424),
-              borderRadius: BorderRadius.circular(4),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: SizedBox(
+              width: 42,
+              height: 42,
+              child: gifUrl != null
+                  ? CachedNetworkImage(
+                      imageUrl: gifUrl,
+                      fit: BoxFit.cover,
+                      placeholder: (_, __) => Container(
+                        color: const Color(0xFF242424),
+                        child: const Icon(Icons.fitness_center, size: 20,
+                            color: Color(0xFF9E9E9E)),
+                      ),
+                      errorWidget: (_, __, ___) => Container(
+                        color: const Color(0xFF242424),
+                        child: const Icon(Icons.fitness_center, size: 20,
+                            color: Color(0xFF9E9E9E)),
+                      ),
+                    )
+                  : Container(
+                      color: const Color(0xFF242424),
+                      child: const Icon(Icons.fitness_center, size: 20,
+                          color: Color(0xFF9E9E9E)),
+                    ),
             ),
-            child: const Icon(Icons.fitness_center, size: 20,
-                color: Color(0xFF9E9E9E)),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -54,7 +84,7 @@ class NextStepPreview extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  _stepName(),
+                  _stepName(ref),
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
