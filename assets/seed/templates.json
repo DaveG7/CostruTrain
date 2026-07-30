@@ -34,17 +34,17 @@
     "globalRestSeconds": null,
     "steps": [
       {"type": "exercise", "id": "tf_01", "orderIndex": 0,
-       "exerciseId": "f7Y9eDZ", "mode": "reps", "reps": 21, "restSeconds": 0},
+       "exerciseId": "exercisedb_f7Y9eDZ", "mode": "reps", "reps": 21, "restSeconds": 0},
       {"type": "exercise", "id": "tf_02", "orderIndex": 1,
-       "exerciseId": "lBDjFxJ", "mode": "reps", "reps": 21, "restSeconds": 0},
+       "exerciseId": "exercisedb_lBDjFxJ", "mode": "reps", "reps": 21, "restSeconds": 0},
       {"type": "exercise", "id": "tf_03", "orderIndex": 2,
-       "exerciseId": "f7Y9eDZ", "mode": "reps", "reps": 15, "restSeconds": 0},
+       "exerciseId": "exercisedb_f7Y9eDZ", "mode": "reps", "reps": 15, "restSeconds": 0},
       {"type": "exercise", "id": "tf_04", "orderIndex": 3,
-       "exerciseId": "lBDjFxJ", "mode": "reps", "reps": 15, "restSeconds": 0},
+       "exerciseId": "exercisedb_lBDjFxJ", "mode": "reps", "reps": 15, "restSeconds": 0},
       {"type": "exercise", "id": "tf_05", "orderIndex": 4,
-       "exerciseId": "f7Y9eDZ", "mode": "reps", "reps": 9, "restSeconds": 0},
+       "exerciseId": "exercisedb_f7Y9eDZ", "mode": "reps", "reps": 9, "restSeconds": 0},
       {"type": "exercise", "id": "tf_06", "orderIndex": 5,
-       "exerciseId": "lBDjFxJ", "mode": "reps", "reps": 9, "restSeconds": 0}
+       "exerciseId": "exercisedb_lBDjFxJ", "mode": "reps", "reps": 9, "restSeconds": 0}
     ]
   },
   {
@@ -57,11 +57,11 @@
     "steps": [
       {"type": "countdown", "id": "tc_01", "orderIndex": 0, "durationSeconds": 1200},
       {"type": "exercise", "id": "tc_02", "orderIndex": 1,
-       "exerciseId": "lBDjFxJ", "mode": "reps", "reps": 5, "restSeconds": 0},
+       "exerciseId": "exercisedb_lBDjFxJ", "mode": "reps", "reps": 5, "restSeconds": 0},
       {"type": "exercise", "id": "tc_03", "orderIndex": 2,
-       "exerciseId": "I4hDWkc", "mode": "reps", "reps": 10, "restSeconds": 0},
+       "exerciseId": "exercisedb_I4hDWkc", "mode": "reps", "reps": 10, "restSeconds": 0},
       {"type": "exercise", "id": "tc_04", "orderIndex": 3,
-       "exerciseId": "5BZHW9s", "mode": "reps", "reps": 15, "restSeconds": 0}
+       "exerciseId": "exercisedb_5BZHW9s", "mode": "reps", "reps": 15, "restSeconds": 0}
     ]
   },
   {
@@ -95,7 +95,7 @@
       {"type": "circuit", "id": "t5_01", "orderIndex": 0, "rounds": 5,
        "children": [
          {"type": "exercise", "id": "t5_01a", "orderIndex": 0,
-          "exerciseId": "ila4NZS", "mode": "reps", "reps": 5, "restSeconds": 180}
+          "exerciseId": "exercisedb_ila4NZS", "mode": "reps", "reps": 5, "restSeconds": 180}
        ]
       }
     ]
