@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
@@ -58,6 +59,17 @@ class SettingsScreen extends ConsumerWidget {
 }
 
 Future<void> _exportDb(BuildContext context) async {
+  // path_provider's application-documents directory (and therefore a
+  // sharable local DB file path) doesn't exist on web — the database
+  // lives in browser storage instead. Fixing this properly requires
+  // exporting the WASM-backed DB's bytes, not just guarding the call, so
+  // for now give an honest heads-up instead of silently doing nothing.
+  if (kIsWeb) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(context.l10n.settingsExportNotSupportedOnWeb)),
+    );
+    return;
+  }
   try {
     final docsDir = await getApplicationDocumentsDirectory();
     final dbPath = p.join(docsDir.path, 'costrutrain.db');
@@ -70,6 +82,10 @@ Future<void> _exportDb(BuildContext context) async {
       );
     }
   } catch (_) {
-    // Share sheet dismissed or error — no action needed.
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.settingsExportFailed)),
+      );
+    }
   }
 }

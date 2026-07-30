@@ -270,6 +270,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingsExportSuccess => 'Database exported.';
 
   @override
+  String get settingsExportNotSupportedOnWeb =>
+      'Export isn\'t available in the web version yet — try the desktop or mobile app.';
+
+  @override
+  String get settingsExportFailed => 'Export failed. Please try again.';
+
+  @override
   String get onboardingHeadline1 => 'Build your training.';
 
   @override

@@ -590,6 +590,18 @@ abstract class AppLocalizations {
   /// **'Database exported.'**
   String get settingsExportSuccess;
 
+  /// SnackBar shown when Export app data is tapped on the web platform
+  ///
+  /// In en, this message translates to:
+  /// **'Export isn\'t available in the web version yet — try the desktop or mobile app.'**
+  String get settingsExportNotSupportedOnWeb;
+
+  /// SnackBar shown when the native DB export throws
+  ///
+  /// In en, this message translates to:
+  /// **'Export failed. Please try again.'**
+  String get settingsExportFailed;
+
   /// Onboarding screen 1 headline
   ///
   /// In en, this message translates to:
