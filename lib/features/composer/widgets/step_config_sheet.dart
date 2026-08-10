@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../../core/models/step_mode.dart';
 import '../../../core/models/workout_step.dart';
+import '../../../core/utils/extensions.dart';
 import '../../../shared/theme/ct_colors.dart';
 
 class StepConfigSheet extends StatefulWidget {
@@ -216,27 +217,30 @@ class _StepConfigSheetState extends State<StepConfigSheet> {
             )),
         const SizedBox(height: 20),
         SegmentedButton<StepMode>(
-          segments: const [
-            ButtonSegment(value: StepMode.reps, label: Text('Count')),
-            ButtonSegment(value: StepMode.timed, label: Text('Timed')),
-            ButtonSegment(value: StepMode.amrap, label: Text('AMRAP')),
+          segments: [
+            ButtonSegment(
+                value: StepMode.reps, label: Text(context.l10n.stepModeCount)),
+            ButtonSegment(
+                value: StepMode.timed, label: Text(context.l10n.stepModeTimed)),
+            ButtonSegment(
+                value: StepMode.amrap, label: Text(context.l10n.stepModeAmrap)),
           ],
           selected: {_mode},
           onSelectionChanged: (s) => setState(() => _mode = s.first),
         ),
         const SizedBox(height: 20),
         if (_mode == StepMode.reps) ...[
-          _field('Sets', _sets),
+          _field(context.l10n.sets, _sets),
           const SizedBox(height: 12),
-          _field('Reps', _reps),
+          _field(context.l10n.reps, _reps),
         ] else ...[
-          _field('Duration', _work, suffix: 's'),
+          _field(context.l10n.duration, _work, suffix: 's'),
         ],
         const SizedBox(height: 12),
-        _field('Rest', _rest, suffix: 's'),
+        _field(context.l10n.rest, _rest, suffix: 's'),
         const SizedBox(height: 16),
         ExpansionTile(
-          title: const Text('Tempo'),
+          title: Text(context.l10n.tempo),
           tilePadding: EdgeInsets.zero,
           children: [
             Row(
@@ -278,7 +282,7 @@ class _StepConfigSheetState extends State<StepConfigSheet> {
           width: double.infinity,
           child: FilledButton(
             onPressed: _save,
-            child: const Text('Save'),
+            child: Text(context.l10n.saveStep),
           ),
         ),
       );

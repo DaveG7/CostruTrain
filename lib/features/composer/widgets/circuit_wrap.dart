@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../core/models/workout_step.dart';
+import '../../../core/utils/extensions.dart';
 import '../../../shared/theme/ct_colors.dart';
 
 class CircuitBlockRow extends StatelessWidget {
@@ -49,7 +50,7 @@ class CircuitBlockRow extends StatelessWidget {
                   icon: const Icon(LucideIcons.trash2, size: 18),
                   color: Theme.of(context).colorScheme.error,
                   onPressed: onDelete,
-                  tooltip: 'Remove circuit',
+                  tooltip: context.l10n.removeCircuit,
                 ),
                 const Icon(LucideIcons.gripVertical, size: 18),
               ],

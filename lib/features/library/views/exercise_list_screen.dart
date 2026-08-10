@@ -96,11 +96,11 @@ class _ExerciseListScreenState extends ConsumerState<ExerciseListScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Error: $e'),
+                    Text(context.l10n.commonError('$e')),
                     const SizedBox(height: 8),
                     FilledButton(
                       onPressed: () => ref.invalidate(exerciseSearchResultsProvider),
-                      child: const Text('Retry'),
+                      child: Text(context.l10n.seedRetry),
                     ),
                   ],
                 ),

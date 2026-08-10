@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/utils/extensions.dart';
 import '../../../shared/theme/ct_colors.dart';
 import '../../../shared/widgets/ct_filter_chip.dart';
 import '../providers/library_filter_notifier.dart';
@@ -61,19 +62,19 @@ class FilterSheet extends ConsumerWidget {
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                 children: [
                   _Section(
-                    title: 'Body Part',
+                    title: context.l10n.filterBodyPart,
                     values: _bodyParts,
                     selected: filter.bodyPart,
                     onSelect: (v) => notifier.setBodyPart(v == filter.bodyPart ? null : v),
                   ),
                   _Section(
-                    title: 'Equipment',
+                    title: context.l10n.filterEquipment,
                     values: _equipment,
                     selected: filter.equipment,
                     onSelect: (v) => notifier.setEquipment(v == filter.equipment ? null : v),
                   ),
                   _Section(
-                    title: 'Muscle Group',
+                    title: context.l10n.filterMuscleGroup,
                     values: _muscleGroups,
                     selected: filter.muscleGroup,
                     onSelect: (v) => notifier.setMuscleGroup(v == filter.muscleGroup ? null : v),
@@ -92,14 +93,14 @@ class FilterSheet extends ConsumerWidget {
                         notifier.clearAll();
                         Navigator.of(context).pop();
                       },
-                      child: const Text('Clear all'),
+                      child: Text(context.l10n.clearFilters),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: FilledButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Apply'),
+                      child: Text(context.l10n.commonApply),
                     ),
                   ),
                 ],

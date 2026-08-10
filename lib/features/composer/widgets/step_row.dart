@@ -3,6 +3,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../core/models/step_mode.dart';
 import '../../../core/models/workout_step.dart';
+import '../../../core/utils/extensions.dart';
 import '../../../shared/theme/ct_colors.dart';
 
 class ExerciseStepRow extends StatelessWidget {
@@ -75,7 +76,7 @@ class _RowTrailing extends StatelessWidget {
           icon: const Icon(LucideIcons.trash2, size: 18),
           color: Theme.of(context).colorScheme.error,
           onPressed: onDelete,
-          tooltip: 'Remove step',
+          tooltip: context.l10n.removeStep,
         ),
         const Icon(LucideIcons.gripVertical, size: 18),
       ],
@@ -100,7 +101,7 @@ class RestStepRow extends StatelessWidget {
       onTap: onTap,
       leading: Icon(LucideIcons.timer,
           color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
-      title: Text('Rest — ${step.durationSeconds}s',
+      title: Text(context.l10n.restStepLabel(step.durationSeconds),
           style: TextStyle(
               color: Theme.of(context).colorScheme.onSurfaceVariant)),
       trailing: _RowTrailing(isSelectMode: false, onDelete: onDelete),
@@ -125,7 +126,7 @@ class CountdownStepRow extends StatelessWidget {
       onTap: onTap,
       leading: Icon(LucideIcons.clock,
           color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
-      title: Text('Countdown — ${step.durationSeconds}s',
+      title: Text(context.l10n.countdownStepLabel(step.durationSeconds),
           style: TextStyle(
               color: Theme.of(context).colorScheme.onSurfaceVariant)),
       trailing: _RowTrailing(isSelectMode: false, onDelete: onDelete),

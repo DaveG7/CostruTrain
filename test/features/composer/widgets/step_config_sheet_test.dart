@@ -1,11 +1,14 @@
 import 'package:costrutrain/core/models/step_mode.dart';
 import 'package:costrutrain/core/models/workout_step.dart';
 import 'package:costrutrain/features/composer/widgets/step_config_sheet.dart';
+import 'package:costrutrain/generated/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Widget _wrap(Widget child) => MaterialApp(
       theme: ThemeData.dark(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       home: Scaffold(body: child),
     );
 

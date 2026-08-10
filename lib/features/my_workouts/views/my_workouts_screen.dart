@@ -19,7 +19,7 @@ class MyWorkoutsScreen extends ConsumerWidget {
       appBar: AppBar(title: Text(context.l10n.myWorkouts)),
       body: async.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(child: Text(context.l10n.commonError('$e'))),
         data: (workouts) => workouts.isEmpty
             ? EmptyState(
                 icon: Icons.fitness_center,
@@ -76,7 +76,7 @@ class MyWorkoutsScreen extends ConsumerWidget {
             ),
             ListTile(
               leading: const Icon(LucideIcons.trash2),
-              title: const Text('Delete'),
+              title: Text(context.l10n.commonDelete),
               onTap: () {
                 Navigator.pop(context);
                 _confirmDelete(context, ref, id, name);

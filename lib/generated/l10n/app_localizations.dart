@@ -739,6 +739,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Template'**
   String get templateChipLabel;
+
+  /// Generic cancel button in dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commonCancel;
+
+  /// Generic confirm button in dialogs
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get commonOk;
+
+  /// Apply button in the Library filter sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get commonApply;
+
+  /// Delete action in the workout context menu
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get commonDelete;
+
+  /// Generic inline error message on a failed async load
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {message}'**
+  String commonError(String message);
+
+  /// Tooltip on the composer step delete button
+  ///
+  /// In en, this message translates to:
+  /// **'Remove step'**
+  String get removeStep;
+
+  /// Tooltip on the composer circuit delete button
+  ///
+  /// In en, this message translates to:
+  /// **'Remove circuit'**
+  String get removeCircuit;
+
+  /// Composer timeline row title for a rest step
+  ///
+  /// In en, this message translates to:
+  /// **'Rest — {seconds}s'**
+  String restStepLabel(int seconds);
+
+  /// Composer timeline row title for a countdown step
+  ///
+  /// In en, this message translates to:
+  /// **'Countdown — {seconds}s'**
+  String countdownStepLabel(int seconds);
+
+  /// Title of the rename-workout dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Workout Name'**
+  String get workoutNameTitle;
+
+  /// Snackbar shown when a non-exercise step is selected for a circuit
+  ///
+  /// In en, this message translates to:
+  /// **'Only exercise steps can be wrapped in a circuit'**
+  String get circuitExerciseStepsOnly;
+
+  /// Shown on the detail screen when an exercise id resolves to nothing
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise not found'**
+  String get exerciseNotFound;
+
+  /// Segmented-button label for rep-counted step mode
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get stepModeCount;
+
+  /// Section heading in the Library filter sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Body Part'**
+  String get filterBodyPart;
+
+  /// Section heading in the Library filter sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment'**
+  String get filterEquipment;
+
+  /// Section heading in the Library filter sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Muscle Group'**
+  String get filterMuscleGroup;
 }
 
 class _AppLocalizationsDelegate

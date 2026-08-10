@@ -350,4 +350,59 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get templateChipLabel => 'Template';
+
+  @override
+  String get commonCancel => 'Cancel';
+
+  @override
+  String get commonOk => 'OK';
+
+  @override
+  String get commonApply => 'Apply';
+
+  @override
+  String get commonDelete => 'Delete';
+
+  @override
+  String commonError(String message) {
+    return 'Error: $message';
+  }
+
+  @override
+  String get removeStep => 'Remove step';
+
+  @override
+  String get removeCircuit => 'Remove circuit';
+
+  @override
+  String restStepLabel(int seconds) {
+    return 'Rest — ${seconds}s';
+  }
+
+  @override
+  String countdownStepLabel(int seconds) {
+    return 'Countdown — ${seconds}s';
+  }
+
+  @override
+  String get workoutNameTitle => 'Workout Name';
+
+  @override
+  String get circuitExerciseStepsOnly =>
+      'Only exercise steps can be wrapped in a circuit';
+
+  @override
+  String get exerciseNotFound => 'Exercise not found';
+
+  @override
+  String get stepModeCount => 'Count';
+
+  @override
+  String get filterBodyPart => 'Body Part';
+
+  @override
+  String get filterEquipment => 'Equipment';
+
+  @override
+  String get filterMuscleGroup => 'Muscle Group';
 }

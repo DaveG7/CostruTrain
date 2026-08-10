@@ -165,5 +165,46 @@
   "errorDbResetCancel": "Cancel",
   "@errorDbResetCancel": {"description": "Cancel button in reset dialog"},
   "templateChipLabel": "Template",
-  "@templateChipLabel": {"description": "Chip shown on WorkoutCard for seeded template workouts"}
+  "@templateChipLabel": {"description": "Chip shown on WorkoutCard for seeded template workouts"},
+  "commonCancel": "Cancel",
+  "@commonCancel": {"description": "Generic cancel button in dialogs"},
+  "commonOk": "OK",
+  "@commonOk": {"description": "Generic confirm button in dialogs"},
+  "commonApply": "Apply",
+  "@commonApply": {"description": "Apply button in the Library filter sheet"},
+  "commonDelete": "Delete",
+  "@commonDelete": {"description": "Delete action in the workout context menu"},
+  "commonError": "Error: {message}",
+  "@commonError": {
+    "description": "Generic inline error message on a failed async load",
+    "placeholders": {"message": {"type": "String"}}
+  },
+  "removeStep": "Remove step",
+  "@removeStep": {"description": "Tooltip on the composer step delete button"},
+  "removeCircuit": "Remove circuit",
+  "@removeCircuit": {"description": "Tooltip on the composer circuit delete button"},
+  "restStepLabel": "Rest — {seconds}s",
+  "@restStepLabel": {
+    "description": "Composer timeline row title for a rest step",
+    "placeholders": {"seconds": {"type": "int"}}
+  },
+  "countdownStepLabel": "Countdown — {seconds}s",
+  "@countdownStepLabel": {
+    "description": "Composer timeline row title for a countdown step",
+    "placeholders": {"seconds": {"type": "int"}}
+  },
+  "workoutNameTitle": "Workout Name",
+  "@workoutNameTitle": {"description": "Title of the rename-workout dialog"},
+  "circuitExerciseStepsOnly": "Only exercise steps can be wrapped in a circuit",
+  "@circuitExerciseStepsOnly": {"description": "Snackbar shown when a non-exercise step is selected for a circuit"},
+  "exerciseNotFound": "Exercise not found",
+  "@exerciseNotFound": {"description": "Shown on the detail screen when an exercise id resolves to nothing"},
+  "stepModeCount": "Count",
+  "@stepModeCount": {"description": "Segmented-button label for rep-counted step mode"},
+  "filterBodyPart": "Body Part",
+  "@filterBodyPart": {"description": "Section heading in the Library filter sheet"},
+  "filterEquipment": "Equipment",
+  "@filterEquipment": {"description": "Section heading in the Library filter sheet"},
+  "filterMuscleGroup": "Muscle Group",
+  "@filterMuscleGroup": {"description": "Section heading in the Library filter sheet"}
 }

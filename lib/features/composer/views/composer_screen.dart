@@ -55,7 +55,7 @@ class _ComposerScreenState extends ConsumerState<ComposerScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.commonCancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
@@ -144,7 +144,7 @@ class _ComposerScreenState extends ConsumerState<ComposerScreen> {
     final steps = ref.read(composerNotifierProvider).draft.steps;
     if (sorted.any((i) => steps[i] is! ExerciseStep)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Only exercise steps can be wrapped in a circuit')),
+        SnackBar(content: Text(context.l10n.circuitExerciseStepsOnly)),
       );
       return;
     }
@@ -159,12 +159,13 @@ class _ComposerScreenState extends ConsumerState<ComposerScreen> {
             controller: ctrl,
             keyboardType: TextInputType.number,
             autofocus: true,
-            decoration: const InputDecoration(labelText: 'Rounds'),
+            decoration:
+                InputDecoration(labelText: context.l10n.circuitRounds),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, int.tryParse(ctrl.text) ?? 3),
-              child: const Text('OK'),
+              child: Text(context.l10n.commonOk),
             ),
           ],
         );
@@ -420,7 +421,7 @@ class _ComposerScreenState extends ConsumerState<ComposerScreen> {
     showDialog<void>(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Workout Name'),
+        title: Text(context.l10n.workoutNameTitle),
         content: TextField(
           controller: nameCtrl,
           autofocus: true,
@@ -430,7 +431,7 @@ class _ComposerScreenState extends ConsumerState<ComposerScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.commonCancel),
           ),
           FilledButton(
             onPressed: () {
@@ -439,7 +440,7 @@ class _ComposerScreenState extends ConsumerState<ComposerScreen> {
                   .updateMeta(name: nameCtrl.text.trim());
               Navigator.pop(context);
             },
-            child: const Text('OK'),
+            child: Text(context.l10n.commonOk),
           ),
         ],
       ),

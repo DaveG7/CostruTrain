@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../../core/utils/extensions.dart';
 import '../../../data/repositories/exercise_lookup_provider.dart';
 import '../../../shared/theme/ct_colors.dart';
 import '../../../shared/widgets/ct_filter_chip.dart';
@@ -30,10 +31,10 @@ class ExerciseDetailScreen extends ConsumerWidget {
       ),
       body: asyncExercise.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(child: Text(context.l10n.commonError('$e'))),
         data: (exercise) {
           if (exercise == null) {
-            return const Center(child: Text('Exercise not found'));
+            return Center(child: Text(context.l10n.exerciseNotFound));
           }
           final ct = context.ct;
           // GIFs from the source dataset are square and only 180x180 native —
