@@ -16,8 +16,9 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.x'
-          channel: 'stable'
+          # Pinned deliberately. Flutter 3.44+ made IconData final, which breaks
+          # lucide_icons. Do not float this to '3.x' or 'stable'.
+          flutter-version: '3.41.9'
           cache: true
 
       - name: Install dependencies
