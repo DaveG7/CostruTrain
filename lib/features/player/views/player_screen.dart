@@ -1,15 +1,16 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/models/step_mode.dart';
+import '../../../core/models/workout.dart';
 import '../../../core/models/workout_step.dart';
 import '../../../core/player/player_phase.dart';
 import '../../../core/player/player_state.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../data/repositories/drift_workout_repository.dart';
 import '../../../data/repositories/exercise_lookup_provider.dart';
+import '../../../shared/widgets/gif_image.dart';
 import '../providers/player_notifier.dart';
 import '../widgets/countdown_ring.dart';
 import '../widgets/next_step_preview.dart';
@@ -23,10 +24,18 @@ class PlayerScreen extends ConsumerStatefulWidget {
 }
 
 class _PlayerScreenState extends ConsumerState<PlayerScreen> {
+  Workout? _workout;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // A previously finished/abandoned session may still be sitting in the
+      // (keepAlive) provider's state — clear it so this fresh entry always
+      // lands on the ready-to-start view instead of flashing stale results.
+      // Must run post-frame: modifying a provider inside initState() itself
+      // throws "Tried to modify a provider while the widget tree was building".
+      ref.read(playerNotifierProvider.notifier).resetToIdle();
       final workout =
           await ref.read(workoutRepositoryProvider).getById(widget.workoutId);
       if (!mounted) return;
@@ -34,7 +43,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
         context.pop();
         return;
       }
-      ref.read(playerNotifierProvider.notifier).start(workout);
+      setState(() => _workout = workout);
     });
   }
 
@@ -42,9 +51,16 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(playerNotifierProvider);
     if (state.phase == PlayerPhase.idle) {
-      return const Scaffold(
-        backgroundColor: Color(0xFF0F0F0F),
-        body: Center(child: CircularProgressIndicator()),
+      if (_workout == null) {
+        return const Scaffold(
+          backgroundColor: Color(0xFF0F0F0F),
+          body: Center(child: CircularProgressIndicator()),
+        );
+      }
+      return _ReadyToStartView(
+        workout: _workout!,
+        onStart: () =>
+            ref.read(playerNotifierProvider.notifier).start(_workout!),
       );
     }
     return PopScope(
@@ -58,6 +74,96 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
           child: state.phase == PlayerPhase.complete
               ? _FinishedView(state: state)
               : _ActiveView(state: state),
+        ),
+      ),
+    );
+  }
+}
+
+class _ReadyToStartView extends StatelessWidget {
+  const _ReadyToStartView({required this.workout, required this.onStart});
+  final Workout workout;
+  final VoidCallback onStart;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF0F0F0F),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(18, 16, 18, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () => context.pop(),
+                    child: Container(
+                      width: 28,
+                      height: 28,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: const Color(0xFF2E2E2E)),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: const Center(
+                        child: Text('✕',
+                            style: TextStyle(
+                                fontFamily: 'RobotoMono',
+                                fontSize: 14,
+                                color: Color(0xFF9E9E9E))),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      context.l10n.playerReadyTitle,
+                      style: const TextStyle(
+                        fontFamily: 'RobotoMono',
+                        fontSize: 12,
+                        color: Color(0xFF4CAF50),
+                        letterSpacing: 2,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Text(
+                        workout.name.isEmpty ? 'Untitled Workout' : workout.name,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: -0.4,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      context.l10n.sessionSteps(workout.steps.length),
+                      style: const TextStyle(
+                          fontSize: 13, color: Color(0xFF9E9E9E)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(18, 0, 18, 22),
+              child: _PillBtn(
+                label: '▶  ${context.l10n.playerStartCta}',
+                color: const Color(0xFFE84040),
+                onTap: onStart,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -181,18 +287,20 @@ class _ActiveView extends ConsumerWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: SizedBox(
-                  width: 220,
-                  height: 140,
+                  // Source GIFs are square (180x180) — square container so
+                  // the whole picture shows instead of being cropped.
+                  width: 180,
+                  height: 180,
                   child: switch (_currentGifUrl(ref, state)) {
-                    final url? => CachedNetworkImage(
-                        imageUrl: url,
-                        fit: BoxFit.cover,
-                        placeholder: (_, __) => Container(
+                    final url? => GifImage(
+                        url: url,
+                        fit: BoxFit.contain,
+                        placeholder: (_) => Container(
                           color: const Color(0xFF242424),
                           child: const Icon(Icons.fitness_center,
                               size: 40, color: Color(0xFF9E9E9E)),
                         ),
-                        errorWidget: (_, __, ___) => Container(
+                        errorWidget: (_, __) => Container(
                           color: const Color(0xFF242424),
                           child: const Icon(Icons.fitness_center,
                               size: 40, color: Color(0xFF9E9E9E)),
@@ -305,7 +413,9 @@ class _ActiveView extends ConsumerWidget {
   }
 
   int _totalSeconds(PlayerState state) {
-    if (state.phase == PlayerPhase.countdown) return 3;
+    if (state.phase == PlayerPhase.countdown) {
+      return state.getReadyCountdownSeconds;
+    }
     if (state.sequence.isEmpty) return 0;
     final step = state.current.step;
     if (step is ExerciseStep) return step.workSeconds ?? 0;

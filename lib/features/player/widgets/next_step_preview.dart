@@ -1,10 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/player/player_state.dart';
 import '../../../core/models/workout_step.dart';
 import '../../../data/repositories/exercise_lookup_provider.dart';
+import '../../../shared/widgets/gif_image.dart';
 
 class NextStepPreview extends ConsumerWidget {
   const NextStepPreview({super.key, required this.nextFlat});
@@ -47,15 +47,15 @@ class NextStepPreview extends ConsumerWidget {
               width: 42,
               height: 42,
               child: gifUrl != null
-                  ? CachedNetworkImage(
-                      imageUrl: gifUrl,
+                  ? GifImage(
+                      url: gifUrl,
                       fit: BoxFit.cover,
-                      placeholder: (_, __) => Container(
+                      placeholder: (_) => Container(
                         color: const Color(0xFF242424),
                         child: const Icon(Icons.fitness_center, size: 20,
                             color: Color(0xFF9E9E9E)),
                       ),
-                      errorWidget: (_, __, ___) => Container(
+                      errorWidget: (_, __) => Container(
                         color: const Color(0xFF242424),
                         child: const Icon(Icons.fitness_center, size: 20,
                             color: Color(0xFF9E9E9E)),
