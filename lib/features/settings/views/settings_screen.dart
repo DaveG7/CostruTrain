@@ -46,6 +46,31 @@ class SettingsScreen extends ConsumerWidget {
               onChanged: (v) => notifier.setDefaultRestTime(v.round()),
             ),
           ),
+          ListTile(
+            title: Text(context.l10n.settingsStartCountdown),
+            subtitle: Text(
+              context.l10n.settingsStartCountdownValue(
+                  state.startCountdownSeconds),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Slider(
+              value: state.startCountdownSeconds.toDouble(),
+              min: 3,
+              max: 15,
+              divisions: 12,
+              label: context.l10n.settingsStartCountdownValue(
+                  state.startCountdownSeconds),
+              onChanged: (v) => notifier.setStartCountdownSeconds(v.round()),
+            ),
+          ),
+          const Divider(),
+          SwitchListTile(
+            title: Text(context.l10n.settingsShowBrokenMediaExercises),
+            value: state.showExercisesWithoutMedia,
+            onChanged: notifier.setShowExercisesWithoutMedia,
+          ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.upload_file),

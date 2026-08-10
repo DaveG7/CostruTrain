@@ -482,6 +482,18 @@ abstract class AppLocalizations {
   /// **'Countdown'**
   String get playerCountdownLabel;
 
+  /// No description provided for @playerReadyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready?'**
+  String get playerReadyTitle;
+
+  /// No description provided for @playerStartCta.
+  ///
+  /// In en, this message translates to:
+  /// **'START'**
+  String get playerStartCta;
+
   /// No description provided for @historyEmpty.
   ///
   /// In en, this message translates to:
@@ -577,6 +589,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{seconds}s'**
   String settingsDefaultRestTimeValue(int seconds);
+
+  /// Settings slider label for the pre-workout Get Ready countdown duration
+  ///
+  /// In en, this message translates to:
+  /// **'Get Ready countdown'**
+  String get settingsStartCountdown;
+
+  /// Live label on the Get Ready countdown slider
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds}s'**
+  String settingsStartCountdownValue(int seconds);
+
+  /// Settings toggle label to include exercises whose preview GIF is a dead link on the CDN in library search results (excluded by default)
+  ///
+  /// In en, this message translates to:
+  /// **'Show exercises without a preview GIF'**
+  String get settingsShowBrokenMediaExercises;
 
   /// Settings tile to export the SQLite database file
   ///

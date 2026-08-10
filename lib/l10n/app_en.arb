@@ -86,6 +86,8 @@
   "playerGetReadyLabel": "Get Ready",
   "playerRestLabel": "Rest",
   "playerCountdownLabel": "Countdown",
+  "playerReadyTitle": "Ready?",
+  "playerStartCta": "START",
   "historyEmpty": "No sessions yet.\nStart a workout to see your history.",
   "historyGroupThisWeek": "THIS WEEK",
   "historyGroupLastWeek": "LAST WEEK",
@@ -111,6 +113,15 @@
     "description": "Live label on the default rest time slider",
     "placeholders": {"seconds": {"type": "int"}}
   },
+  "settingsStartCountdown": "Get Ready countdown",
+  "@settingsStartCountdown": {"description": "Settings slider label for the pre-workout Get Ready countdown duration"},
+  "settingsStartCountdownValue": "{seconds}s",
+  "@settingsStartCountdownValue": {
+    "description": "Live label on the Get Ready countdown slider",
+    "placeholders": {"seconds": {"type": "int"}}
+  },
+  "settingsShowBrokenMediaExercises": "Show exercises without a preview GIF",
+  "@settingsShowBrokenMediaExercises": {"description": "Settings toggle label to include exercises whose preview GIF is a dead link on the CDN in library search results (excluded by default)"},
   "settingsExportData": "Export app data",
   "@settingsExportData": {"description": "Settings tile to export the SQLite database file"},
   "settingsExportSuccess": "Database exported.",

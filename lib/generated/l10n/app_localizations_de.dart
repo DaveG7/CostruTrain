@@ -211,6 +211,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get playerCountdownLabel => 'Countdown';
 
   @override
+  String get playerReadyTitle => 'Ready?';
+
+  @override
+  String get playerStartCta => 'START';
+
+  @override
   String get historyEmpty =>
       'No sessions yet.\nStart a workout to see your history.';
 
@@ -262,6 +268,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String settingsDefaultRestTimeValue(int seconds) {
     return '${seconds}s';
   }
+
+  @override
+  String get settingsStartCountdown => 'Get Ready countdown';
+
+  @override
+  String settingsStartCountdownValue(int seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String get settingsShowBrokenMediaExercises =>
+      'Show exercises without a preview GIF';
 
   @override
   String get settingsExportData => 'Export app data';
