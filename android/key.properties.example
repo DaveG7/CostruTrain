@@ -1,0 +1,28 @@
+# Vorlage fuer android/key.properties — enthaelt KEINE echten Werte.
+#
+# Benutzung:
+#   cp android/key.properties.example android/key.properties
+#   dann die vier Werte unten eintragen.
+#
+# android/key.properties ist gitignored und darf NIE committet werden.
+# Diese .example-Datei ist es nicht — sie dokumentiert nur die Struktur.
+#
+# Solange android/key.properties fehlt, faellt der Release-Build bewusst auf
+# Debug-Signing zurueck (siehe android/app/build.gradle.kts). Das ist fuer
+# lokale Tests ok, aber NICHT fuer ein veroeffentlichtes APK: Android bindet
+# Updates an die Signatur, ein spaeterer Key-Wechsel zwingt Nutzer zur
+# Neuinstallation — und damit sind bei dieser Offline-App alle Workouts weg.
+
+# Alias, den du bei keytool -genkeypair per -alias vergeben hast.
+keyAlias=costrutrain
+
+# Passwort des Schluessels. Bei der empfohlenen Variante (beim
+# "Schluesselpasswort" nur Enter) identisch mit storePassword.
+keyPassword=DEIN_KEY_PASSWORT
+
+# Absoluter Pfad zur .jks-Datei. Relative Pfade werden gegen android/app/
+# aufgeloest — absolut ist eindeutig.
+storeFile=/home/dave/costrutrain-release.jks
+
+# Passwort des Keystores.
+storePassword=DEIN_STORE_PASSWORT
