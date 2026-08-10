@@ -33,3 +33,9 @@ docs/superpowers/
 android/key.properties
 *.jks
 *.keystore
+
+# graphify — generated knowledge graph, rebuild locally with /graphify
+graphify-out/
+
+# Raw exercise GIF cache — bulk-downloaded originals for a future upscale pass
+raw_gifs/
