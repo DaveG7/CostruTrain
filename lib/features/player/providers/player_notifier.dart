@@ -57,8 +57,20 @@ class PlayerNotifier extends _$PlayerNotifier {
       _log.w('Audio preload failed', error: e);
     }
 
-    state = _machine.transition(state, PlayerEvent.start, workout: workout);
+    final startCountdownSeconds =
+        ref.read(settingsNotifierProvider).startCountdownSeconds;
+    state = _machine.transition(
+      state,
+      PlayerEvent.start,
+      workout: workout,
+      getReadyCountdownSeconds: startCountdownSeconds,
+    );
     _timer = Timer.periodic(const Duration(seconds: 1), (_) => _onTick());
+  }
+
+  void resetToIdle() {
+    _cleanup();
+    state = PlayerState.idle();
   }
 
   void _onTick() {

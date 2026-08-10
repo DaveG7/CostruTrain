@@ -98,17 +98,18 @@ void main() {
       expect(s.ringBellThisTick, true);
     });
 
-    test('no rest → advance to next step countdown', () {
+    test('no rest → advances directly to next step, no countdown', () {
       final w = _workout([
         _exStep(id: 's1', orderIndex: 0, workSeconds: 1, restSeconds: 0),
         _exStep(id: 's2', orderIndex: 1, workSeconds: 10, restSeconds: 0),
       ]);
       var s = m.transition(PlayerState.idle(), PlayerEvent.start, workout: w);
-      s = _tick(m, s, times: 3); // countdown
-      s = _tick(m, s); // work 1→0 → countdown for s2
-      expect(s.phase, PlayerPhase.countdown);
+      s = _tick(m, s, times: 3); // get-ready countdown (start only)
+      s = _tick(m, s); // work 1→0 → directly into s2, no countdown
+      expect(s.phase, PlayerPhase.working);
       expect(s.currentStepIndex, 1);
-      expect(s.remainingSeconds, 3);
+      expect(s.remainingSeconds, 10);
+      expect(s.ringBellThisTick, true);
     });
 
     test('last step with no rest → complete', () {
@@ -138,20 +139,21 @@ void main() {
   });
 
   group('resting', () {
-    test('rest counts down → next step countdown', () {
+    test('rest counts down → advances directly to next step, no countdown', () {
       final w = _workout([
         _exStep(id: 's1', orderIndex: 0, workSeconds: 1, restSeconds: 2),
         _exStep(id: 's2', orderIndex: 1, workSeconds: 10, restSeconds: 0),
       ]);
       var s = m.transition(PlayerState.idle(), PlayerEvent.start, workout: w);
-      s = _tick(m, s, times: 3); // countdown s1
+      s = _tick(m, s, times: 3); // countdown s1 (get ready, start only)
       s = _tick(m, s); // s1 done → resting(2s)
       expect(s.phase, PlayerPhase.resting);
       s = _tick(m, s); // 2→1
       expect(s.remainingSeconds, 1);
-      s = _tick(m, s); // 1→0 → countdown s2
-      expect(s.phase, PlayerPhase.countdown);
+      s = _tick(m, s); // 1→0 → directly into s2, no countdown
+      expect(s.phase, PlayerPhase.working);
       expect(s.currentStepIndex, 1);
+      expect(s.remainingSeconds, 10);
     });
   });
 
@@ -163,20 +165,34 @@ void main() {
       expect(s.phase, PlayerPhase.resting);
       expect(s.remainingSeconds, 30);
     });
+
+    test('after a RestStep, advances directly to next step, no countdown', () {
+      final w = _workout([
+        _restStep(duration: 2),
+        _exStep(id: 's2', orderIndex: 1, workSeconds: 10, restSeconds: 0),
+      ]);
+      var s = m.transition(PlayerState.idle(), PlayerEvent.start, workout: w);
+      s = _tick(m, s, times: 3); // get-ready countdown (start only)
+      expect(s.phase, PlayerPhase.resting);
+      s = _tick(m, s, times: 2); // rest 2→1→0 → directly into s2
+      expect(s.phase, PlayerPhase.working);
+      expect(s.currentStepIndex, 1);
+    });
   });
 
   group('skip', () {
-    test('marks current as skipped and advances', () {
+    test('marks current as skipped and advances directly, no countdown', () {
       final w = _workout([
         _exStep(id: 's1', orderIndex: 0, workSeconds: 30, restSeconds: 0),
         _exStep(id: 's2', orderIndex: 1, workSeconds: 10, restSeconds: 0),
       ]);
       var s = m.transition(PlayerState.idle(), PlayerEvent.start, workout: w);
-      s = _tick(m, s, times: 3); // countdown
+      s = _tick(m, s, times: 3); // get-ready countdown (start only)
       s = m.transition(s, PlayerEvent.skip);
       expect(s.sequence[0].skipped, true);
       expect(s.currentStepIndex, 1);
-      expect(s.phase, PlayerPhase.countdown);
+      expect(s.phase, PlayerPhase.working);
+      expect(s.remainingSeconds, 10);
     });
 
     test('skip on last step → complete', () {
@@ -189,32 +205,33 @@ void main() {
   });
 
   group('back', () {
-    test('elapsed > 3s → restart current (back to countdown)', () {
+    test('elapsed > 3s → restarts current step directly, no countdown', () {
       final w = _workout([_exStep(workSeconds: 30, restSeconds: 0)]);
       var s = m.transition(PlayerState.idle(), PlayerEvent.start, workout: w);
-      s = _tick(m, s, times: 3); // finish countdown
+      s = _tick(m, s, times: 3); // finish get-ready countdown
       s = _tick(m, s, times: 5); // elapsed = 5s
       expect(s.stepElapsedSeconds, 5);
       s = m.transition(s, PlayerEvent.back);
-      expect(s.phase, PlayerPhase.countdown);
+      expect(s.phase, PlayerPhase.working);
       expect(s.currentStepIndex, 0);
-      expect(s.remainingSeconds, 3);
+      expect(s.remainingSeconds, 30);
+      expect(s.stepElapsedSeconds, 0);
     });
 
-    test('elapsed ≤ 3s, index > 0 → go to previous step', () {
+    test('elapsed ≤ 3s, index > 0 → goes directly to previous step, no countdown', () {
       final w = _workout([
         _exStep(id: 's1', orderIndex: 0, workSeconds: 1, restSeconds: 0),
         _exStep(id: 's2', orderIndex: 1, workSeconds: 30, restSeconds: 0),
       ]);
       var s = m.transition(PlayerState.idle(), PlayerEvent.start, workout: w);
-      s = _tick(m, s, times: 3); // countdown s1
-      s = _tick(m, s); // s1 done → countdown s2
-      s = _tick(m, s); // countdown 3→2 (stepElapsed resets to 0 per countdown)
-      // We are now in countdown for s2 — stepElapsedSeconds = 0
+      s = _tick(m, s, times: 3); // countdown s1 (get ready, start only)
+      s = _tick(m, s); // s1 done → directly into s2 working, stepElapsed = 0
+      expect(s.phase, PlayerPhase.working);
+      expect(s.currentStepIndex, 1);
       // back should go to s1
       s = m.transition(s, PlayerEvent.back);
       expect(s.currentStepIndex, 0);
-      expect(s.phase, PlayerPhase.countdown);
+      expect(s.phase, PlayerPhase.working);
     });
 
     test('elapsed ≤ 3s, index = 0 → no-op', () {

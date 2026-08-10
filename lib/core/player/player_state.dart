@@ -40,6 +40,7 @@ class PlayerState {
     required this.isCountingUp,
     required this.ringBellThisTick,
     required this.sequence,
+    this.getReadyCountdownSeconds = 3,
   });
 
   final PlayerPhase phase;
@@ -50,6 +51,7 @@ class PlayerState {
   final bool isCountingUp;
   final bool ringBellThisTick;
   final List<FlatStep> sequence;
+  final int getReadyCountdownSeconds;
 
   bool get shouldPlayBeep =>
       !isPaused && remainingSeconds <= 3 && remainingSeconds > 0;
@@ -80,6 +82,7 @@ class PlayerState {
     bool? isCountingUp,
     bool? ringBellThisTick,
     List<FlatStep>? sequence,
+    int? getReadyCountdownSeconds,
   }) =>
       PlayerState(
         phase: phase ?? this.phase,
@@ -90,5 +93,7 @@ class PlayerState {
         isCountingUp: isCountingUp ?? this.isCountingUp,
         ringBellThisTick: ringBellThisTick ?? this.ringBellThisTick,
         sequence: sequence ?? this.sequence,
+        getReadyCountdownSeconds:
+            getReadyCountdownSeconds ?? this.getReadyCountdownSeconds,
       );
 }

@@ -5,7 +5,12 @@ import 'player_phase.dart';
 import 'player_state.dart';
 
 class PlayerStateMachine {
-  PlayerState transition(PlayerState s, PlayerEvent event, {Workout? workout}) {
+  PlayerState transition(
+    PlayerState s,
+    PlayerEvent event, {
+    Workout? workout,
+    int getReadyCountdownSeconds = 3,
+  }) {
     switch (event) {
       case PlayerEvent.start:
         final seq = _flatten(workout!.steps);
@@ -13,12 +18,13 @@ class PlayerStateMachine {
         return PlayerState(
           phase: PlayerPhase.countdown,
           currentStepIndex: 0,
-          remainingSeconds: 3,
+          remainingSeconds: getReadyCountdownSeconds,
           stepElapsedSeconds: 0,
           isPaused: false,
           isCountingUp: false,
           ringBellThisTick: false,
           sequence: List.unmodifiable(seq),
+          getReadyCountdownSeconds: getReadyCountdownSeconds,
         );
 
       case PlayerEvent.tick:
@@ -137,18 +143,17 @@ class PlayerStateMachine {
     return _advanceToNextStep(s);
   }
 
+  // "Get Ready" only ever happens once, at the very start of a workout
+  // (PlayerEvent.start). Every later transition — end of rest, end of work
+  // with no rest, skip, back — jumps directly into the next/previous step's
+  // real phase via _beginStep, with no countdown pause in between.
   PlayerState _advanceToNextStep(PlayerState s) {
     final nextIndex = s.currentStepIndex + 1;
     if (nextIndex >= s.sequence.length) {
       return s.copyWith(phase: PlayerPhase.complete, ringBellThisTick: true);
     }
-    return s.copyWith(
-      phase: PlayerPhase.countdown,
-      currentStepIndex: nextIndex,
-      remainingSeconds: 3,
-      stepElapsedSeconds: 0,
-      isCountingUp: false,
-      ringBellThisTick: false,
+    return _beginStep(
+      s.copyWith(currentStepIndex: nextIndex, stepElapsedSeconds: 0),
     );
   }
 
@@ -163,35 +168,20 @@ class PlayerStateMachine {
         ringBellThisTick: true,
       );
     }
-    return s.copyWith(
-      phase: PlayerPhase.countdown,
+    return _beginStep(s.copyWith(
       currentStepIndex: nextIndex,
-      remainingSeconds: 3,
       stepElapsedSeconds: 0,
-      isCountingUp: false,
-      ringBellThisTick: false,
       sequence: List.unmodifiable(updated),
-    );
+    ));
   }
 
   PlayerState _applyBack(PlayerState s) {
     if (s.stepElapsedSeconds > 3) {
-      return s.copyWith(
-        phase: PlayerPhase.countdown,
-        remainingSeconds: 3,
-        stepElapsedSeconds: 0,
-        isCountingUp: false,
-        ringBellThisTick: false,
-      );
+      return _beginStep(s.copyWith(stepElapsedSeconds: 0));
     }
     if (s.currentStepIndex > 0) {
-      return s.copyWith(
-        phase: PlayerPhase.countdown,
-        currentStepIndex: s.currentStepIndex - 1,
-        remainingSeconds: 3,
-        stepElapsedSeconds: 0,
-        isCountingUp: false,
-        ringBellThisTick: false,
+      return _beginStep(
+        s.copyWith(currentStepIndex: s.currentStepIndex - 1, stepElapsedSeconds: 0),
       );
     }
     return s;
