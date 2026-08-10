@@ -358,6 +358,9 @@ class _ComposerScreenState extends ConsumerState<ComposerScreen> {
     Map<String, String> names, {
     required Key key,
   }) {
+    void delete() =>
+        ref.read(composerNotifierProvider.notifier).removeStep(step.id);
+
     return switch (step) {
       ExerciseStep s => ExerciseStepRow(
           key: key,
@@ -373,17 +376,25 @@ class _ComposerScreenState extends ConsumerState<ComposerScreen> {
             }
           }),
           onTap: () => _openStepConfig(step, names),
+          onDelete: delete,
         ),
       RestStep s => RestStepRow(
-          key: key, step: s, onTap: () => _openStepConfig(step, names)),
+          key: key,
+          step: s,
+          onTap: () => _openStepConfig(step, names),
+          onDelete: delete),
       CountdownStep s => CountdownStepRow(
-          key: key, step: s, onTap: () => _openStepConfig(step, names)),
+          key: key,
+          step: s,
+          onTap: () => _openStepConfig(step, names),
+          onDelete: delete),
       CircuitBlock b => CircuitBlockRow(
           key: key,
           block: b,
           exerciseNames: names,
           onHeaderTap: () => _openStepConfig(step, names),
           onChildTap: (child) => _openStepConfig(child, names),
+          onDelete: delete,
         ),
     };
   }

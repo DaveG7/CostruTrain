@@ -11,12 +11,14 @@ class CircuitBlockRow extends StatelessWidget {
     required this.exerciseNames,
     required this.onHeaderTap,
     required this.onChildTap,
+    this.onDelete,
   });
 
   final CircuitBlock block;
   final Map<String, String> exerciseNames;
   final VoidCallback onHeaderTap;
   final void Function(ExerciseStep step) onChildTap;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,18 @@ class CircuitBlockRow extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onSurface,
                   fontWeight: FontWeight.w600),
             ),
-            trailing: const Icon(LucideIcons.gripVertical, size: 18),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(LucideIcons.trash2, size: 18),
+                  color: Theme.of(context).colorScheme.error,
+                  onPressed: onDelete,
+                  tooltip: 'Remove circuit',
+                ),
+                const Icon(LucideIcons.gripVertical, size: 18),
+              ],
+            ),
           ),
           const Divider(height: 1),
           ...block.steps.map(

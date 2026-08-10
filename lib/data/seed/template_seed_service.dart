@@ -10,7 +10,10 @@ import '../local/app_database.dart';
 import '../repositories/workout_repository.dart';
 
 class TemplateSeedService {
-  static const flagKey = 'templates_seeded_v1';
+  // Bumped to v2 on 2026-08-01: templates.json's exerciseId format was fixed
+  // (bug-032/033) after some installs had already seeded under v1 — bumping
+  // forces exactly one re-seed so stale pre-fix template steps get replaced.
+  static const flagKey = 'templates_seeded_v2';
 
   Future<void> seedIfNeeded({
     required SharedPreferences prefs,

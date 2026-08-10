@@ -14,6 +14,7 @@ class ExerciseStepRow extends StatelessWidget {
     this.isSelectMode = false,
     this.isSelected = false,
     this.onSelectToggle,
+    this.onDelete,
   });
 
   final ExerciseStep step;
@@ -22,6 +23,7 @@ class ExerciseStepRow extends StatelessWidget {
   final bool isSelectMode;
   final bool isSelected;
   final ValueChanged<bool>? onSelectToggle;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -53,15 +55,44 @@ class ExerciseStepRow extends StatelessWidget {
               color: Theme.of(context).colorScheme.onSurface,
               fontWeight: FontWeight.w500)),
       subtitle: Text(subtitle, style: TextStyle(color: valueColor, fontSize: 12)),
-      trailing: const Icon(LucideIcons.gripVertical, size: 18),
+      trailing: _RowTrailing(isSelectMode: isSelectMode, onDelete: onDelete),
+    );
+  }
+}
+
+class _RowTrailing extends StatelessWidget {
+  const _RowTrailing({required this.isSelectMode, this.onDelete});
+  final bool isSelectMode;
+  final VoidCallback? onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    if (isSelectMode) return const Icon(LucideIcons.gripVertical, size: 18);
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          icon: const Icon(LucideIcons.trash2, size: 18),
+          color: Theme.of(context).colorScheme.error,
+          onPressed: onDelete,
+          tooltip: 'Remove step',
+        ),
+        const Icon(LucideIcons.gripVertical, size: 18),
+      ],
     );
   }
 }
 
 class RestStepRow extends StatelessWidget {
-  const RestStepRow({super.key, required this.step, required this.onTap});
+  const RestStepRow({
+    super.key,
+    required this.step,
+    required this.onTap,
+    this.onDelete,
+  });
   final RestStep step;
   final VoidCallback onTap;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -72,15 +103,21 @@ class RestStepRow extends StatelessWidget {
       title: Text('Rest — ${step.durationSeconds}s',
           style: TextStyle(
               color: Theme.of(context).colorScheme.onSurfaceVariant)),
-      trailing: const Icon(LucideIcons.gripVertical, size: 18),
+      trailing: _RowTrailing(isSelectMode: false, onDelete: onDelete),
     );
   }
 }
 
 class CountdownStepRow extends StatelessWidget {
-  const CountdownStepRow({super.key, required this.step, required this.onTap});
+  const CountdownStepRow({
+    super.key,
+    required this.step,
+    required this.onTap,
+    this.onDelete,
+  });
   final CountdownStep step;
   final VoidCallback onTap;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +128,7 @@ class CountdownStepRow extends StatelessWidget {
       title: Text('Countdown — ${step.durationSeconds}s',
           style: TextStyle(
               color: Theme.of(context).colorScheme.onSurfaceVariant)),
-      trailing: const Icon(LucideIcons.gripVertical, size: 18),
+      trailing: _RowTrailing(isSelectMode: false, onDelete: onDelete),
     );
   }
 }

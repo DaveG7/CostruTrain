@@ -36,6 +36,8 @@ class _FakeSettingsNotifier extends SettingsNotifier {
         audioCuesEnabled: true,
         hapticsEnabled: true,
         defaultRestTime: 60,
+        startCountdownSeconds: 5,
+        showExercisesWithoutMedia: false,
       );
 }
 

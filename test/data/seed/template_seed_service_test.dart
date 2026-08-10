@@ -31,7 +31,7 @@ void main() {
     expect(workouts.every((w) => w.templateId != null), isTrue);
   });
 
-  test('sets templates_seeded_v1 flag after seeding', () async {
+  test('sets the seeded flag after seeding', () async {
     SharedPreferences.setMockInitialValues({});
     final prefs = await SharedPreferences.getInstance();
     final service = TemplateSeedService();

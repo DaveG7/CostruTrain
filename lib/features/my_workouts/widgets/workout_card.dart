@@ -77,7 +77,8 @@ class WorkoutCard extends StatelessWidget {
                 spacing: 6,
                 children: workout.tags
                     .map((t) => Chip(
-                          label: Text(t, style: const TextStyle(fontSize: 11)),
+                          label: Text(_titleCase(t),
+                              style: const TextStyle(fontSize: 11)),
                           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
                           visualDensity: VisualDensity.compact,
@@ -102,4 +103,9 @@ class WorkoutCard extends StatelessWidget {
       ),
     );
   }
+
+  String _titleCase(String s) => s
+      .split(' ')
+      .map((w) => w.isEmpty ? w : '${w[0].toUpperCase()}${w.substring(1)}')
+      .join(' ');
 }
