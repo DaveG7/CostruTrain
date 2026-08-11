@@ -24,10 +24,85 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Phase 4b TODO: inject keystore credentials from GitHub Secrets for production signing.
-      # Current behaviour: falls back to debug signing (acceptable for sideload/testing APKs).
+      # A tag push publishes a public GitHub Release. Android binds updates to the
+      # signing key, so a debug-signed APK reaching users cannot be replaced later
+      # without a reinstall — which wipes every workout and session of this
+      # offline-first app. Fail loudly instead of silently falling back to debug.
+      - name: Verify signing secrets are present
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+        run: |
+          missing=""
+          for name in ANDROID_KEYSTORE_BASE64 ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD ANDROID_STORE_PASSWORD; do
+            if [ -z "${!name}" ]; then
+              missing="$missing $name"
+            fi
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secret(s):$missing"
+            echo "::error::Refusing to publish a debug-signed release. Add them under Settings > Secrets and variables > Actions, then re-push the tag."
+            exit 1
+          fi
+
+      # Decoded outside the workspace so the keystore can never be swept into a
+      # build output or an uploaded artifact.
+      - name: Decode keystore and write key.properties
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+        run: |
+          keystore="$RUNNER_TEMP/costrutrain-release.jks"
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$keystore"
+          chmod 600 "$keystore"
+          # Fails fast on a truncated or mis-encoded secret, before Gradle turns it
+          # into an opaque "Keystore was tampered with" stack trace.
+          if command -v keytool > /dev/null; then
+            keytool -list -keystore "$keystore" -storepass "$ANDROID_STORE_PASSWORD" > /dev/null
+          else
+            echo "::warning::keytool not on PATH; skipping keystore readability check."
+          fi
+
+          # storeFile must be absolute: relative paths resolve against android/app/.
+          umask 077
+          cat > android/key.properties <<EOF
+          keyAlias=$ANDROID_KEY_ALIAS
+          keyPassword=$ANDROID_KEY_PASSWORD
+          storeFile=$keystore
+          storePassword=$ANDROID_STORE_PASSWORD
+          EOF
+
       - name: Build APK (split per ABI)
         run: flutter build apk --release --split-per-abi
+
+      # Last line of defence: build.gradle.kts falls back to the debug key whenever
+      # key.properties is absent, so a silent failure above would still produce
+      # installable-looking APKs. Refuse to publish those.
+      - name: Assert APKs are not debug-signed
+        run: |
+          sdk="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-}}"
+          apksigner=$(find "$sdk/build-tools" -name apksigner -type f 2>/dev/null | sort -V | tail -n 1)
+          if [ -z "$apksigner" ]; then
+            echo "::error::apksigner not found under '$sdk/build-tools'; cannot verify signatures."
+            exit 1
+          fi
+          for apk in build/app/outputs/flutter-apk/*-release.apk; do
+            echo "--- $apk"
+            certs=$("$apksigner" verify --print-certs "$apk")
+            echo "$certs"
+            if echo "$certs" | grep -q "CN=Android Debug"; then
+              echo "::error::$apk is signed with the Android debug key."
+              exit 1
+            fi
+          done
+
+      - name: Remove signing material
+        if: always()
+        run: rm -f android/key.properties "$RUNNER_TEMP/costrutrain-release.jks"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

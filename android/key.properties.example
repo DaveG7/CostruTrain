@@ -1,5 +1,7 @@
 # Vorlage fuer android/key.properties — enthaelt KEINE echten Werte.
 #
+# Der komplette Release-Ablauf (inkl. der vier CI-Secrets) steht in RELEASING.md.
+#
 # Benutzung:
 #   cp android/key.properties.example android/key.properties
 #   dann die vier Werte unten eintragen.
