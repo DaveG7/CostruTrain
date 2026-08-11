@@ -19,6 +19,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Pinned for the same reason as Flutter below: ubuntu-latest's default JDK
+      # drifts, and Gradle 8.14 / AGP 8.11.1 only accept a bounded range. 17 matches
+      # sourceCompatibility/jvmTarget in android/app/build.gradle.kts.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
       - uses: subosito/flutter-action@v2
         with:
           # Pinned deliberately. Flutter 3.44+ made IconData final, which breaks

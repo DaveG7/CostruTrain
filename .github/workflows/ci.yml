@@ -31,3 +31,48 @@ jobs:
 
       - name: Test
         run: flutter test
+
+  # Separate job so analyze+test still report fast and independently.
+  #
+  # This exists because the Android build was broken from a clean checkout for
+  # months without anyone noticing: analyze+test never touch Gradle, and no
+  # release had ever been tagged. A missing splash PNG (9f00b59) only surfaced on
+  # the first manual release dry run. Never let Android go unbuilt in CI again.
+  android-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Pinned for the same reason as Flutter: ubuntu-latest's default JDK drifts,
+      # and Gradle 8.14 / AGP 8.11.1 only accept a bounded range. 17 matches
+      # sourceCompatibility/jvmTarget in android/app/build.gradle.kts.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.9'
+          cache: true
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('android/**/*.gradle*', 'android/**/gradle-wrapper.properties') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # --release on purpose, not --debug: the release buildType is the one with
+      # isMinifyEnabled/isShrinkResources, so this is what exercises R8 and resource
+      # shrinking. android/key.properties is absent here, so build.gradle.kts falls
+      # back to the debug key -- fine, because this APK is only ever discarded. The
+      # publishable ones are built by release.yml, which verifies its signature.
+      - name: Build release APK (signature irrelevant, never published)
+        run: flutter build apk --release
