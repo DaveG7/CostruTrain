@@ -4,6 +4,11 @@ on:
   push:
     tags:
       - 'v*'
+  # Dry run: builds and signs exactly like a real release, prints the certificate
+  # fingerprint, and uploads the APKs as workflow artifacts — but creates NO
+  # GitHub Release. Use this to rehearse signing before the first v* tag, since
+  # a tag publishes irreversibly and binds every future update to that key.
+  workflow_dispatch:
 
 jobs:
   release:
@@ -90,6 +95,17 @@ jobs:
             echo "::error::apksigner not found under '$sdk/build-tools'; cannot verify signatures."
             exit 1
           fi
+          {
+            echo "## Signing verification"
+            echo
+            echo "Compare the SHA-256 below against your local keystore:"
+            echo '```'
+            echo 'keytool -list -v -keystore ~/costrutrain-release.jks'
+            echo '```'
+            echo
+            echo "| APK | Certificate SHA-256 |"
+            echo "| --- | --- |"
+          } >> "$GITHUB_STEP_SUMMARY"
           for apk in build/app/outputs/flutter-apk/*-release.apk; do
             echo "--- $apk"
             certs=$("$apksigner" verify --print-certs "$apk")
@@ -98,13 +114,28 @@ jobs:
               echo "::error::$apk is signed with the Android debug key."
               exit 1
             fi
+            sha=$(echo "$certs" | grep -m1 "SHA-256 digest" | sed 's/.*digest: //')
+            echo "| \`$(basename "$apk")\` | \`$sha\` |" >> "$GITHUB_STEP_SUMMARY"
           done
+
+      # Dry run only: lets the signed APK be installed and tested without a public
+      # release existing. Artifacts inherit the repo's visibility and expire on the
+      # repo's retention setting.
+      - name: Upload APKs as artifacts (dry run only)
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dry-run-apks
+          path: build/app/outputs/flutter-apk/*-release.apk
+          retention-days: 7
 
       - name: Remove signing material
         if: always()
         run: rm -f android/key.properties "$RUNNER_TEMP/costrutrain-release.jks"
 
+      # Tag pushes only. A manual dry run must never publish — that is its whole point.
       - name: Create GitHub Release
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
           files: |

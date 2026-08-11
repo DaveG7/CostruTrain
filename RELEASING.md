@@ -58,7 +58,29 @@ The workflow fails fast if any secret is missing, and verifies with `apksigner`
 that no built APK carries the `CN=Android Debug` certificate, so a
 misconfiguration cannot silently publish a debug-signed release.
 
-## 4. Tagging
+## 4. Dry run (do this before your first tag)
+
+`release.yml` also accepts a manual `workflow_dispatch`. It builds and signs exactly as a
+real release does, but **creates no GitHub Release** — the publish step is gated on
+`github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')`.
+
+*Actions → Release Build → Run workflow → Run workflow* (on `main`).
+
+Then verify the run:
+
+1. The run summary shows a **Signing verification** table with each APK's certificate
+   SHA-256. Compare it against your keystore:
+   ```bash
+   keytool -list -v -keystore ~/costrutrain-release.jks
+   ```
+   Matching fingerprints prove the real key was used — not the debug fallback.
+2. The APKs are attached to the run as the **`dry-run-apks`** artifact (7-day retention),
+   so you can sideload and test the genuinely-signed build before anything is public.
+
+Certificate fingerprints are safe to look at and share; they're public by design. GitHub
+masks the secret values themselves everywhere in the logs.
+
+## 5. Tagging
 
 Version format is `MAJOR.MINOR.PATCH[-channel.N]+BUILD` (see `CLAUDE.md`). Bump
 `version:` in `pubspec.yaml` first, then:
@@ -69,8 +91,10 @@ git push origin --tags
 ```
 
 Pushing a `v*` tag triggers `release.yml`, which builds per-ABI APKs and creates a
-**public** GitHub Release with generated notes. Do not tag until the four secrets
-above are set.
+**public** GitHub Release with generated notes. Do not tag until the four secrets above are
+set, the dry run in §4 is green with a matching fingerprint, and the keystore is backed up
+off-machine — a tag is not reversible in any way that matters, because anyone who installs
+the APK is bound to that key forever.
 
 Note: pushing a commit that touches `.github/workflows/*` over HTTPS requires a
 personal access token with both the `repo` **and** `workflow` scopes. Without
